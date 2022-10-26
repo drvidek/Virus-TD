@@ -6,12 +6,22 @@ public class TowerRanged : TowerBase
 {
     private Mob _currentTarget;
     private LineRenderer _laser;
+    private SpriteRenderer _rangeUI;
 
     new protected void Start()
     {
         base.Start();
         _laser ??= GetComponentInChildren<LineRenderer>();
         _laser.SetPosition(0, transform.position);
+        _rangeUI ??= GetComponentInChildren<SpriteRenderer>();
+        _rangeUI.transform.localScale = new Vector3(_attackRange, _attackRange);
+    }
+
+    new void Update()
+    {
+        base.Update();
+        if (_currentTarget != null)
+        _laser.SetPosition(1, _currentTarget.transform.position);
     }
 
     protected override void Attack()
@@ -53,7 +63,6 @@ public class TowerRanged : TowerBase
     IEnumerator LaserEffect()
     {
         _laser.enabled = true;
-        _laser.SetPosition(1, _currentTarget.transform.position);
         yield return new WaitForSeconds(0.1f);
         _laser.enabled = false;
     }

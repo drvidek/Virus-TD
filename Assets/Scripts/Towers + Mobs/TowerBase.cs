@@ -39,7 +39,7 @@ public class TowerBase : MonoBehaviour
         _attackDelay = 0;
     }
 
-    private void Update()
+    protected void Update()
     {
         if (_attackDelay == 0)
         {
