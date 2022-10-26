@@ -11,7 +11,7 @@ public enum Effect
 
 public class TowerBase : MonoBehaviour
 {
-    [SerializeField] protected float _damage;
+    [SerializeField] protected float _attackPower;
     [SerializeField] protected float _attackRate, _attackRange, _attackDelay;
     [SerializeField] protected EffectSO[] _effects;
     [SerializeField] private SphereCollider _myCollider;
@@ -25,7 +25,7 @@ public class TowerBase : MonoBehaviour
 
     virtual public void Initialise(TowerSO towerCard)
     {
-        _damage = towerCard.damage;
+        _attackPower = towerCard.attackPower;
         _attackRate = towerCard.attackRate;
         _attackRange = towerCard.attackRange;
         _effects = towerCard.effects;
@@ -33,7 +33,7 @@ public class TowerBase : MonoBehaviour
         _myCollider.radius = _attackRange;
     }
 
-    virtual public void RoundStart()
+    virtual public void Reset()
     {
         _validTargets.Clear();
         _attackDelay = 0;

@@ -24,6 +24,7 @@ public class Mob : MonoBehaviour
 
     private void Start()
     {
+        _healthCurrent = _healthMax;
         _moveDir = _waypoints[_waypointIndex].position - transform.position;
         _moveDir.Normalize();
     }
@@ -35,7 +36,10 @@ public class Mob : MonoBehaviour
 
     private void Update()
     {
-        Move();
+        if (_blockade != null)
+            ManageAttack();
+        else
+            Move();
     }
 
     private void Move()
@@ -55,17 +59,35 @@ public class Mob : MonoBehaviour
     private void UpdateWaypoint()
     {
         _waypointIndex++;
+        
         if (_waypointIndex >= _waypoints.Length)
+        #region replace this code
+            //currently they loop to their first waypoint
+            //replace this with earning points
             _waypointIndex = 0;
+        #endregion
 
         _moveDir = _waypoints[_waypointIndex].position - transform.position;
         _moveDir.Normalize();
+    }
 
-        //else
-        //{
-        //    _moveDir = Vector3.zero;
-        //    //EndOfLife();
-        //}
+    private void ManageAttack()
+    {
+        if (_attackDelay == 0)
+        {
+            Attack();
+        }
+        else
+        {
+            _attackDelay = Mathf.MoveTowards(_attackDelay, 0, Time.deltaTime);
+        }
+    }
+
+    private void Attack()
+    {
+        _blockade.TakeDamage(_attackPower);
+        _attackDelay = _attackRate;
+        //StartCoroutine("LaserEffect");
     }
 
     public void SetBlockade(TowerBlockade tower)
@@ -141,7 +163,14 @@ public class Mob : MonoBehaviour
         {
             tower.CheckMob(this);
         }
+        Reset();
+        gameObject.SetActive(false);
+    }
 
-        Destroy(gameObject);
+    private void Reset()
+    {
+        _moveDebuff = 0;
+        _healthCurrent = _healthMax;
+        _blockade = null;
     }
 }

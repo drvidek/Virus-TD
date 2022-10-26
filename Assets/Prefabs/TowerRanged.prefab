@@ -196,9 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b52a446d6327f246be739398d55dcd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 1
-  _attackRate: 1
-  _attackRange: 3
+  _attackPower: 1
+  _attackRate: 3
+  _attackRange: 5
   _attackDelay: 0
   _effects: []
   _myCollider: {fileID: 0}

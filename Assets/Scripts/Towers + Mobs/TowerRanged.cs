@@ -28,7 +28,7 @@ public class TowerRanged : TowerBase
     {
         if (DetermineTarget())
         {
-            _currentTarget.TakeDamage(_damage);
+            _currentTarget.TakeDamage(_attackPower);
             _attackDelay = _attackRate;
             StartCoroutine("LaserEffect");
             if (_effects.Length > 0)

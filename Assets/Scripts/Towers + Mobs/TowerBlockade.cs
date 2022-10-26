@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class TowerBlockade : TowerBase
 {
-    private float _healthCurrent, _healthMax;
-
+    [SerializeField] private float _healthCurrent, _healthMax;
+    
+    new void Start()
+    {
+        base.Start();
+        _healthCurrent = _healthMax;
+    }
     override public void Initialise(TowerSO towerCard)
     {
         base.Initialise(towerCard);
         _healthMax = towerCard.healthMax;
     }
 
-    override public void RoundStart()
+    override public void Reset()
     {
-        base.RoundStart();
+        base.Reset();
         _healthCurrent = _healthMax;
     }
 
@@ -22,8 +27,14 @@ public class TowerBlockade : TowerBase
     {
         foreach (Mob mob in _validTargets)
         {
-            mob.TakeDamage(_damage);
+            mob.TakeDamage(_attackPower);
             _attackDelay = _attackRate;
+            mob.SetBlockade(this);
+            //StartCoroutine("LaserEffect");
+            if (_effects.Length > 0)
+            {
+                ApplyEffect(mob);
+            }
         }
     }
 
@@ -38,6 +49,11 @@ public class TowerBlockade : TowerBase
 
     private void EndOfLife()
     {
-
+        foreach (Mob mob in _validTargets)
+        {
+            mob.SetBlockade(null);
+        }
+        Reset();
+        gameObject.SetActive(false);
     }
 }
