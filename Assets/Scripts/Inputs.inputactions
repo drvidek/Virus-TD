@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Select",
-                    "type": "Button",
-                    "id": "b83b2e00-fbb5-4b5b-87c2-6be427492a57",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Drag&Move",
                     "type": "Value",
                     "id": "07c0e6b4-8e08-4f67-b98b-b21ff0c62155",
@@ -34,17 +25,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "27a41fd8-f1bb-425f-8202-3e2899c30223",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard/Mouse",
-                    "action": "Select",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "Mouse",
                     "id": "f910e17b-6f21-49c1-8bf9-985fdcf43b56",
@@ -80,6 +60,28 @@
                 },
                 {
                     "name": "",
+                    "id": "9b0b5da8-b0bd-4ccb-808d-7c3e4f744da2",
+                    "path": "<Touchscreen>/touch1/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8ef736e0-6b2b-4931-873f-4d6af77659bb",
+                    "path": "<Touchscreen>/touch1/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "17554b7c-8d70-4039-b88a-03ddeb50739d",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -96,6 +98,28 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard/Mouse",
+                    "action": "Drag&Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3975dd0f-5423-47c5-9c36-5e4bec2631b6",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "Drag&Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "822495e4-8d38-48cd-b6ad-cf4c9190e63b",
+                    "path": "<Touchscreen>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
                     "action": "Drag&Move",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +18,8 @@ public class InputManager : MonoBehaviour
     private Vector3 _dragStartPos;
     private Vector3 _dragCurrentPos;
     private Vector3 _newPosition;
+    float _touchStartDist = 0f;
+    float _touchCurrentDist = 0f;
     Vector3 _oldPosition;
     [Header("Movement")]
     [SerializeField] private float _moveSpeed = 2.5f;
@@ -48,11 +49,40 @@ public class InputManager : MonoBehaviour
     #region Input Actions
     public void Zoom(InputAction.CallbackContext context)
     {
-        if (context.started)
+        #region Mouse
+        if (context.control.path == "/Mouse/scroll/up")
         {
-            _inputs.y = Mathf.Clamp(context.ReadValue<float>(), -1f, 1f);
-            
+            if (context.started)
+            {
+                _inputs.y = Mathf.Clamp(context.ReadValue<float>(), -1f, 1f);
+            }
         }
+        #endregion
+        #region TouchScreen
+        else if (Input.touchCount == 2)
+        {
+            if (context.started)
+            {
+                _touchStartDist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+            }
+            if (context.performed)
+            {
+                _touchCurrentDist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+                if (_touchCurrentDist < _touchStartDist)
+                {
+                    _inputs.y = 1f;
+                }
+                else if (_touchCurrentDist > _touchStartDist)
+                {
+                    _inputs.y = -1f;
+                }
+                else
+                {
+                    _inputs.y = 0f;
+                }
+            }
+        }
+        #endregion
         if (context.canceled)
         {
             _inputs.y = 0f;
@@ -60,11 +90,13 @@ public class InputManager : MonoBehaviour
     }
     public void ClickDrag(InputAction.CallbackContext context)
     {
-        if (context.started)
+        #region Mouse
+        if (context.control.path == "/Mouse/leftButton")
         {
-            _oldPosition = transform.position;
-            if (context.control.path == "/Mouse/leftButton")
+            if (context.started)
             {
+                _oldPosition = transform.position;
+
                 Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
                 Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
                 float _screenPoint;
@@ -73,10 +105,7 @@ public class InputManager : MonoBehaviour
                     _dragStartPos = _locationRay.GetPoint(_screenPoint);
                 }
             }
-        }
-        if (context.performed)
-        {
-            if (context.control.path == "/Mouse/leftButton")
+            if (context.performed)
             {
                 Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
                 Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
@@ -87,24 +116,81 @@ public class InputManager : MonoBehaviour
                     _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
                 }
             }
-        }
-        if (context.canceled)
-        {
-            if (context.control.path == "/Mouse/leftButton" && _oldPosition == transform.position)
+
+            if (context.canceled)
             {
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out _hitInfo))
+                if (_oldPosition == transform.position)
                 {
-                    if (_hitInfo.transform.tag == "Start")
+
+                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out _hitInfo))
                     {
-                        SetMob();
+                        if (_hitInfo.transform.tag == "Start")
+                        {
+                            SetMob();
+                        }
+                        else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
+                        {
+                            PlaceTower();
+                        }
                     }
-                    else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
+
+                }
+
+            }
+        }
+        #endregion
+        #region Touchscreen
+        if (context.control.path == "/Touchscreen1/press" && Input.touchCount < 2)
+        {
+            if (context.started)
+            {
+                _oldPosition = transform.position;
+                Ray _locationRay = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+
+                Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+                float _screenPoint;
+                if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                {
+                    _dragStartPos = _locationRay.GetPoint(_screenPoint);
+                }
+
+            }
+            if (context.performed)
+            {
+                Ray _locationRay = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+
+                Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+                float _screenPoint;
+                if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                {
+                    _dragCurrentPos = _locationRay.GetPoint(_screenPoint);
+                    _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
+                }
+
+            }
+            if (context.canceled)
+            {
+                if (_oldPosition == transform.position)
+                {
+
+                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.GetTouch(0).position), out _hitInfo))
                     {
-                        PlaceTower();
+                        if (_hitInfo.transform.tag == "Start")
+                        {
+                            SetMob();
+                        }
+                        else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
+                        {
+                            PlaceTower();
+                        }
                     }
+
                 }
             }
         }
+        #endregion
     }
     #endregion
 }
+
+
