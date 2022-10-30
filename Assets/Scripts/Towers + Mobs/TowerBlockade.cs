@@ -28,6 +28,7 @@ public class TowerBlockade : TowerBase
 
     protected override void Attack()
     {
+        //attack each mob within range of your collider
         foreach (Mob mob in _validTargets)
         {
             mob.TakeDamage(_attackPower);
@@ -52,6 +53,7 @@ public class TowerBlockade : TowerBase
 
     private void EndOfLife()
     {
+        //remove the blockage for each affected mob
         foreach (Mob mob in _blockedTargets)
         {
             mob.SetBlockade(null);
@@ -62,6 +64,7 @@ public class TowerBlockade : TowerBase
 
     private void OnTriggerEnter(Collider other)
     {
+        //if a mob enters your collider, try adding them to your target lists
         if (other.TryGetComponent<Mob>(out Mob m))
         {
             if (_validTargets.Contains(m))

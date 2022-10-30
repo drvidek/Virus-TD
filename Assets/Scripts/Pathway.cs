@@ -15,6 +15,7 @@ public class Pathway : MonoBehaviour
 
     private void Start()
     {
+        //Get the child objects and draw the line based on their positions
         _points = GetComponentsInChildren<Transform>();
         _line = GetComponent<LineRenderer>();
         _line.positionCount = _points.Length - 1;

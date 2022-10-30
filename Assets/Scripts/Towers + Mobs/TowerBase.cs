@@ -19,12 +19,14 @@ public class TowerBase : MonoBehaviour
 
     protected void Start()
     {
+        //Use the attack range to set the collider radius
         _myCollider = GetComponent<SphereCollider>();
         _myCollider.radius = _attackRange;
     }
 
     protected void OnValidate()
     {
+        //if you have a card equpped, initialise it
         if (_myCard != null)
         Initialise(_myCard);
     }
@@ -48,6 +50,7 @@ public class TowerBase : MonoBehaviour
 
     protected void Update()
     {
+        //count down to 0 and try an attack
         if (_attackDelay == 0)
         {
             Attack();
@@ -85,6 +88,7 @@ public class TowerBase : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //if a mob enters your attack range, add it to your list of possible targets
         if (other.TryGetComponent<Mob>(out Mob m))
         {
             if (!_validTargets.Contains(m))
@@ -94,6 +98,7 @@ public class TowerBase : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        //if a mob exits your attack range, remove it from your list of possible targets
         if (other.TryGetComponent<Mob>(out Mob m))
         {
             if (_validTargets.Contains(m))
@@ -103,6 +108,7 @@ public class TowerBase : MonoBehaviour
 
     public void CheckMob(Mob m)
     {
+        //check if a mob is in your list, and if so, remove it
         if (_validTargets.Contains(m))
             _validTargets.Remove(m);
     }
