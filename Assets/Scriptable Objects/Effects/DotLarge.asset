@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1faa9dae026fb674f9bc091081441561, type: 3}
-  m_Name: SlowLarge
+  m_Name: DotLarge
   m_EditorClassIdentifier: 
-  myEffect: 0
-  effectValue: 0.6
-  effectRange: 5
+  myEffect: 1
+  effectValue: 1.5
+  effectRange: 6

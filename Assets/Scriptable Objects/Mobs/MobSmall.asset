@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1faa9dae026fb674f9bc091081441561, type: 3}
-  m_Name: SlowMed
+  m_Script: {fileID: 11500000, guid: a99dbc6bb09424d4ea62fa7929e139f0, type: 3}
+  m_Name: MobSmall
   m_EditorClassIdentifier: 
-  myEffect: 0
-  effectValue: 0.4
-  effectRange: 8
+  moveSpd: 6
+  healthMax: 5
+  attackPower: 0.5
+  attackRate: 0.5
+  scale: 0.5

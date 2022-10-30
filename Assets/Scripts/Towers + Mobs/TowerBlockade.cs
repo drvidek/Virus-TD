@@ -5,7 +5,8 @@ using UnityEngine;
 public class TowerBlockade : TowerBase
 {
     [SerializeField] private float _healthCurrent, _healthMax;
-    
+    private List<Mob> _blockedTargets = new List<Mob>();
+
     new void Start()
     {
         base.Start();
@@ -21,6 +22,8 @@ public class TowerBlockade : TowerBase
     {
         base.Reset();
         _healthCurrent = _healthMax;
+        _validTargets.Clear();
+        _blockedTargets.Clear();
     }
 
     protected override void Attack()
@@ -29,7 +32,7 @@ public class TowerBlockade : TowerBase
         {
             mob.TakeDamage(_attackPower);
             _attackDelay = _attackRate;
-            mob.SetBlockade(this);
+            //mob.SetBlockade(this);
             //StartCoroutine("LaserEffect");
             if (_effects.Length > 0)
             {
@@ -49,11 +52,29 @@ public class TowerBlockade : TowerBase
 
     private void EndOfLife()
     {
-        foreach (Mob mob in _validTargets)
+        foreach (Mob mob in _blockedTargets)
         {
             mob.SetBlockade(null);
         }
         Reset();
         gameObject.SetActive(false);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<Mob>(out Mob m))
+        {
+            if (_validTargets.Contains(m))
+                return;
+            _validTargets.Add(m);
+            _blockedTargets.Add(m);
+            m.SetBlockade(this);
+        }
+    }
+
+    public void AddBlockedTarget(Mob m)
+    {
+        _blockedTargets.Add(m);
+    }
+
 }

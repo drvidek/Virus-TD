@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60ff61525e8153940b2426171f138f64, type: 3}
-  m_Name: Tower1
+  m_Script: {fileID: 11500000, guid: 1faa9dae026fb674f9bc091081441561, type: 3}
+  m_Name: DotMed
   m_EditorClassIdentifier: 
-  damage: 0
-  attackRate: 0
-  attackRange: 0
-  healthMax: 0
-  effects: []
+  myEffect: 1
+  effectValue: 1
+  effectRange: 5

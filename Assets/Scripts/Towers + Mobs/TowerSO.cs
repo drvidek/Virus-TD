@@ -6,6 +6,7 @@ using UnityEngine;
 public class TowerSO : ScriptableObject
 {
     [SerializeField] public float attackPower;
-    [SerializeField] public float attackRate, attackRange, healthMax;
+    [SerializeField] public float attackRate, attackRange, attackRadius, healthMax;
     [SerializeField] public EffectSO[] effects;
+    [SerializeField] public string description;
 }

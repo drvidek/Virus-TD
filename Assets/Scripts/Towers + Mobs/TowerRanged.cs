@@ -1,13 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TowerRanged : TowerBase
 {
     private Mob _currentTarget;
     private LineRenderer _laser;
     private SpriteRenderer _rangeUI;
+    private Image _delayUI;
 
+    new private void OnValidate()
+    {
+        base.OnValidate();
+        _rangeUI = GetComponentInChildren<SpriteRenderer>();
+        _delayUI = GetComponentInChildren<Image>();
+        _rangeUI.transform.localScale = new Vector3(_attackRange, _attackRange);
+    }
     new protected void Start()
     {
         base.Start();
@@ -21,19 +30,38 @@ public class TowerRanged : TowerBase
     {
         base.Update();
         if (_currentTarget != null)
-        _laser.SetPosition(1, _currentTarget.transform.position);
+            _laser.SetPosition(1, _currentTarget.transform.position);
+        _delayUI.fillAmount = (_attackDelay / _attackRate);
     }
 
     protected override void Attack()
     {
         if (DetermineTarget())
         {
-            _currentTarget.TakeDamage(_attackPower);
+            if (_attackRadius > 0.5f)
+            {
+                AoeAttack();
+            }
+            else
+            {
+                _currentTarget.TakeDamage(_attackPower);
+                ApplyEffect(_currentTarget);
+            }
             _attackDelay = _attackRate;
             StartCoroutine("LaserEffect");
-            if (_effects.Length > 0)
+
+        }
+    }
+
+    private void AoeAttack()
+    {
+        Collider[] hits = Physics.OverlapSphere(_currentTarget.transform.position, _attackRadius);
+        foreach (Collider hit in hits)
+        {
+            if (hit.TryGetComponent<Mob>(out Mob m))
             {
-                ApplyEffect(_currentTarget);
+                m.TakeDamage(_attackPower);
+                ApplyEffect(m);
             }
         }
     }
