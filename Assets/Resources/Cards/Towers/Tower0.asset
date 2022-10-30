@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a99dbc6bb09424d4ea62fa7929e139f0, type: 3}
-  m_Name: MobBig
+  m_Script: {fileID: 11500000, guid: 60ff61525e8153940b2426171f138f64, type: 3}
+  m_Name: Tower0
   m_EditorClassIdentifier: 
-  moveSpd: 3
-  healthMax: 20
-  attackPower: 3
-  attackRate: 2
-  scale: 1.5
+  attackPower: 1
+  attackRate: 1
+  attackRange: 3
+  attackRadius: 0.1
+  healthMax: 0
+  effects: []
+  description: Decent attacker with no special effects

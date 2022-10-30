@@ -6,16 +6,18 @@ public class TowerBlockade : TowerBase
 {
     [SerializeField] private float _healthCurrent, _healthMax;
     private List<Mob> _blockedTargets = new List<Mob>();
+    private Animator _anim;
 
     new void Start()
     {
         base.Start();
         _healthCurrent = _healthMax;
     }
-    override public void Initialise(TowerSO towerCard)
+    override public void Initialise(TowerCard towerCard)
     {
         base.Initialise(towerCard);
         _healthMax = towerCard.healthMax;
+        _anim = GetComponent<Animator>();
     }
 
     override public void Reset()
@@ -45,6 +47,7 @@ public class TowerBlockade : TowerBase
     public void TakeDamage(float dmg)
     {
         _healthCurrent -= dmg;
+        _anim.SetTrigger("Hit");
         if (_healthCurrent <= 0)
         {
             EndOfLife();
@@ -78,6 +81,11 @@ public class TowerBlockade : TowerBase
     public void AddBlockedTarget(Mob m)
     {
         _blockedTargets.Add(m);
+    }
+
+    public bool CheckInMobRange(Mob m)
+    {
+        return _validTargets.Contains(m);
     }
 
 }

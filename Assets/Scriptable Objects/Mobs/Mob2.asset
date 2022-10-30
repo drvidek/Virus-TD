@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a99dbc6bb09424d4ea62fa7929e139f0, type: 3}
-  m_Name: MobMed
+  m_Name: Mob2
   m_EditorClassIdentifier: 
-  moveSpd: 4
-  healthMax: 10
-  attackPower: 1
-  attackRate: 1
-  scale: 1
+  moveSpd: 3
+  healthMax: 20
+  attackPower: 3
+  attackRate: 2
+  scale: 1.5

@@ -36,13 +36,22 @@ public class InputManager : MonoBehaviour
     }
     #endregion
     #region Build Phase
-    public void PlaceTower()
+    public void PlaceTower(Transform parent)
     {
         Debug.Log("Place Tower");
+        GameObject prefab = Resources.Load($"Prefabs/TowersAndMobs/Tower{(parent.tag == "Tower" ? "Ranged" : "Blockade")}") as GameObject;
+        TowerBase tower = Instantiate(prefab, parent).GetComponent<TowerBase>();
+        int towerIndex = Random.Range(0, 3);
+        tower.Initialise(Resources.Load($"Cards/Towers/Tower{(parent.tag == "Tower" ? towerIndex.ToString() : "Block0")}") as TowerCard);
     }
-    public void SetMob()
+    public void SetMob(Transform parent)
     {
         Debug.Log("Set Mob");
+        GameObject prefab = Resources.Load("Prefabs/TowersAndMobs/Mob") as GameObject;
+        Mob mob = Instantiate(prefab, parent.position, Quaternion.identity).GetComponent<Mob>();
+        int mobIndex = Random.Range(0, 3);
+        mob.Initialise(Resources.Load("Cards/Mobs/Mob" + mobIndex.ToString()) as MobCard, parent.gameObject);
+
     }
     #endregion
     #region Input Actions
@@ -51,7 +60,7 @@ public class InputManager : MonoBehaviour
         if (context.started)
         {
             _inputs.y = Mathf.Clamp(context.ReadValue<float>(), -1f, 1f);
-            
+
         }
         if (context.canceled)
         {
@@ -96,11 +105,11 @@ public class InputManager : MonoBehaviour
                 {
                     if (_hitInfo.transform.tag == "Start")
                     {
-                        SetMob();
+                        SetMob(_hitInfo.transform);
                     }
                     else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
                     {
-                        PlaceTower();
+                        PlaceTower(_hitInfo.transform);
                     }
                 }
             }

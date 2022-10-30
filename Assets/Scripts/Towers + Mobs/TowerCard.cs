@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TowerSO", menuName = "SOs/TowerSO")]
-public class TowerSO : ScriptableObject
+public class TowerCard : ScriptableObject
 {
     [SerializeField] public float attackPower;
     [SerializeField] public float attackRate, attackRange, attackRadius, healthMax;

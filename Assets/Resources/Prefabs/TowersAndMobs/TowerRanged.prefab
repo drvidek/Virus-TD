@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7237048317796520425}
   - component: {fileID: 8996237813292167509}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Range Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53749472532215651}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6369a1e65e96c524495860f3e6c8ca97, type: 3}
-  m_Color: {r: 1, g: 0.00000007947286, b: 0, a: 0.105882354}
+  m_Color: {r: 0.83346844, g: 1, b: 0, a: 0.078431375}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2774445854419620216}
   - component: {fileID: 1113615310709753282}
   - component: {fileID: 3716831825467156097}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 3529742038287615380}
   - component: {fileID: 3529742038287615379}
   - component: {fileID: 3529742038287615378}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TowerRanged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,10 +273,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b52a446d6327f246be739398d55dcd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myCard: {fileID: 0}
   _attackPower: 1
   _attackRate: 3
   _attackRange: 5
   _attackDelay: 0
+  _attackRadius: 0
   _effects: []
   _myCollider: {fileID: 0}
   _validTargets: []
@@ -290,7 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8044656167040626207}
   - component: {fileID: 8048073562665397363}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +425,7 @@ GameObject:
   - component: {fileID: 72273891482302675}
   - component: {fileID: 2779381465675933900}
   - component: {fileID: 1966132317613615543}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,7 +10,7 @@ public enum Effect
 
 public class TowerBase : MonoBehaviour
 {
-    [SerializeField] protected TowerSO _myCard;
+    [SerializeField] protected TowerCard _myCard;
     [SerializeField] protected float _attackPower;
     [SerializeField] protected float _attackRate, _attackRange, _attackDelay, _attackRadius;
     [SerializeField] protected EffectSO[] _effects;
@@ -31,7 +31,7 @@ public class TowerBase : MonoBehaviour
         Initialise(_myCard);
     }
 
-    virtual public void Initialise(TowerSO towerCard)
+    virtual public void Initialise(TowerCard towerCard)
     {
         _attackPower = towerCard.attackPower;
         _attackRate = towerCard.attackRate;
@@ -51,7 +51,7 @@ public class TowerBase : MonoBehaviour
     protected void Update()
     {
         //count down to 0 and try an attack
-        if (_attackDelay == 0)
+        if (_attackDelay == 0 && _attackRate > 0)
         {
             Attack();
         }
@@ -106,7 +106,7 @@ public class TowerBase : MonoBehaviour
         }
     }
 
-    public void CheckMob(Mob m)
+    public void CheckMobForRemoval(Mob m)
     {
         //check if a mob is in your list, and if so, remove it
         if (_validTargets.Contains(m))

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mob : MonoBehaviour
 {
-    [SerializeField] private MobSO _myCard;
+    [SerializeField] private MobCard _myCard;
     [SerializeField] private float _moveSpd;
     [SerializeField] private float _moveDebuff, _minDist;
     [SerializeField] private Vector3 _moveDir;
@@ -28,25 +28,25 @@ public class Mob : MonoBehaviour
 
     private void OnValidate()
     {
-        //if you have a waypoint parent object
-        if (_waypointParent != null)
-        {
-            //get all the waypoint transforms
-            Transform[] _points = _waypointParent.GetComponentsInChildren<Transform>();
-            //set your waypoint list length to the length of that list (minus one for the parent object)
-            _waypoints = new Transform[_points.Length-1];
-            //loop through and add each waypoint to your waypoint list
-            for (int i = 0; i < _points.Length; i++)
-            {
-                if (i > 0)
-                {
-                    _waypoints[i-1] = _points[i];
-                }
-            }
-        }
         //if you have a card equpped, initialise it
         if (_myCard != null)
-        Initialise(_myCard);
+            Initialise(_myCard, _waypointParent);
+    }
+
+    private void ScrapePath(GameObject parent)
+    {
+        //get all the waypoint transforms
+        Transform[] _points = parent.GetComponentsInChildren<Transform>();
+        //set your waypoint list length to the length of that list (minus one for the parent object)
+        _waypoints = new Transform[_points.Length - 1];
+        //loop through and add each waypoint to your waypoint list
+        for (int i = 0; i < _points.Length; i++)
+        {
+            if (i > 0)
+            {
+                _waypoints[i - 1] = _points[i];
+            }
+        }
     }
 
     private void Start()
@@ -59,13 +59,15 @@ public class Mob : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
-    private void Initialise(MobSO mobCard)
+    public void Initialise(MobCard mobCard, GameObject pathParent)
     {
         _moveSpd = mobCard.moveSpd;
         _healthMax = mobCard.healthMax;
         _attackPower = mobCard.attackPower;
         _attackRate = mobCard.attackRate;
         transform.localScale = Vector3.one * mobCard.scale;
+        if (pathParent != null)
+            ScrapePath(pathParent);
     }
 
     private void Update()
@@ -104,9 +106,9 @@ public class Mob : MonoBehaviour
     private void UpdateWaypoint()
     {
         _waypointIndex++;
-        
+
         if (_waypointIndex >= _waypoints.Length)
-        #region replace this code
+            #region replace this code
             //currently they loop to their first waypoint
             //replace this with earning points
             _waypointIndex = 0;
@@ -122,6 +124,9 @@ public class Mob : MonoBehaviour
 
     private void ManageAttack()
     {
+        if (!_blockade.CheckInMobRange(this))
+            return;
+
         //count towards 0 and attack
         if (_attackDelay == 0)
         {
@@ -183,7 +188,7 @@ public class Mob : MonoBehaviour
                 return;
             }
         }
-        
+
         //otherwise add a new entry to the slow list
         _slowList.Add(newSlow);
     }
@@ -259,7 +264,7 @@ public class Mob : MonoBehaviour
                 newDot.sec++;
             }
             //if the DoT has elapsed
-            if (newDot.time<= 0)
+            if (newDot.time <= 0)
             {
                 //remove it from the list and keep looping
                 _dotList.RemoveAt(i);
@@ -280,7 +285,7 @@ public class Mob : MonoBehaviour
         foreach (TowerBase tower in FindObjectsOfType<TowerBase>())
         {
             //check if it needs to remove this mob from its targets
-            tower.CheckMob(this);
+            tower.CheckMobForRemoval(this);
         }
         //reset the mob
         Reset();
