@@ -23,7 +23,7 @@ public class TowerRanged : TowerBase
         base.Start();
         //set the laser line up
         _laser ??= GetComponentInChildren<LineRenderer>();
-        _laser.SetPosition(0, transform.position);
+        _laser.SetPosition(0, transform.position + Vector3.up*2);
         //set the range indicator up
         _rangeUI ??= GetComponentInChildren<SpriteRenderer>();
         _rangeUI.transform.localScale = new Vector3(_attackRange, _attackRange);
