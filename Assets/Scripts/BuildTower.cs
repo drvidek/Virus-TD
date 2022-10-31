@@ -12,6 +12,7 @@ public class BuildTower : MonoBehaviour
     #region Startup
     private void Start()
     {
+        //On start retrieve the tag of the build location this instance is attached to
         locationTag = gameObject.tag;
     }
     #endregion
