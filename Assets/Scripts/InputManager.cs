@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,52 +15,98 @@ public class InputManager : MonoBehaviour
     private GameObject _selectedLocation;
     //Vector3 to store inputs from mouse, will use x and z for movement and y for zooming.
     private Vector3 _inputs;
+    //Vector3 to store the start position of your touch for dragging
     private Vector3 _dragStartPos;
+    //Vector3 to store the position your touch has moved to for dragging
     private Vector3 _dragCurrentPos;
+    //Vector3 to store the position you want the camera to move to when dragging
     private Vector3 _newPosition;
+    //Vector3 to store the starting position of camera when starting to drag
     Vector3 _oldPosition;
+    //Float to store the distance between your 2 touch fingers when starting Zoom
+    private float _touchStartDist = 0f;
+    //Float to store the distance between your 2 touch fingers during zoom
+    private float _touchCurrentDist = 0f;
     [Header("Movement")]
+    [Tooltip("Set the movement speed we will use for the cameras movement")]
     [SerializeField] private float _moveSpeed = 2.5f;
     #endregion
     #region Startup & Update
     private void Start()
     {
+        //At start the new position to move to is the current position
         _newPosition = transform.position;
     }
     private void Update()
     {
+        //Vector3 to store the new location to move to information from input actions. _newPosition comes from Click/Drag and _inputs.y comes from Zoom
         Vector3 _moveDir = new Vector3(_newPosition.x, transform.position.y + _inputs.y * 2, _newPosition.z);
+        //Use Lerp to smoothly move to new location according to our move speed
         transform.position = Vector3.Lerp(transform.position, _moveDir, _moveSpeed * Time.deltaTime);
+        //Adjust current location to clamp it inside acceptable movement area
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, 2f, 10.4f), transform.position.z);
     }
     #endregion
     #region Build Phase
-    public void PlaceTower(Transform parent)
+    public void PlaceTower()
     {
         Debug.Log("Place Tower");
-        GameObject prefab = Resources.Load($"Prefabs/TowersAndMobs/Tower{(parent.tag == "Tower" ? "Ranged" : "Blockade")}") as GameObject;
-        TowerBase tower = Instantiate(prefab, parent).GetComponent<TowerBase>();
-        int towerIndex = Random.Range(0, 3);
-        tower.Initialise(Resources.Load($"Cards/Towers/Tower{(parent.tag == "Tower" ? towerIndex.ToString() : "Block0")}") as TowerCard);
     }
-    public void SetMob(Transform parent)
+    public void SetMob()
     {
         Debug.Log("Set Mob");
-        GameObject prefab = Resources.Load("Prefabs/TowersAndMobs/Mob") as GameObject;
-        Mob mob = Instantiate(prefab, parent.position, Quaternion.identity).GetComponent<Mob>();
-        int mobIndex = Random.Range(0, 3);
-        mob.Initialise(Resources.Load("Cards/Mobs/Mob" + mobIndex.ToString()) as MobCard, parent.gameObject);
-
     }
     #endregion
     #region Input Actions
     public void Zoom(InputAction.CallbackContext context)
     {
-        if (context.started)
+        //Seperate out input from Mouse scroll wheel so we don't access Touch features without any touches
+        #region Mouse
+        if (context.control.path == "/Mouse/scroll/up")
         {
-            _inputs.y = Mathf.Clamp(context.ReadValue<float>(), -1f, 1f);
-
+            //If we have started input make _inputs.y equal value passed through from mouse scroll clamped between -1 and 1. Mouse scroll registers one input as 120 by default for some reason
+            if (context.started)
+            {
+                _inputs.y = Mathf.Clamp(context.ReadValue<float>(), -1f, 1f);
+            }
         }
+        #endregion
+        //Else use our Touchscreen inputs
+        #region TouchScreen
+        //Only run function if we have 2 touches. This allows us to get data from second touches without errors if a touch was cancelled before function finishes
+        else if (Input.touchCount == 2)
+        {
+            //If touch input has started store the current distance between the touches
+            if (context.started)
+            {
+                _touchStartDist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+            }
+            //As touch input continues
+            if (context.performed)
+            {
+                //Store current distance between the 2 touches
+                _touchCurrentDist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+                //If current distance is less than original distance apply 1 to our _inputs.y to zoom out and make our start distance the current distance
+                if (_touchCurrentDist < _touchStartDist)
+                {
+                    _inputs.y = 1f;
+                    _touchStartDist = _touchCurrentDist;
+                }
+                //Else if current distance is more than original distance apply -1 to _inputs.y to zoom in and make our start distance our current distance
+                else if (_touchCurrentDist > _touchStartDist)
+                {
+                    _inputs.y = -1f;
+                    _touchStartDist = _touchCurrentDist;
+                }
+                //Else our touches haven't moved, apply nothing to _inputs.y
+                else
+                {
+                    _inputs.y = 0f;
+                }
+            }
+        }
+        #endregion
+        //If either input is cancelled _inputs.y = 0 to stop zooming
         if (context.canceled)
         {
             _inputs.y = 0f;
@@ -69,51 +114,134 @@ public class InputManager : MonoBehaviour
     }
     public void ClickDrag(InputAction.CallbackContext context)
     {
-        if (context.started)
+        //Seperate out mouse button input to avoid errors when trying to access touch data without touches. This also allows us to use less if statements
+        #region Mouse
+        if (context.control.path == "/Mouse/leftButton")
         {
-            _oldPosition = transform.position;
-            if (context.control.path == "/Mouse/leftButton")
+            //If we have started recieving inputs
+            if (context.started)
             {
+                //Set our old position to our current position
+                _oldPosition = transform.position;
+                //Define a Ray to use to find current position of mouse click
                 Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+                //A plane to use as our area to determine location from
                 Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+                //A float to store the location information recieved from our Ray
                 float _screenPoint;
+                //Perform the Raycast and store the location hit as our _dragStartPos
                 if (_screenLocator.Raycast(_locationRay, out _screenPoint))
                 {
                     _dragStartPos = _locationRay.GetPoint(_screenPoint);
                 }
             }
-        }
-        if (context.performed)
-        {
-            if (context.control.path == "/Mouse/leftButton")
+            //As input continues to be recieved
+            if (context.performed)
             {
+                //Define a Ray to use to find the current position of mouse as it is dragged
                 Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+                //A plane to use as our area to determine location from
                 Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+                //A float to store the location information recieved from our Ray
                 float _screenPoint;
+                //Perform the Raycast, store the location hit as our _dragStartPos and apply the difference between start and current position to our current camera position
                 if (_screenLocator.Raycast(_locationRay, out _screenPoint))
                 {
                     _dragCurrentPos = _locationRay.GetPoint(_screenPoint);
                     _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
                 }
             }
-        }
-        if (context.canceled)
-        {
-            if (context.control.path == "/Mouse/leftButton" && _oldPosition == transform.position)
+            //If input from mouse has stopped
+            if (context.canceled)
             {
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out _hitInfo))
+                //If old position is equal to our current camera position we have not moved so we are obviously selecting something
+                if (_oldPosition == transform.position)
                 {
-                    if (_hitInfo.transform.tag == "Start")
+                    //Raycast a ray from mouses current position and store hit info from object with collider we hit
+                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out _hitInfo))
                     {
-                        SetMob(_hitInfo.transform);
+                        //If hit object has the tag start we are hiring mobs, activate the SetMob function
+                        if (_hitInfo.transform.tag == "Start")
+                        {
+                            SetMob();
+                        }
+                        //If hit object has the tag Tower or Path we are placing a tower, activate the PlaceTower method
+                        else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
+                        {
+                            PlaceTower();
+                        }
                     }
-                    else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
+
+                }
+
+            }
+        }
+        #endregion
+        //Else use our Touchscreen inputs
+        #region Touchscreen
+        //Run the function if we have less than 2 touches
+        if (Input.touchCount == 1)
+        {
+            //If we have started receiving inputs
+            if (context.started)
+            {
+                //Old position equals the current camera transform position
+                _oldPosition = transform.position;
+                //Define a Ray at touch position to determine position in scene
+                Ray _locationRay = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                //Plane to use for Ray to determine location
+                Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+                //Float to store location data gathered from Ray
+                float _screenPoint;
+                //Cast the ray and store the location received as our drag start position
+                if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                {
+                    _dragStartPos = _locationRay.GetPoint(_screenPoint);
+                }
+
+            }
+            //If input is continuing
+            if (context.performed)
+            {
+                //Define a Ray at touch position to get current position of touch in scene
+                Ray _locationRay = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                //Plane to use for Ray to determine location
+                Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+                //Float to store location data received from Ray
+                float _screenPoint;
+                //Cast the ray, store the location recieved as current drag position and apply the difference between the start and current drag position to our camera position
+                if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                {
+                    _dragCurrentPos = _locationRay.GetPoint(_screenPoint);
+                    _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
+                }
+
+            }
+            //If input has stopped
+            if (context.canceled)
+            {
+                //If old position is equal to cameras current position we have not moved and we are obviously selecting something
+                if (_oldPosition == transform.position)
+                {
+                    //Cast a ray from touch location and store data on object with collider that is hit 
+                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.GetTouch(0).position), out _hitInfo))
                     {
-                        PlaceTower(_hitInfo.transform);
+                        //If object has the tag Start we are placing a mob, call the SetMob method
+                        if (_hitInfo.transform.tag == "Start")
+                        {
+                            SetMob();
+                        }
+                        //If object has the tag Tower or Path we are placing a tower, call the PlaceTower method
+                        else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
+                        {
+                            PlaceTower();
+                        }
                     }
+
                 }
             }
         }
+        #endregion
     }
     #endregion
 }
