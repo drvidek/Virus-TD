@@ -48,8 +48,14 @@ public class InputManager : MonoBehaviour
     }
     #endregion
     #region Build Phase
-
-
+    public void PlaceTower()
+    {
+        Debug.Log("Place Tower");
+    }
+    public void SetMob()
+    {
+        Debug.Log("Set Mob");
+    }
     #endregion
     #region Input Actions
     public void Zoom(InputAction.CallbackContext context)
@@ -218,10 +224,10 @@ public class InputManager : MonoBehaviour
                 //If object has the tag Tower or Path we are placing a tower, call the PlaceTower method
                 else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
                 {
-                    _hitInfo.transform.GetComponent<BuildTower>().PlaceTower();
+                    if (_hitInfo.transform.TryGetComponent<BuildTower>(out BuildTower bt))
+                        bt.PlaceTower();
                 }
             }
-
-        }
+        }   
     }
 }
