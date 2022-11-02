@@ -2,10 +2,9 @@
 [Tt]emp/
 [Oo]bj/
 [Ll]ogs/
+[Uu]serSettings/
 [Bb]uild/
 [Bb]uilds/
-[Pp]ackages/
-[Uu]serSettings/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
@@ -28,15 +27,6 @@ ExportedObj/
 *.opendb
 *.VC.db
 
-# User defined meta files
-*.cs.meta
-*.prefab.meta
-*.asset.meta
-*.obj.meta
-*.shader.meta
-*.anim.meta
-*.fbx.meta
-
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
@@ -47,3 +37,16 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Logs/shadercompiler-UnityShaderCompiler.exe6.log
+Logs/shadercompiler-UnityShaderCompiler.exe5.log
+Logs/shadercompiler-UnityShaderCompiler.exe4.log
+Logs/shadercompiler-UnityShaderCompiler.exe3.log
+Logs/shadercompiler-UnityShaderCompiler.exe2.log
+Logs/shadercompiler-UnityShaderCompiler.exe1.log
+Logs/shadercompiler-UnityShaderCompiler.exe0.log
+Logs/shadercompiler-AssetImportWorker0.log
+Logs/AssetImportWorker1.log
+Logs/AssetImportWorker0.log
+*.log
+*.log
+UserSettings/Layouts/default-2021.dwlt
