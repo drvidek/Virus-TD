@@ -5,7 +5,9 @@
 [Uu]serSettings/
 [Bb]uild/
 [Bb]uilds/
+
 Assets/AssetStoreTools*
+Assets/ParrelSync*
 
 # Visual Studio cache directory
 .vs/

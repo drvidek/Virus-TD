@@ -74,6 +74,9 @@ public class NetworkManager : MonoBehaviour
         GameClient.ConnectionFailed += FailedToConnect;
         //When the client disconnects from the server
         GameClient.Disconnected += DidDisconnect;
+
+        NetworkManager.NetworkManagerInstance.Connect();
+
     }
 
     void DidConnect(object sender, EventArgs e)

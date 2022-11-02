@@ -21,6 +21,7 @@ public class BuildTower : MonoBehaviour
     #region Startup
     private void Start()
     {
+        playerID -= 1;
         //On start retrieve the tag of the build location this instance is attached to
         buildArray[0] = new BuildTower[100];
         buildArray[1] = new BuildTower[100];
@@ -33,7 +34,7 @@ public class BuildTower : MonoBehaviour
     {
         towerID = (ushort)Random.Range(0, 3);
         Debug.Log("Set Mob for Player " + playerID + "at location " + locationID);
-        Message m = Message.Create(MessageSendMode.reliable, ClientToServerID.towerSpawn);
+        Message m = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerID.towerSpawn);
         m.AddUShort(playerID);
         m.AddUShort(locationID);
         m.AddUShort(towerID);
