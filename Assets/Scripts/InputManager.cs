@@ -44,7 +44,8 @@ public class InputManager : MonoBehaviour
         //Use Lerp to smoothly move to new location according to our move speed
         transform.position = Vector3.Lerp(transform.position, _moveDir, _moveSpeed * Time.deltaTime);
         //Adjust current location to clamp it inside acceptable movement area
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, 2f, 10.4f), transform.position.z);
+        float yPos = Mathf.Clamp(transform.position.y, 2f, 10.4f);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -5.85f + (yPos / 2), 5.85f - (yPos / 2)), yPos, Mathf.Clamp(transform.position.z, -10.4f + yPos, 10.4f - yPos));
     }
     #endregion
     #region Build Phase
@@ -74,27 +75,31 @@ public class InputManager : MonoBehaviour
         //Else use our Touchscreen inputs
         #region TouchScreen
         //Only run function if we have 2 touches. This allows us to get data from second touches without errors if a touch was cancelled before function finishes
-        else if (Input.touchCount == 2)
+        else if (Input.touchCount > 1)
         {
             //If touch input has started store the current distance between the touches
             if (context.started)
             {
                 _touchStartDist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+                Debug.Log(_touchStartDist);
             }
             //As touch input continues
             if (context.performed)
             {
                 //Store current distance between the 2 touches
                 _touchCurrentDist = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+                Debug.Log(_touchCurrentDist);
                 //If current distance is less than original distance apply 1 to our _inputs.y to zoom out and make our start distance the current distance
                 if (_touchCurrentDist < _touchStartDist)
                 {
+                    Debug.Log("Zooming Out");
                     _inputs.y = 1f;
                     _touchStartDist = _touchCurrentDist;
                 }
                 //Else if current distance is more than original distance apply -1 to _inputs.y to zoom in and make our start distance our current distance
                 else if (_touchCurrentDist > _touchStartDist)
                 {
+                    Debug.Log("Zooming In");
                     _inputs.y = -1f;
                     _touchStartDist = _touchCurrentDist;
                 }
@@ -155,6 +160,7 @@ public class InputManager : MonoBehaviour
             if (context.canceled)
             {
                 CheckBuild(Mouse.current.position.ReadValue());
+                _newPosition = transform.position;
             }
         }
         #endregion
