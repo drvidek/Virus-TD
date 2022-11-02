@@ -3,7 +3,7 @@ using RiptideNetworking.Utils;
 using UnityEngine;
 using System;
 
-public enum ClientToServerID
+public enum ClientToServerID : ushort
 {
     name = 1,
     towerSpawn,
@@ -11,7 +11,7 @@ public enum ClientToServerID
     points
 }
 
-public enum ServerToClientID
+public enum ServerToClientID : ushort
 {
     name = 1,
     towerSpawn,
