@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -71,9 +70,12 @@ public class GameManager : MonoBehaviour
                             (ScriptableObject)Resources.Load("/Cards/Towers/Tower" + cardIndex);
                         // Setting the element in the Tower Cards array to the same SO the Deck array was passed.
                         _towerCards[cardIndex] = _deck[cardTypeIndex, cardIndex];
-                        /*// assign the current Card Object in the 2D array
+                        /*
+                        // assign the current Card Object in the 2D array
                         // to the Card Object at the same index in the tower cards array.
-                        _deck[cardTypeIndex, cardIndex] = _towerCards[cardIndex];*/
+                        _deck[cardTypeIndex, cardIndex] = _towerCards[cardIndex];
+                        */
+                        Debug.Log($"Added card Scriptable Object with index: {cardIndex} to Tower element.");
                     }
                     catch (NullReferenceException nullRefE)
                     {
@@ -127,10 +129,12 @@ public class GameManager : MonoBehaviour
                             (ScriptableObject)Resources.Load("/Cards/Mobs/Mob" + cardIndex);
                         // Setting the element in the Mob Cards array to the same SO the Deck array was passed.
                         _mobCards[cardIndex] = _deck[cardTypeIndex, cardIndex];
-                        /* assign the current Card Object in the 2D array
+                        /* 
+                        // Assign the current Card Object in the 2D array
                         // to the Card Object at the same index in the mob cards array
                         _deck[cardTypeIndex, cardIndex] = _mobCards[cardIndex];
                         */
+                        Debug.Log($"Added card Scriptable Object with index: {cardIndex} to Mob element.");
                     }
                     catch (NullReferenceException nullRefE)
                     {
@@ -171,6 +175,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        Debug.Log("Reached the end of Awake().");
     }
 
     void Update()
@@ -178,7 +183,8 @@ public class GameManager : MonoBehaviour
         switch (_currentState)
         {
             case GameState.PreGame:
-                { 
+                {
+                    Debug.Log("We are in PreGame state.");
                     break; 
                 }
             case GameState.Build:
@@ -195,6 +201,11 @@ public class GameManager : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    private void ChangeGameState()
+    {
+
     }
 
     private void OnValidate()
