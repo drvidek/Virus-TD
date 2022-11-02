@@ -27,6 +27,18 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+#User generated meta files
+*.fbx.meta
+*.assets.meta
+*.scripts.meta
+*.png.meta
+*.anim.meta
+*.obj.meta
+*.cs.meta
+*.mat.meta
+*.prefab.meta
+*.shader.meta
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta

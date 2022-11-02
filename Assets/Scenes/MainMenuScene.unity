@@ -280,6 +280,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1b667a5de2a5641a8f5151ab960df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameResult: 0
+  _towerCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _mobCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1019179905
 Transform:
   m_ObjectHideFlags: 0
