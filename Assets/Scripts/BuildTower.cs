@@ -26,17 +26,18 @@ public class BuildTower : MonoBehaviour
 
     public void PlaceTower()
     {
-        Debug.Log("Place Tower");
+        Debug.Log("Set Mob for Player " + playerID + "at location " + locationID);
         /*GameObject prefab = Resources.Load($"Prefabs/TowersAndMobs/Tower{(tag == "Tower" ? "Ranged" : "Blockade")}") as GameObject;
         currentTower = Instantiate(prefab, transform).GetComponent<TowerBase>();
         int towerIndex = Random.Range(0, 3);
         currentTower.Initialise(Resources.Load($"Cards/Towers/Tower{(tag == "Tower" ? towerIndex.ToString() : "Block0")}") as TowerCard);
+        towerID = towerIndex;
         */
     }
 
     public void SetMob()
     {
-        Debug.Log("Set Mob");
+        Debug.Log("Set Mob for Player " + playerID + "at location " + locationID);
         /*GameObject prefab = Resources.Load("Prefabs/TowersAndMobs/Mob") as GameObject;
         Mob mob = Instantiate(prefab, transform.position, Quaternion.identity).GetComponent<Mob>();
         int mobIndex = Random.Range(0, 3);
