@@ -154,26 +154,7 @@ public class InputManager : MonoBehaviour
             //If input from mouse has stopped
             if (context.canceled)
             {
-                //If old position is equal to our current camera position we have not moved so we are obviously selecting something
-                if (_oldPosition == transform.position)
-                {
-                    //Raycast a ray from mouses current position and store hit info from object with collider we hit
-                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out _hitInfo))
-                    {
-                        //If hit object has the tag start we are hiring mobs, activate the SetMob function
-                        if (_hitInfo.transform.tag == "Start")
-                        {
-                            SetMob();
-                        }
-                        //If hit object has the tag Tower or Path we are placing a tower, activate the PlaceTower method
-                        else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
-                        {
-                            PlaceTower();
-                        }
-                    }
-
-                }
-
+                CheckBuild(Mouse.current.position.ReadValue());
             }
         }
         #endregion
@@ -220,28 +201,33 @@ public class InputManager : MonoBehaviour
             //If input has stopped
             if (context.canceled)
             {
-                //If old position is equal to cameras current position we have not moved and we are obviously selecting something
-                if (_oldPosition == transform.position)
-                {
-                    //Cast a ray from touch location and store data on object with collider that is hit 
-                    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.GetTouch(0).position), out _hitInfo))
-                    {
-                        //If object has the tag Start we are placing a mob, call the SetMob method
-                        if (_hitInfo.transform.tag == "Start")
-                        {
-                            SetMob();
-                        }
-                        //If object has the tag Tower or Path we are placing a tower, call the PlaceTower method
-                        else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
-                        {
-                            PlaceTower();
-                        }
-                    }
-
-                }
+                CheckBuild(Input.GetTouch(0).position);
             }
         }
         #endregion
     }
     #endregion
+
+    private void CheckBuild(Vector3 pos)
+    {
+        //If old position is equal to cameras current position we have not moved and we are obviously selecting something
+        if (_oldPosition == transform.position)
+        {
+            //Cast a ray from touch location and store data on object with collider that is hit 
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(pos), out _hitInfo))
+            {
+                //If object has the tag Start we are placing a mob, call the SetMob method
+                if (_hitInfo.transform.tag == "Start")
+                {
+                    _hitInfo.transform.GetComponent<BuildTower>().SetMob();
+                }
+                //If object has the tag Tower or Path we are placing a tower, call the PlaceTower method
+                else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
+                {
+                    if (_hitInfo.transform.TryGetComponent<BuildTower>(out BuildTower bt))
+                        bt.PlaceTower();
+                }
+            }
+        }   
+    }
 }
