@@ -219,13 +219,13 @@ public class InputManager : MonoBehaviour
                 //If object has the tag Start we are placing a mob, call the SetMob method
                 if (_hitInfo.transform.tag == "Start")
                 {
-                    _hitInfo.transform.GetComponent<BuildTower>().SetMob();
+                    _hitInfo.transform.GetComponent<BuildTower>().SpawnMobFromPlayerInput();
                 }
                 //If object has the tag Tower or Path we are placing a tower, call the PlaceTower method
                 else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
                 {
                     if (_hitInfo.transform.TryGetComponent<BuildTower>(out BuildTower bt))
-                        bt.PlaceTower();
+                        bt.PlaceTowerFromPlayerInput();
                 }
             }
         }   

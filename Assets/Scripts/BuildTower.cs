@@ -11,7 +11,7 @@ public class BuildTower : MonoBehaviour
     public ushort locationID;
     [Tooltip("The ID of the current tower at location. Will be set automatically as player builds his towers.")]
     public ushort towerID;
-    public static BuildTower[][] buildArray = new BuildTower[2][];
+    public static BuildTower[,] buildArray = new BuildTower[2,100];
     //Bool to check if location has a tower already so we can determine if we can build here. True at start as no towers have been built
     [HideInInspector] public bool locationFree = true;
     //Tag of build location will be used to determine if location is on the path or not for towers, or is starting point for mobs
@@ -23,37 +23,24 @@ public class BuildTower : MonoBehaviour
     {
         playerID -= 1;
         //On start retrieve the tag of the build location this instance is attached to
-        buildArray[0] = new BuildTower[100];
-        buildArray[1] = new BuildTower[100];
-        buildArray[playerID][locationID] = this;
+        buildArray[playerID,locationID] = this;
         locationTag = gameObject.tag;
     }
     #endregion
 
-    public void PlaceTower()
+    #region Towers
+    public void PlaceTowerFromPlayerInput()
     {
         towerID = (ushort)Random.Range(0, 3);
         Debug.Log("Set Mob for Player " + playerID + "at location " + locationID);
-        Message m = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerID.towerSpawn);
-        m.AddUShort(playerID);
-        m.AddUShort(locationID);
-        m.AddUShort(towerID);
-
-        NetworkManager.NetworkManagerInstance.GameClient.Send(m);
-
         SpawnTowerFromID(towerID);
-
-        /*GameObject prefab = Resources.Load($"Prefabs/TowersAndMobs/Tower{(tag == "Tower" ? "Ranged" : "Blockade")}") as GameObject;
-        currentTower = Instantiate(prefab, transform).GetComponent<TowerBase>();
-        int towerIndex = Random.Range(0, 3);
-        currentTower.Initialise(Resources.Load($"Cards/Towers/Tower{(tag == "Tower" ? towerIndex.ToString() : "Block0")}") as TowerCard);
-        towerID = towerIndex;
-        */
+        SendTowerMessage();
     }
+
 
     public void PlaceTowerFromMessage(ushort mTowerID)
     {
-        SpawnTowerFromID(towerID);
+        SpawnTowerFromID(mTowerID);
     }
 
     private void SpawnTowerFromID(ushort spawningID)
@@ -67,20 +54,64 @@ public class BuildTower : MonoBehaviour
         newTower.Initialise(Resources.Load($"Cards/Towers/Tower{(tag == "Tower" ? towerID.ToString() : "Block0")}") as TowerCard);
 
         locationFree = false;
-    }
+    } 
+    public void SendTowerMessage()
+    {
+        Message m = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerID.towerSpawn);
+        m.AddUShort(playerID);
+        m.AddUShort(locationID);
+        m.AddUShort(towerID);
 
-    public void SetMob()
+        NetworkManager.NetworkManagerInstance.GameClient.Send(m);
+    }
+    #endregion
+
+    #region Mobs
+    public void SpawnMobFromPlayerInput()
     {
         Debug.Log("Set Mob for Player " + playerID + "at location " + locationID);
-        /*GameObject prefab = Resources.Load("Prefabs/TowersAndMobs/Mob") as GameObject;
-        Mob mob = Instantiate(prefab, transform.position, Quaternion.identity).GetComponent<Mob>();
-        int mobIndex = Random.Range(0, 3);
-        mob.Initialise(Resources.Load("Cards/Mobs/Mob" + mobIndex.ToString()) as MobCard, gameObject);*/
+        ushort mobIndex = (ushort)Random.Range(0, 3);
+        SpawnMobFromID(mobIndex);
+        SendMobMessage(mobIndex);
     }
+
+    public void SpawnMobFromMessage(ushort mMobID)
+    {
+        SpawnMobFromID(mMobID);
+    }
+
+    private void SpawnMobFromID(ushort mobID)
+    {
+        GameObject prefab = Resources.Load("Prefabs/TowersAndMobs/Mob") as GameObject;
+        Mob mob = Instantiate(prefab, transform.position, Quaternion.identity).GetComponent<Mob>();
+        mob.Initialise(Resources.Load("Cards/Mobs/Mob" + mobID.ToString()) as MobCard, gameObject);
+    }
+
+    public void SendMobMessage(ushort mobID)
+    {
+        Message m = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerID.mobSpawn);
+        m.AddUShort(playerID);
+        m.AddUShort(locationID);
+        m.AddUShort(mobID);
+
+        NetworkManager.NetworkManagerInstance.GameClient.Send(m);
+    } 
+    #endregion
+
 
     [MessageHandler((ushort)ServerToClientID.towerSpawn)]
     public static void TowerMessage(Message message)
     {
-        buildArray[message.GetUShort()][message.GetUShort()].PlaceTowerFromMessage(message.GetUShort());
+        BuildTower bt = buildArray[message.GetUShort(),message.GetUShort()];
+        if (bt != null)
+            bt.PlaceTowerFromMessage(message.GetUShort());
+    }
+
+    [MessageHandler((ushort)ServerToClientID.mobSpawn)]
+    public static void MobMessage(Message message)
+    {
+        BuildTower bt = buildArray[message.GetUShort(), message.GetUShort()];
+        if (bt != null)
+            bt.SpawnMobFromMessage(message.GetUShort());
     }
 }
