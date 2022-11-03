@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
     /// Public property for the array of both Card ScriptableObject types (Towers and Mobs.)
     /// </summary>
     public ScriptableObject[,] Deck { get { return _deck; } set { _deck = value; } }
+
+    public static GameState CurrentState { get => _currentState; }
     #endregion
 
 
@@ -241,7 +243,7 @@ public class GameManager : MonoBehaviour
     private void ChangeGameState(GameState newState)
     {
         GameManager._currentState = newState;
-        GetComponent<PlayerManager>().ResetReady();
+        GetComponent<PlayerManager>().ResetReadyStatus();
     }
 
     private void OnValidate()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Mob : MonoBehaviour
 {
     [SerializeField] private MobCard _myCard;
+    [SerializeField] private ushort _playerId;
     [SerializeField] private float _moveSpd;
     [SerializeField] private float _moveDebuff, _minDist;
     [SerializeField] private Vector3 _moveDir;
@@ -30,7 +31,7 @@ public class Mob : MonoBehaviour
     {
         //if you have a card equpped, initialise it
         if (_myCard != null)
-            Initialise(_myCard, _waypointParent);
+            Initialise(_myCard, _waypointParent,0);
     }
 
     private void ScrapePath(GameObject parent)
@@ -38,13 +39,13 @@ public class Mob : MonoBehaviour
         //get all the waypoint transforms
         Transform[] _points = parent.GetComponentsInChildren<Transform>();
         //set your waypoint list length to the length of that list (minus one for the parent object)
-        _waypoints = new Transform[_points.Length - 1];
+        _waypoints = new Transform[_points.Length];
         //loop through and add each waypoint to your waypoint list
         for (int i = 0; i < _points.Length; i++)
         {
             if (i > 0)
             {
-                _waypoints[i - 1] = _points[i];
+                _waypoints[i] = _points[i];
             }
         }
     }
@@ -56,11 +57,12 @@ public class Mob : MonoBehaviour
         //figure out the direction to your current waypoint
         _moveDir = GetNewDirection();
         //get the animator
-        _anim = GetComponent<Animator>();
+        _anim = GetComponentInChildren<Animator>();
     }
 
-    public void Initialise(MobCard mobCard, GameObject pathParent)
+    public void Initialise(MobCard mobCard, GameObject pathParent, ushort playerId)
     {
+        _playerId = playerId;
         _moveSpd = mobCard.moveSpd;
         _healthMax = mobCard.healthMax;
         _attackPower = mobCard.attackPower;

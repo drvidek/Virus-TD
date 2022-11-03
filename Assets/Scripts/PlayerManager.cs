@@ -41,13 +41,13 @@ public class PlayerManager : MonoBehaviour
         NetworkManager.NetworkManagerInstance.GameClient.Send(m);
     }
 
-    public void ToggleReady()
+    public void ToggleReadyStatus()
     {
         _ready = !_ready;
         SendReadyMessage(_ready);
     }
 
-    public void ResetReady()
+    public void ResetReadyStatus()
     {
         _ready = false;
     }

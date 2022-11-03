@@ -111,4 +111,12 @@ public class NetworkManager : MonoBehaviour
         //Connect to the server
         GameClient.Connect($"{s_ip}:{s_port}");
     }
+
+    public static ushort GetPlayerIDForReference()
+    {
+        int realId = NetworkManager.NetworkManagerInstance.GameClient.Id;
+        realId--;
+        ushort referenceId = (ushort)realId;
+        return referenceId;
+    }
 }

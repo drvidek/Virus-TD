@@ -13,9 +13,9 @@ public class TowerBlockade : TowerBase
         base.Start();
         _healthCurrent = _healthMax;
     }
-    override public void Initialise(TowerCard towerCard)
+    override public void Initialise(TowerCard towerCard, ushort playerId)
     {
-        base.Initialise(towerCard);
+        base.Initialise(towerCard,playerId);
         _healthMax = towerCard.healthMax;
         _anim = GetComponent<Animator>();
     }

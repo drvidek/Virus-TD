@@ -16,6 +16,7 @@ public class TowerBase : MonoBehaviour
     [SerializeField] protected EffectSO[] _effects;
     [SerializeField] private SphereCollider _myCollider;
     [SerializeField] protected List<Mob> _validTargets = new List<Mob>();
+    [SerializeField] private ushort _playerId;
 
     protected void Start()
     {
@@ -28,11 +29,12 @@ public class TowerBase : MonoBehaviour
     {
         //if you have a card equpped, initialise it
         if (_myCard != null)
-        Initialise(_myCard);
+        Initialise(_myCard, 0);
     }
 
-    virtual public void Initialise(TowerCard towerCard)
+    virtual public void Initialise(TowerCard towerCard, ushort playerId)
     {
+        _playerId = playerId;
         _attackPower = towerCard.attackPower;
         _attackRate = towerCard.attackRate;
         _attackRange = towerCard.attackRange;
