@@ -14,7 +14,7 @@ public class BuildTower : MonoBehaviour
     [Tooltip("The ID of the current tower at location. Will be set automatically as player builds his towers.")]
     public ushort towerID;
     public static BuildTower[,] buildArray = new BuildTower[2, 100];
-    private List<ushort> _mobsToSpawn = new List<ushort>();
+    [SerializeField] private List<ushort> _mobsToSpawn = new List<ushort>();
     private float _mobSpawnRate;
     //Bool to check if location has a tower already so we can determine if we can build here. True at start as no towers have been built
     [HideInInspector] public bool locationFree = true;
@@ -118,7 +118,7 @@ public class BuildTower : MonoBehaviour
         GameObject prefab = Resources.Load("Prefabs/TowersAndMobs/Mob") as GameObject;
         Mob mob = Instantiate(prefab, transform.position, Quaternion.identity).GetComponent<Mob>();
         MobCard mobCard = Resources.Load("Cards/Mobs/Mob" + mobId.ToString()) as MobCard;
-        mob.Initialise(mobCard, this.gameObject, playerId);
+        mob.Initialise(mobCard, gameObject, playerId);
         return mobCard.scale;
     }
 
@@ -150,7 +150,7 @@ public class BuildTower : MonoBehaviour
         ushort playerId = message.GetUShort();
         ushort locId = message.GetUShort();
         BuildTower bt = buildArray[playerId, locId];
-        if (bt != null)
+        if (bt != null && playerId != NetworkManager.GetPlayerIDNormalised())
             bt.AddMobToList(message.GetUShort());
     }
     

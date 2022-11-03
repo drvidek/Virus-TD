@@ -16,7 +16,7 @@ public class TowerBase : MonoBehaviour
     [SerializeField] protected EffectSO[] _effects;
     [SerializeField] private SphereCollider _myCollider;
     [SerializeField] protected List<Mob> _validTargets = new List<Mob>();
-    [SerializeField] private ushort _playerId;
+    [SerializeField] protected ushort _playerId;
 
     protected void Start()
     {

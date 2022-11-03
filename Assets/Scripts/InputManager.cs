@@ -226,13 +226,13 @@ public class InputManager : MonoBehaviour
                 if (_hitInfo.transform.tag == "Start")
                 {
                     if (_hitInfo.transform.TryGetComponent<BuildTower>(out BuildTower bt))
-                        bt.SetMobFromPlayerInput(NetworkManager.GetPlayerIDForReference());
+                        bt.SetMobFromPlayerInput(NetworkManager.GetPlayerIDNormalised());
                 }
                 //If object has the tag Tower or Path we are placing a tower, call the PlaceTower method
                 else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
                 {
                     if (_hitInfo.transform.TryGetComponent<BuildTower>(out BuildTower bt))
-                        bt.PlaceTowerFromPlayerInput(NetworkManager.GetPlayerIDForReference());
+                        bt.PlaceTowerFromPlayerInput(NetworkManager.GetPlayerIDNormalised());
                 }
             }
         }   

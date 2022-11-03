@@ -90,6 +90,9 @@ public class TowerRanged : TowerBase
             //for each mob in your valid targets
             foreach (Mob mob in _validTargets)
             {
+                if (mob.PlayerID == _playerId)
+                    continue;
+
                 //figure out the distance it has to the end point
                 float newDist = mob.GetDistanceToEnd();
                 //if that is closer than the currently closest mob

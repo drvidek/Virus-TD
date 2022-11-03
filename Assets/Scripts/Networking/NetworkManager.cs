@@ -112,7 +112,11 @@ public class NetworkManager : MonoBehaviour
         GameClient.Connect($"{s_ip}:{s_port}");
     }
 
-    public static ushort GetPlayerIDForReference()
+    /// <summary>
+    /// Returns the PlayerID normalised to 0 or 1 for array access
+    /// </summary>
+    /// <returns></returns>
+    public static ushort GetPlayerIDNormalised()
     {
         int realId = NetworkManager.NetworkManagerInstance.GameClient.Id;
         realId--;

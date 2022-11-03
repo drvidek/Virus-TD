@@ -6,6 +6,7 @@ public class Mob : MonoBehaviour
 {
     [SerializeField] private MobCard _myCard;
     [SerializeField] private ushort _playerId;
+    public ushort PlayerID { get => _playerId; }
     [SerializeField] private float _moveSpd;
     [SerializeField] private float _moveDebuff, _minDist;
     [SerializeField] private Vector3 _moveDir;
@@ -31,22 +32,22 @@ public class Mob : MonoBehaviour
     {
         //if you have a card equpped, initialise it
         if (_myCard != null)
-            Initialise(_myCard, _waypointParent,0);
+            Initialise(_myCard, _waypointParent, 0);
     }
 
     private void ScrapePath(GameObject parent)
     {
         //get all the waypoint transforms
         Transform[] _points = parent.GetComponentsInChildren<Transform>();
+        Debug.Log(_points.Length + "points");
         //set your waypoint list length to the length of that list (minus one for the parent object)
         _waypoints = new Transform[_points.Length];
+        Debug.Log(_waypoints.Length + "size array");
+
         //loop through and add each waypoint to your waypoint list
         for (int i = 0; i < _points.Length; i++)
         {
-            if (i > 0)
-            {
-                _waypoints[i] = _points[i];
-            }
+            _waypoints[i] = _points[i];
         }
     }
 
@@ -70,6 +71,7 @@ public class Mob : MonoBehaviour
         transform.localScale = Vector3.one * mobCard.scale;
         if (pathParent != null)
             ScrapePath(pathParent);
+        _myCard ??= mobCard;
     }
 
     private void Update()
