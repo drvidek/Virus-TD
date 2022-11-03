@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RiptideNetworking;
 
 public class PlayerManager : MonoBehaviour
 {
     #region Private Variables
+    private bool _ready;
     #endregion
 
     #region Properties
@@ -26,6 +28,35 @@ public class PlayerManager : MonoBehaviour
     /// <para><example><i>Index 0: Wood</i></example></para>
     /// <para><example><i>Index 1: Gold</i></example></para>
     /// </summary>
-    public int[] ResourceCount { get; private set; } = new int[2] {0,0};
+    public int[] ResourceCount { get; private set; } = new int[2] { 0, 0 };
     #endregion
+
+    private void SendPlayerPointsMessage(ushort playerID, ushort points, ushort resourceA, ushort resourceB)
+    {
+        Message m = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerID.points);
+        m.AddUShort(playerID);
+        m.AddUShort(points);
+        m.AddUShort(resourceA);
+        m.AddUShort(resourceB);
+        NetworkManager.NetworkManagerInstance.GameClient.Send(m);
+    }
+
+    public void ToggleReady()
+    {
+        _ready = !_ready;
+        SendReadyMessage(_ready);
+    }
+
+    public void ResetReady()
+    {
+        _ready = false;
+    }
+
+    private void SendReadyMessage(bool ready)
+    {
+        Message m = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerID.playerReady);
+        m.AddBool(ready);
+        NetworkManager.NetworkManagerInstance.GameClient.Send(m);
+    }
+
 }

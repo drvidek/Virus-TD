@@ -1,6 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using RiptideNetworking;
+
+public enum GameState
+{
+    PreGame,
+    Build,
+    Play,
+    PostGame
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -12,14 +21,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ushort _gameResult = 0;
     [Tooltip("This value is set at runtime in the Build phase by the server. " +
         "\nIt represents how much time (in seconds) the player has left before the phase changes automatically.")]
-    [SerializeField] private float _timer = 2*60f;
-    private enum GameState
-    {
-        PreGame,
-        Build,
-        PostGame
-    };
-    private GameState _currentState = GameState.PreGame;
+    [SerializeField] private float _timer = 2 * 60f;
+
+    private static GameState _currentState = GameState.PreGame;
     [SerializeField] private ParticleSystem _fogOfWarParticleSystem;
 
     [Tooltip("DO NOT CHANGE THE NUMBER OF ELEMENTS IN THIS ARRAY VIA UNITY EDITOR, LOGIC LOOPS DEPEND ON IT.")]
@@ -32,27 +36,53 @@ public class GameManager : MonoBehaviour
     // The array is set to have 8 rows and 2 columns,
     // each COLUMN represents whether it is a Mob or Tower card
     // each ROW represents the individual scriptable object (card) of that type of card
-    private ScriptableObject[,] _deck = new ScriptableObject[2,8];
+    private ScriptableObject[,] _deck = new ScriptableObject[2, 8];
     #endregion
 
     #region Properties
+    private static GameManager _gameManagerInstance;
+    public static GameManager GameManagerInstance
+    {
+        //Property Read is the instance, public by default
+        get => _gameManagerInstance;
+        //private means only this instance of the class can access set
+        private set
+        {
+            //set the instance to the value if the instance is null
+            if (_gameManagerInstance == null)
+            {
+                _gameManagerInstance = value;
+            }
+            //if it is not null, check if the value is stored as the static instance
+            else if (_gameManagerInstance != value)
+            {
+                //if not, throw a warning and destroy that instance
+
+                //$ is to identify the string as containing an interpolated value
+                Debug.LogWarning($"{nameof(GameManager)} instance already exists, destroy duplicate!");
+                Destroy(value);
+            }
+        }
+    }
+
     /// <summary>
     /// Public property for the fog of war Particle System that overlays the opposing side of the battlefield.
     /// </summary>
-    public ParticleSystem FogOfWarParticleSystem 
-    { 
-        get{ return _fogOfWarParticleSystem; }
-        set{ _fogOfWarParticleSystem = value; } 
+    public ParticleSystem FogOfWarParticleSystem
+    {
+        get { return _fogOfWarParticleSystem; }
+        set { _fogOfWarParticleSystem = value; }
     }
     /// <summary>
     /// Public property for the array of both Card ScriptableObject types (Towers and Mobs.)
     /// </summary>
-    public ScriptableObject[,] Deck { get { return _deck; } set { _deck = value; } } 
+    public ScriptableObject[,] Deck { get { return _deck; } set { _deck = value; } }
     #endregion
 
 
     void Awake()
     {
+        GameManagerInstance = this;
         // loop through the 2D card ScriptableObject array COLUMNS to determine the card type (Mob or Tower).
         for (int cardTypeIndex = 0; cardTypeIndex < 2; ++cardTypeIndex)
         {
@@ -66,7 +96,7 @@ public class GameManager : MonoBehaviour
                     {
                         // Assign the current Card Object in the 2D array to the Tower Card ScriptableObject
                         // loaded from the Resources folder in the Unity directory.
-                        _deck[cardTypeIndex, cardIndex] = 
+                        _deck[cardTypeIndex, cardIndex] =
                             (ScriptableObject)Resources.Load("/Cards/Towers/Tower" + cardIndex);
                         // Setting the element in the Tower Cards array to the same SO the Deck array was passed.
                         _towerCards[cardIndex] = _deck[cardTypeIndex, cardIndex];
@@ -184,15 +214,20 @@ public class GameManager : MonoBehaviour
         {
             case GameState.PreGame:
                 {
-                    Debug.Log("We are in PreGame state.");
-                    break; 
+                    Debug.Log($"We are in {_currentState} state.");
+                    break;
                 }
             case GameState.Build:
                 {
+                    Debug.Log($"We are in {_currentState} state.");
                     break;
                 }
+            case GameState.Play:
+                Debug.Log($"We are in {_currentState} state.");
+                break;
             case GameState.PostGame:
                 {
+                    Debug.Log($"We are in {_currentState} state.");
                     break;
                 }
             default:
@@ -203,13 +238,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ChangeGameState()
+    private void ChangeGameState(GameState newState)
     {
-
+        GameManager._currentState = newState;
+        GetComponent<PlayerManager>().ResetReady();
     }
 
     private void OnValidate()
     {
         Mathf.Clamp(_gameResult, 0, 1);
     }
+
+    [MessageHandler((ushort)ServerToClientID.stateChange)]
+    private static void GetGameStateMessage(Message message)
+    {
+        ushort stateID = message.GetUShort();
+        GameState newState = (GameState)stateID;
+        GameManager.GameManagerInstance.ChangeGameState(newState);
+    }
+
 }
