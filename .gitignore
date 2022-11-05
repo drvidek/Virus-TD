@@ -1,9 +1,13 @@
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
+[Uu]serSettings/
+[Ll]ogs/
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
+Assets/ParrelSync*
+Assets/TextMesh Pro*
 
 # Visual Studio cache directory
 .vs/
