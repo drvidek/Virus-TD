@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     [Header("Players Current Hand")]
     [Tooltip("This array stores the list of Tower and Mob names the player is currently holding. Set size to number of cards player should have available to play the round with.")]
     public string[] currentHand = new string[8];
+    [Header("UI Elements")]
+    [Tooltip("Add the four Select buttons so their appearance can be change based on what type of tower/mob building spot was selected")]
+    [SerializeField] private Button[] _buttons = new Button[4];
     #endregion
     #region Startup
     private void Start()
