@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ff61525e8153940b2426171f138f64, type: 3}
+  m_Name: TowerBlock0
+  m_EditorClassIdentifier: 
+  attackPower: 0
+  attackRate: 0
+  attackRange: 0.1
+  attackRadius: 1
+  healthMax: 10
+  effects: []
+  description: 

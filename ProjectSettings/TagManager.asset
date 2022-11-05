@@ -8,6 +8,7 @@ TagManager:
   - Path
   - Junction
   - Start
+  - Ignore
   layers:
   - Default
   - TransparentFX
