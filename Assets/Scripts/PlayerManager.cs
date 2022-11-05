@@ -37,7 +37,7 @@ public class PlayerManager : MonoBehaviour
     //Also used to populate starting hand arrays with random cards to see if UI was updating properly
     private void Start()
     {
-        ResourceCount = new int[] {10, 10};
+        ResourceCount = new int[] {100, 100};
         GameManager _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         ScriptableObject[,] _deck = _gameManager.Deck;
         TowerCardsArr = new ScriptableObject[4];
