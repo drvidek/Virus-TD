@@ -32,12 +32,11 @@ public class BuildTower : MonoBehaviour
     #endregion
 
     #region Towers
-    public void PlaceTowerFromPlayerInput(ushort playerIdCheck)
+    public void PlaceTowerFromPlayerInput(ushort playerIdCheck, ushort towerID)
     {
         if (playerIdCheck != playerID)
             return;
 
-        towerID = (ushort)Random.Range(0, 3);
         Debug.Log("Set Tpwer for Player " + playerID + "at location " + locationID);
         SpawnTowerFromID(towerID, playerID);
         SendTowerMessage();
@@ -73,12 +72,11 @@ public class BuildTower : MonoBehaviour
     #endregion
 
     #region Mobs
-    public void SetMobFromPlayerInput(ushort playerIdCheck)
+    public void SetMobFromPlayerInput(ushort playerIdCheck, ushort mobIndex)
     {
         if (playerIdCheck != playerID)
             return;
         Debug.Log("Set Mob for Player " + playerID + "at location " + locationID);
-        ushort mobIndex = (ushort)Random.Range(0, 3);
         AddMobToList(mobIndex);
         SendMobMessage(mobIndex);
     }

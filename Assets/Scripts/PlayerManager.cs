@@ -59,4 +59,31 @@ public class PlayerManager : MonoBehaviour
         NetworkManager.NetworkManagerInstance.GameClient.Send(m);
     }
 
+    public int workerCount = 0;
+    public int workerCost = 10;
+    public int blockTowerCost = 10;
+    //I used start to set a default value for resources so I could test purchasing features
+    //Also used to populate starting hand arrays with random cards to see if UI was updating properly
+    private void Start()
+    {
+        ResourceCount = new int[] { 10, 10 };
+        GameManager _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        ScriptableObject[,] _deck = _gameManager.Deck;
+        TowerCardsArr = new ScriptableObject[4];
+        for (int i = 0; i < 4; i++)
+        {
+            TowerCardsArr[i] = _deck[0, Random.Range(0, 7)];
+        }
+        MobCardsArr = new ScriptableObject[4];
+        for (int i = 0; i < 4; i++)
+        {
+            MobCardsArr[i] = _deck[1, Random.Range(0, 7)];
+        }
+    }
+    //Allow changing of resource points from outside script from UI functions for purchasing mobs, towers and workers
+    public void AdjustResources(int index, int adjustAmount)
+    {
+        ResourceCount[index] += adjustAmount;
+    }
+
 }

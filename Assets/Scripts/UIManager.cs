@@ -62,12 +62,12 @@ public class UIManager : MonoBehaviour
         //If buildType check variable equals Mob we will pass the index passed from the button pressed to the SetMob function of the build location
         if (_buildType == "Mob")
         {
-            _hitInfo.transform.GetComponent<BuildTower>().SetMob(index);
+            _hitInfo.transform.GetComponent<BuildTower>().SetMobFromPlayerInput(NetworkManager.GetPlayerIDNormalised(), (ushort)index);
         }
         //Else we pass it to the PlaceTower function
         else
         {
-            _hitInfo.transform.GetComponent<BuildTower>().PlaceTower(index);
+            _hitInfo.transform.GetComponent<BuildTower>().PlaceTowerFromPlayerInput(NetworkManager.GetPlayerIDNormalised(), (ushort)index);
         }
     }
     public void HireWorkers()
