@@ -17,11 +17,11 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Public property to access and set the tower cards present in the 'hand' for the current game.
     /// </summary>
-    public ScriptableObject[] TowerCardsArr { get; private set; }
+    public TowerCard[] TowerCardsArr { get; private set; }
     /// <summary>
     /// Public property to access and set the mob cards present in the 'hand' for the current game.
     /// </summary>
-    public ScriptableObject[] MobCardsArr { get; private set; }
+    public MobCard[] MobCardsArr { get; private set; }
     /// <summary>
     /// Public property to access and set the amount of resources in the current game.
     /// <para>Each array element represents a different resource type. For example:</para>
@@ -66,18 +66,23 @@ public class PlayerManager : MonoBehaviour
     //Also used to populate starting hand arrays with random cards to see if UI was updating properly
     private void Start()
     {
-        ResourceCount = new int[] { 10, 10 };
+        ResourceCount = new int[] { 50, 50 };
         GameManager _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         ScriptableObject[,] _deck = _gameManager.Deck;
-        TowerCardsArr = new ScriptableObject[4];
+
+        TowerCardsArr = new TowerCard[4];
         for (int i = 0; i < 4; i++)
         {
-            TowerCardsArr[i] = _deck[0, Random.Range(0, 7)];
+            int towerIndex = Random.Range(0, 7);
+            TowerCardsArr[i] = _deck[0, towerIndex] as TowerCard;
+            Debug.Log($"Added card Scriptable Object with index: {towerIndex} to Tower element.");
         }
-        MobCardsArr = new ScriptableObject[4];
+        MobCardsArr = new MobCard[4];
         for (int i = 0; i < 4; i++)
         {
-            MobCardsArr[i] = _deck[1, Random.Range(0, 7)];
+            int mobIndex = Random.Range(0, 7);
+            MobCardsArr[i] = _deck[1, mobIndex] as MobCard;
+            Debug.Log($"Added card Scriptable Object with index: {mobIndex} to Tower element.");
         }
     }
     //Allow changing of resource points from outside script from UI functions for purchasing mobs, towers and workers

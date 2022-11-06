@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Effect
-{
-    slow,
-    dot
-}
+
 
 public class TowerBase : MonoBehaviour
 {
     [SerializeField] protected TowerCard _myCard;
     [SerializeField] protected float _attackPower;
     [SerializeField] protected float _attackRate, _attackRange, _attackDelay, _attackRadius;
-    [SerializeField] protected EffectSO[] _effects;
+    [SerializeField] protected Effect[] _effects;
     [SerializeField] private SphereCollider _myCollider;
     [SerializeField] protected List<Mob> _validTargets = new List<Mob>();
     [SerializeField] protected ushort _playerId;
@@ -72,15 +68,15 @@ public class TowerBase : MonoBehaviour
 
     protected void ApplyEffect(Mob mob, bool aoe = true)
     {
-        foreach (EffectSO effect in _effects)
+        foreach (Effect effect in _effects)
         {
-            switch (effect.myEffect)
+            switch (effect.type)
             {
-                case Effect.slow:
-                    mob.AddSlow(effect.effectValue, effect.effectRange, this);
+                case eType.slow:
+                    mob.AddSlow(effect.value, effect.range, this);
                     break;
-                case Effect.dot:
-                    mob.AddDot(effect.effectValue, effect.effectRange, this);
+                case eType.dot:
+                    mob.AddDot(effect.value, effect.range, this);
                     break;
                 default:
                     break;

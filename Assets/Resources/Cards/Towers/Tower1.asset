@@ -17,6 +17,7 @@ MonoBehaviour:
   attackRange: 2
   attackRadius: 0.1
   healthMax: 0
-  effects:
-  - {fileID: 11400000, guid: 2e14e3bc863b0554e87342a50e5f0931, type: 2}
   description: Quickly hit targets with slow
+  towerImage: {fileID: 21300000, guid: 51caf04b6416f194c9726bc839c336ad, type: 3}
+  resourceCost: 5
+  pointCost: 5

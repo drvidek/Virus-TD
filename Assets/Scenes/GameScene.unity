@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1713,9 +1713,9 @@ MonoBehaviour:
   playerID: 1
   locationID: 0
   towerID: 0
+  _mobsToSpawn: 
   locationFree: 1
   locationTag: 
-  currentTower: {fileID: 0}
 --- !u!1001 &358190283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4938,71 +4938,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerManager: {fileID: 736132692}
   mobTypes:
-  - mob: {fileID: 11400000, guid: b4583f67b4700bb46b473f4a353f6bcf, type: 2}
-    mobImage: {fileID: 21300000, guid: 3c2e6c13706c53e499642c476c76cf70, type: 3}
-    mobResourceCost: 5
-    mobPointCost: 5
-  - mob: {fileID: 11400000, guid: d4af82684824cea459b9acd9f4b128ac, type: 2}
-    mobImage: {fileID: 21300000, guid: 4d4856ce2541f0f4eb85d33c6c9572c1, type: 3}
-    mobResourceCost: 10
-    mobPointCost: 10
-  - mob: {fileID: 11400000, guid: 15b3054841cfad04cb2421c3c01dfdac, type: 2}
-    mobImage: {fileID: 21300000, guid: 4a5584611c12e1846ae3344e89ccb2ef, type: 3}
-    mobResourceCost: 15
-    mobPointCost: 15
-  - mob: {fileID: 11400000, guid: c6b753db83b636f4b96e227aa1870e3c, type: 2}
-    mobImage: {fileID: 21300000, guid: 698d0cc1a620cc3498c4be893593e727, type: 3}
-    mobResourceCost: 10
-    mobPointCost: 10
-  - mob: {fileID: 11400000, guid: 950dd415cef5f1243af876429ddc5112, type: 2}
-    mobImage: {fileID: 21300000, guid: ef3d543887e086b4cbe7f4d40c523c0a, type: 3}
-    mobResourceCost: 20
-    mobPointCost: 20
-  - mob: {fileID: 11400000, guid: 8217a6485168ab74aae66d34f09b25bc, type: 2}
-    mobImage: {fileID: 21300000, guid: 1093b9a9fc065dd47bc17710d55df534, type: 3}
-    mobResourceCost: 15
-    mobPointCost: 15
-  - mob: {fileID: 11400000, guid: 27c00902f108c8948bc9a9581c1dda80, type: 2}
-    mobImage: {fileID: 21300000, guid: 9354e601b2f23234cb2beff93522043b, type: 3}
-    mobResourceCost: 20
-    mobPointCost: 20
-  - mob: {fileID: 11400000, guid: 46ebabade860a344bb1543d2c41a9d8c, type: 2}
-    mobImage: {fileID: 21300000, guid: 68331da0c077d0843ba873cdccbf2e35, type: 3}
-    mobResourceCost: 5
-    mobPointCost: 5
+  - {fileID: 11400000, guid: b4583f67b4700bb46b473f4a353f6bcf, type: 2}
+  - {fileID: 11400000, guid: d4af82684824cea459b9acd9f4b128ac, type: 2}
+  - {fileID: 11400000, guid: 15b3054841cfad04cb2421c3c01dfdac, type: 2}
+  - {fileID: 11400000, guid: c6b753db83b636f4b96e227aa1870e3c, type: 2}
+  - {fileID: 11400000, guid: 950dd415cef5f1243af876429ddc5112, type: 2}
+  - {fileID: 11400000, guid: 8217a6485168ab74aae66d34f09b25bc, type: 2}
+  - {fileID: 11400000, guid: 27c00902f108c8948bc9a9581c1dda80, type: 2}
+  - {fileID: 11400000, guid: 46ebabade860a344bb1543d2c41a9d8c, type: 2}
   towerTypes:
-  - tower: {fileID: 11400000, guid: 625fa50064433b64480e2964f8f86ead, type: 2}
-    towerImage: {fileID: 21300000, guid: 11149962794dbc74fbd64974babb9ea5, type: 3}
-    towerResourceCost: 5
-    towerPointCost: 5
-  - tower: {fileID: 11400000, guid: 9b29d2189dc4d4242acd3124a4065d62, type: 2}
-    towerImage: {fileID: 21300000, guid: 51caf04b6416f194c9726bc839c336ad, type: 3}
-    towerResourceCost: 10
-    towerPointCost: 10
-  - tower: {fileID: 11400000, guid: c976aef6d1c53c74da5e71d87fb93be1, type: 2}
-    towerImage: {fileID: 21300000, guid: 982ceade0335f5747813bb18b9a8772a, type: 3}
-    towerResourceCost: 20
-    towerPointCost: 20
-  - tower: {fileID: 11400000, guid: bab9ee57ea0d89f48b0079207744e89f, type: 2}
-    towerImage: {fileID: 21300000, guid: f33d8eb4b7e8fcc41a5dd0a855ab39ce, type: 3}
-    towerResourceCost: 15
-    towerPointCost: 15
-  - tower: {fileID: 11400000, guid: 86ebe90c6d8c6f3478476a5806042915, type: 2}
-    towerImage: {fileID: 21300000, guid: 4becce5e1387af24eb14fc6a21b34360, type: 3}
-    towerResourceCost: 15
-    towerPointCost: 15
-  - tower: {fileID: 11400000, guid: dfd503f22c9473a4ab6686cfaa310617, type: 2}
-    towerImage: {fileID: 21300000, guid: a990492ba54eac247861f81a39409a41, type: 3}
-    towerResourceCost: 10
-    towerPointCost: 10
-  - tower: {fileID: 11400000, guid: 8273f71d2e172ba4a801d5e958e2b9e1, type: 2}
-    towerImage: {fileID: 21300000, guid: 5266cd0ad02ce304a8591b571c5522d3, type: 3}
-    towerResourceCost: 20
-    towerPointCost: 20
-  - tower: {fileID: 11400000, guid: 22a09e068354d814394be9d165355eaa, type: 2}
-    towerImage: {fileID: 21300000, guid: 4626fbb87ebfaeb478886028bdffb7e8, type: 3}
-    towerResourceCost: 5
-    towerPointCost: 5
+  - {fileID: 11400000, guid: 625fa50064433b64480e2964f8f86ead, type: 2}
+  - {fileID: 11400000, guid: 9b29d2189dc4d4242acd3124a4065d62, type: 2}
+  - {fileID: 11400000, guid: c976aef6d1c53c74da5e71d87fb93be1, type: 2}
+  - {fileID: 11400000, guid: bab9ee57ea0d89f48b0079207744e89f, type: 2}
+  - {fileID: 11400000, guid: 86ebe90c6d8c6f3478476a5806042915, type: 2}
+  - {fileID: 11400000, guid: dfd503f22c9473a4ab6686cfaa310617, type: 2}
+  - {fileID: 11400000, guid: 8273f71d2e172ba4a801d5e958e2b9e1, type: 2}
+  - {fileID: 11400000, guid: 22a09e068354d814394be9d165355eaa, type: 2}
   purchasePanel: {fileID: 391858368}
   _buttons:
   - {fileID: 1612065024}
@@ -5447,6 +5399,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061520730}
   m_CullTransparentMesh: 1
+--- !u!1 &1080515462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1080515464}
+  - component: {fileID: 1080515463}
+  m_Layer: 0
+  m_Name: NetworkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1080515463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080515462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a5ca80909200c409115b3e9ad455a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_port: 7777
+  s_ip: 192.168.1.4
+--- !u!4 &1080515464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080515462}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1094723393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10728,6 +10726,6 @@ MonoBehaviour:
   playerID: 0
   locationID: 0
   towerID: 0
+  _mobsToSpawn: 
   locationFree: 1
   locationTag: 
-  currentTower: {fileID: 0}

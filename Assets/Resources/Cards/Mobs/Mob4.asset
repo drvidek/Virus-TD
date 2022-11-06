@@ -17,3 +17,6 @@ MonoBehaviour:
   attackPower: 0.5
   attackRate: 0.5
   scale: 0.5
+  mobImage: {fileID: 21300000, guid: ef3d543887e086b4cbe7f4d40c523c0a, type: 3}
+  resourceCost: 0
+  pointCost: 0

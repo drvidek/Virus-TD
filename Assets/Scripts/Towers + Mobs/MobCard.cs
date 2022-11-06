@@ -8,4 +8,6 @@ public class MobCard : ScriptableObject
 {
     public float moveSpd;
     public float healthMax, attackPower, attackRate, scale;
+    public Sprite mobImage;
+    public int resourceCost, pointCost;
 }

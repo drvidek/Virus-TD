@@ -8,28 +8,12 @@ public class UIManager : MonoBehaviour
     [Tooltip("Add the PlayerManager from the scene in here")]
     [SerializeField] private PlayerManager _playerManager;
     //Create a struct to store various input data relating to our mobs including Card, Image and costs
-    [System.Serializable]
-    public struct MobTypes
-    {
-        public ScriptableObject mob;
-        public Sprite mobImage;
-        public int mobResourceCost;
-        public int mobPointCost;
-    }
     [Header("Mob & Tower Types")]
     [Tooltip("Enter the data including names, images and costs for available Mobs in the game.")]
-    public MobTypes[] mobTypes = new MobTypes[8];
+    public MobCard[] mobTypes = new MobCard[8];
     //Create a struct to store various input data relating to our towers including Card, Image and costs
-    [System.Serializable]
-    public struct TowerTypes
-    {
-        public ScriptableObject tower;
-        public Sprite towerImage;
-        public int towerResourceCost;
-        public int towerPointCost;
-    }
     [Tooltip("Enter the data including names, images and costs for the available Towers in the game.")]
-    public TowerTypes[] towerTypes = new TowerTypes[8];
+    public TowerCard[] towerTypes = new TowerCard[8];
     [Header("UI Elements")]
     [Tooltip("Add the PurchasePanel object from the heirarchy so we can enable it on selection of buildable tile.")]
     public GameObject purchasePanel;
@@ -111,13 +95,13 @@ public class UIManager : MonoBehaviour
             {
                 for (int n = 0; n < 8; n++)
                 {
-                    if (_playerManager.MobCardsArr[i] == mobTypes[n].mob)
+                    if (_playerManager.MobCardsArr[i] as MobCard == mobTypes[n])
                     {
                         //Assign Image that corresponds to Card in hand to the button and adjust it's text to display cost
                         _buttons[i].GetComponent<Image>().sprite = mobTypes[n].mobImage;
-                        _buttons[i].GetComponentInChildren<Text>().text = mobTypes[n].mobResourceCost.ToString();
+                        _buttons[i].GetComponentInChildren<Text>().text = mobTypes[n].resourceCost.ToString();
                         //If we have enough resources in Resource B button is interactable, else it isn't
-                        if (_playerManager.ResourceCount[1] >= mobTypes[n].mobResourceCost)
+                        if (_playerManager.ResourceCount[1] >= mobTypes[n].resourceCost)
                         {
                             _buttons[i].interactable = true;
                         }
@@ -140,13 +124,14 @@ public class UIManager : MonoBehaviour
             {
                 for (int n = 0; n < 8; n++)
                 {
-                    if (_playerManager.TowerCardsArr[i] == towerTypes[n].tower)
+                    if (_playerManager.TowerCardsArr[i] as TowerCard == towerTypes[n])
                     {
+                        Debug.Log($"{towerTypes[n].towerImage}");
                         //Assign Image that corresponds to Card in hand to the button and adjust it's text to display cost
                         _buttons[i].GetComponent<Image>().sprite = towerTypes[n].towerImage;
-                        _buttons[i].GetComponentInChildren<Text>().text = towerTypes[n].towerResourceCost.ToString();
+                        _buttons[i].GetComponentInChildren<Text>().text = towerTypes[n].resourceCost.ToString();
                         //If we have enough resources in Resource B button is interactable, else it isn't
-                        if (_playerManager.ResourceCount[0] >= towerTypes[n].towerResourceCost)
+                        if (_playerManager.ResourceCount[0] >= towerTypes[n].resourceCost)
                         {
                             _buttons[i].interactable = true;
                         }
