@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
+using System.Collections.Generic; //For use of lists
+using UnityEngine; //Connect to Unity Engine
+using UnityEngine.InputSystem; //We are using new input system
 
 public class InputManager : MonoBehaviour
 {
@@ -27,6 +27,11 @@ public class InputManager : MonoBehaviour
     private float _touchStartDist = 0f;
     //Float to store the distance between your 2 touch fingers during zoom
     private float _touchCurrentDist = 0f;
+    [Header("References")]
+    [Tooltip("Add the PlayerManger instance from the scene")]
+    [SerializeField] private PlayerManager _playerManager;
+    [Tooltip("Add UI Manager from scene to this reference")]
+    [SerializeField] private UIManager _uiManager;
     [Header("Movement")]
     [Tooltip("Set the movement speed we will use for the cameras movement")]
     [SerializeField] private float _moveSpeed = 2.5f;
@@ -34,6 +39,15 @@ public class InputManager : MonoBehaviour
     #region Startup & Update
     private void Start()
     {
+        //If class references are null find them in scene
+        if (_playerManager == null)
+        {
+            _playerManager = GameObject.Find("GameManager").GetComponent<PlayerManager>();
+        }
+        if (_uiManager == null)
+        {
+            _uiManager = GameObject.Find("EventSystem").GetComponent<UIManager>();
+        }
         //At start the new position to move to is the current position
         _newPosition = transform.position;
     }
@@ -46,16 +60,6 @@ public class InputManager : MonoBehaviour
         //Adjust current location to clamp it inside acceptable movement area
         float yPos = Mathf.Clamp(transform.position.y, 2f, 10.4f);
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -5.85f + (yPos / 2), 5.85f - (yPos / 2)), yPos, Mathf.Clamp(transform.position.z, -10.4f + yPos, 10.4f - yPos));
-    }
-    #endregion
-    #region Build Phase
-    public void PlaceTower()
-    {
-        Debug.Log("Place Tower");
-    }
-    public void SetMob()
-    {
-        Debug.Log("Set Mob");
     }
     #endregion
     #region Input Actions
@@ -123,44 +127,48 @@ public class InputManager : MonoBehaviour
         #region Mouse
         if (context.control.path == "/Mouse/leftButton")
         {
-            //If we have started recieving inputs
-            if (context.started)
+            //This if check throws a warning in Unity Console but doesn't seem to stop any function. Will try to find a better way when I have more time
+            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
-                //Set our old position to our current position
-                _oldPosition = transform.position;
-                //Define a Ray to use to find current position of mouse click
-                Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-                //A plane to use as our area to determine location from
-                Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
-                //A float to store the location information recieved from our Ray
-                float _screenPoint;
-                //Perform the Raycast and store the location hit as our _dragStartPos
-                if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                //If we have started recieving inputs
+                if (context.started)
                 {
-                    _dragStartPos = _locationRay.GetPoint(_screenPoint);
+                    //Set our old position to our current position
+                    _oldPosition = transform.position;
+                    //Define a Ray to use to find current position of mouse click
+                    Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+                    //A plane to use as our area to determine location from
+                    Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+                    //A float to store the location information recieved from our Ray
+                    float _screenPoint;
+                    //Perform the Raycast and store the location hit as our _dragStartPos
+                    if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                    {
+                        _dragStartPos = _locationRay.GetPoint(_screenPoint);
+                    }
                 }
-            }
-            //As input continues to be recieved
-            if (context.performed)
-            {
-                //Define a Ray to use to find the current position of mouse as it is dragged
-                Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-                //A plane to use as our area to determine location from
-                Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
-                //A float to store the location information recieved from our Ray
-                float _screenPoint;
-                //Perform the Raycast, store the location hit as our _dragStartPos and apply the difference between start and current position to our current camera position
-                if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                //As input continues to be recieved
+                if (context.performed)
                 {
-                    _dragCurrentPos = _locationRay.GetPoint(_screenPoint);
-                    _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
+                    //Define a Ray to use to find the current position of mouse as it is dragged
+                    Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+                    //A plane to use as our area to determine location from
+                    Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+                    //A float to store the location information recieved from our Ray
+                    float _screenPoint;
+                    //Perform the Raycast, store the location hit as our _dragStartPos and apply the difference between start and current position to our current camera position
+                    if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                    {
+                        _dragCurrentPos = _locationRay.GetPoint(_screenPoint);
+                        _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
+                    }
                 }
-            }
-            //If input from mouse has stopped
-            if (context.canceled)
-            {
-                CheckBuild(Mouse.current.position.ReadValue());
-                _newPosition = transform.position;
+                //If input from mouse has stopped
+                if (context.canceled)
+                {
+                    CheckBuild(Mouse.current.position.ReadValue());
+                    _newPosition = transform.position;
+                }
             }
         }
         #endregion
@@ -213,28 +221,29 @@ public class InputManager : MonoBehaviour
         #endregion
     }
     #endregion
-
+    #region Call Build Functions
     private void CheckBuild(Vector3 pos)
     {
         //If old position is equal to cameras current position we have not moved and we are obviously selecting something
         if (_oldPosition == transform.position)
         {
             //Cast a ray from touch location and store data on object with collider that is hit 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(pos), out _hitInfo))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(pos), out _hitInfo) && !_uiManager.purchasePanel.activeInHierarchy)
             {
-                //If object has the tag Start we are placing a mob, call the SetMob method
-                if (_hitInfo.transform.tag == "Start")
+                //If we select the path tiles and we have enough resources place a blockade tower and adjust resources to take away cost
+                if (_hitInfo.transform.tag == "Path" && _playerManager.ResourceCount[0] >= _playerManager.blockTowerCost)
                 {
-                    if (_hitInfo.transform.TryGetComponent<BuildTower>(out BuildTower bt))
-                        bt.SetMobFromPlayerInput(NetworkManager.GetPlayerIDNormalised());
+                    _hitInfo.transform.GetComponent<BuildTower>().PlaceTower(0);
+                    _playerManager.AdjustResources(0, -_playerManager.blockTowerCost);
                 }
-                //If object has the tag Tower or Path we are placing a tower, call the PlaceTower method
-                else if (_hitInfo.transform.tag == "Tower" || _hitInfo.transform.tag == "Path")
+                //Else if we have selected start or tower tiles update the buttons with either tower or mob cards and open purchase panel
+                else if (_hitInfo.transform.tag == "Start" || _hitInfo.transform.tag == "Tower")
                 {
-                    if (_hitInfo.transform.TryGetComponent<BuildTower>(out BuildTower bt))
-                        bt.PlaceTowerFromPlayerInput(NetworkManager.GetPlayerIDNormalised());
+                    _uiManager.UpdateDisplay(_hitInfo);
+                    _uiManager.purchasePanel.SetActive(true);
                 }
             }
-        }   
+        }
     }
+    #endregion
 }
