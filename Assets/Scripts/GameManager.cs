@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         GameManagerInstance = this;
+        
         // loop through the 2D card ScriptableObject array COLUMNS to determine the card type (Mob or Tower).
         for (int cardTypeIndex = 0; cardTypeIndex < 2; ++cardTypeIndex)
         {
@@ -99,7 +100,7 @@ public class GameManager : MonoBehaviour
                         // Assign the current Card Object in the 2D array to the Tower Card ScriptableObject
                         // loaded from the Resources folder in the Unity directory.
                         _deck[cardTypeIndex, cardIndex] =
-                            (ScriptableObject)Resources.Load("/Cards/Towers/Tower" + cardIndex);
+                            Resources.Load<ScriptableObject>("Cards/Towers/Tower" + cardIndex);
                         // Setting the element in the Tower Cards array to the same SO the Deck array was passed.
                         _towerCards[cardIndex] = _deck[cardTypeIndex, cardIndex];
                         /*
@@ -158,7 +159,7 @@ public class GameManager : MonoBehaviour
                         // Assign the current Card Object in the 2D array to the Mob Card ScriptableObject
                         // loaded from the Resources folder in the Unity directory.
                         _deck[cardTypeIndex, cardIndex] =
-                            (ScriptableObject)Resources.Load("/Cards/Mobs/Mob" + cardIndex);
+                            (ScriptableObject)Resources.Load("Cards/Mobs/Mob" + cardIndex);
                         // Setting the element in the Mob Cards array to the same SO the Deck array was passed.
                         _mobCards[cardIndex] = _deck[cardTypeIndex, cardIndex];
                         /* 

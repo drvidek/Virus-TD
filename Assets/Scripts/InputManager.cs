@@ -230,6 +230,9 @@ public class InputManager : MonoBehaviour
             //Cast a ray from touch location and store data on object with collider that is hit 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(pos), out _hitInfo) && !_uiManager.purchasePanel.activeInHierarchy)
             {
+                BuildTower bt = _hitInfo.transform.GetComponent<BuildTower>();
+                if (bt.playerID != NetworkManager.GetPlayerIDNormalised())
+                    return;
                 //If we select the path tiles and we have enough resources place a blockade tower and adjust resources to take away cost
                 if (_hitInfo.transform.tag == "Path" && _playerManager.ResourceCount[0] >= _playerManager.blockTowerCost)
                 {

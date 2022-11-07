@@ -118,8 +118,12 @@ public class NetworkManager : MonoBehaviour
     /// <returns></returns>
     public static ushort GetPlayerIDNormalised()
     {
-        int realId = NetworkManager.NetworkManagerInstance.GameClient.Id;
-        realId--;
+        int realId = 0;
+        if (NetworkManager.NetworkManagerInstance.GameClient.IsConnected)
+        {
+            realId = NetworkManager.NetworkManagerInstance.GameClient.Id;
+            realId--;
+        }
         ushort referenceId = (ushort)realId;
         return referenceId;
     }

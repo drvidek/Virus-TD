@@ -151,7 +151,7 @@ public class UIManager : MonoBehaviour
         //Will be implemented once main menu scene is ready to implement
     }
     #endregion
-    #region
+    #region OnGUI
     private void OnGUI()
     {
         //Apply the GUISkin to our IMGUI elements

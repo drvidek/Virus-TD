@@ -17,11 +17,11 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Public property to access and set the tower cards present in the 'hand' for the current game.
     /// </summary>
-    public TowerCard[] TowerCardsArr { get; private set; }
+    [SerializeField] public TowerCard[] TowerCardsArr;// { get; private set; }
     /// <summary>
     /// Public property to access and set the mob cards present in the 'hand' for the current game.
     /// </summary>
-    public MobCard[] MobCardsArr { get; private set; }
+    [SerializeField] public MobCard[] MobCardsArr;// { get; private set; }
     /// <summary>
     /// Public property to access and set the amount of resources in the current game.
     /// <para>Each array element represents a different resource type. For example:</para>
