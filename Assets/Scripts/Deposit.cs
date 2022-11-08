@@ -15,11 +15,11 @@ public class Deposit : MonoBehaviour
     [SerializeField] GameObject _assignmentGO;
 
     [Header("Misc")]
-    GameManager gameManager;
+    Workers.GameManager gameManager;
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<Workers.GameManager>();
     }
 
     // Update is called once per frame

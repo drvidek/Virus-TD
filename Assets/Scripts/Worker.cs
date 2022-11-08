@@ -25,7 +25,7 @@ public class Worker : MonoBehaviour
 
     [Header("Misc")]
     Rigidbody rb;
-    GameManager gameManager;
+    Workers.GameManager gameManager;
 
     [Header("Dev")]
     [SerializeField] TextMeshProUGUI yesman;
@@ -36,7 +36,7 @@ public class Worker : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<Workers.GameManager>();
         _baseTransform = GameObject.FindGameObjectWithTag("Base").transform;
         _targetDesination = _baseTransform;
         gameManager.WorkerList.Add(gameObject);
