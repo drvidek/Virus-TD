@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6750222871172284536}
   m_Father: {fileID: 7464705128671706744}
@@ -128,6 +129,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1587234449448454985}
   m_RootOrder: 0
@@ -246,8 +248,8 @@ GameObject:
   - component: {fileID: 7464705128671706747}
   - component: {fileID: 7464705128671706746}
   - component: {fileID: 7464705128671706757}
-  - component: {fileID: 4124251167439528549}
   - component: {fileID: 5912919561068086323}
+  - component: {fileID: 3316121957629722818}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Untagged
@@ -265,6 +267,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1587234449448454985}
   m_Father: {fileID: 0}
@@ -289,6 +292,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -327,35 +331,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7464705128671706756}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4124251167439528549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7464705128671706756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38e872417d2b6474ab0a7d7241ec6a14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _invTMP: {fileID: 7525052836824118298}
-  _countdown: 1
-  _invDumpTimer: 1
-  _collectionTimer: 1
-  _moveSpeed: 2
-  _targetDesination: {fileID: 0}
-  _range: 0
-  _invMax: 10
-  _inv: 0
-  _crypto: 0
-  _NFT: 0
-  _target: 0
 --- !u!54 &5912919561068086323
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -372,3 +352,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &3316121957629722818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464705128671706756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab08bf2c358cff74a956cf161664cfdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _countdown: 1
+  _invDumpTimer: 1
+  _collectionTimer: 1
+  _moveSpeed: 2
+  _baseTransform: {fileID: 0}
+  _assignedDepositTransform: {fileID: 0}
+  _targetDesination: {fileID: 0}
+  _inv: 0
+  _resourceA: 0
+  _resourceB: 0
+  yesman: {fileID: 7525052836824118298}

@@ -29,6 +29,8 @@ public class PlayerManager : MonoBehaviour
     /// <para><example><i>Index 1: Gold</i></example></para>
     /// </summary>
     public int[] ResourceCount { get; private set; } = new int[2] { 0, 0 };
+
+    public List<Worker> WorkerList = new List<Worker>();
     #endregion
 
     private void SendPlayerPointsMessage(ushort playerID, ushort points, ushort resourceA, ushort resourceB)

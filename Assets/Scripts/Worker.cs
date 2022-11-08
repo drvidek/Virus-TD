@@ -18,14 +18,15 @@ public class Worker : MonoBehaviour
     public Transform _targetDesination;
 
     [Header("Inventory")]
-    [SerializeField] int _invMax = 10;
+    [SerializeField] static int _invMax = 10;
+    public static int InvMax { get => _invMax; }
     public int _inv;
-    [SerializeField] int _crypto;
-    [SerializeField] int _NFT;
+    [SerializeField] int _resourceA;
+    [SerializeField] int _resourceB;
 
     [Header("Misc")]
     Rigidbody rb;
-    Workers.GameManager gameManager;
+    PlayerManager playerManager;
 
     [Header("Dev")]
     [SerializeField] TextMeshProUGUI yesman;
@@ -36,19 +37,19 @@ public class Worker : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        gameManager = FindObjectOfType<Workers.GameManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
         _baseTransform = GameObject.FindGameObjectWithTag("Base").transform;
         _targetDesination = _baseTransform;
-        gameManager.WorkerList.Add(gameObject);
+        playerManager.WorkerList.Add(this);
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, _targetDesination.transform.position, _moveSpeed * Time.deltaTime);
-        if(gameManager.playPhase || _assignedDepositTransform == null)
+        if(GameManager.CurrentState == GameState.Play || _assignedDepositTransform == null)
             _targetDesination = _baseTransform;
-        _inv = _crypto + _NFT;
+        _inv = _resourceA + _resourceB;
 
         State();
 
@@ -57,7 +58,7 @@ public class Worker : MonoBehaviour
 
     void State()
     {
-        if (!gameManager.playPhase)
+        if (GameManager.CurrentState != GameState.Play)
         {
             //Crypto deposit extraction
             if (Vector3.Distance(_targetDesination.transform.position, transform.position) < 1 && _targetDesination.tag == "DepositCrypto")
@@ -70,7 +71,7 @@ public class Worker : MonoBehaviour
                 if (_collectionTimer <= 0)
                 {
                     _collectionTimer = _countdown;
-                    _crypto++;
+                    _resourceA++;
                     _targetDesination.GetComponent<Deposit>()._resources--;
                     _targetDesination = _assignedDepositTransform;
                 }
@@ -91,7 +92,7 @@ public class Worker : MonoBehaviour
                 if (_collectionTimer <= 0)
                 {
                     _collectionTimer = _countdown;
-                    _NFT++;
+                    _resourceB++;
                     _targetDesination.GetComponent<Deposit>()._resources--;
                     _targetDesination = _assignedDepositTransform;
                 }
@@ -107,16 +108,16 @@ public class Worker : MonoBehaviour
                 {
                     _invDumpTimer = _countdown;
 
-                    if (_crypto > 0)
+                    if (_resourceA > 0)
                     {
-                        _crypto--;
-                        gameManager._cryptoI++;
+                        _resourceA--;
+                        playerManager.ResourceCount[0]++;
                     }
 
-                    if (_NFT > 0)
+                    if (_resourceB > 0)
                     {
-                        _NFT--;
-                        gameManager._NFTI++;
+                        _resourceB--;
+                        playerManager.ResourceCount[1]++;
                     }
                 }
                 if (_inv <= 0 && _assignedDepositTransform != null)
@@ -130,6 +131,6 @@ public class Worker : MonoBehaviour
 
     private void OnDestroy()
     {
-        gameManager.WorkerList.Remove(gameObject);
+        playerManager.WorkerList.Remove(this);
     }
 }
