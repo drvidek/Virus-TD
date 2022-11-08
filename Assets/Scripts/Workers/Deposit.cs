@@ -22,7 +22,7 @@ public class Deposit : MonoBehaviour
     PlayerManager playerManager;
 
     [SerializeField] private ushort _resourceID;
-    private static Deposit[] _desposits;
+    private static Deposit[,] _deposits = new Deposit[2,9];
     [SerializeField] private ushort _playerID;
 
     private void SpawnResource(ushort value, string type)
@@ -34,7 +34,7 @@ public class Deposit : MonoBehaviour
     private void Start()
     {
         playerManager = FindObjectOfType<PlayerManager>();
-        _desposits[_resourceID] = this;
+        _deposits[_playerID,_resourceID] = this;
 
     }
 
@@ -50,7 +50,8 @@ public class Deposit : MonoBehaviour
         //        _reloadTimer = 0;
         //    }
         //}
-        _resourceDisplay.text = tag + _resources.ToString();
+        _resourceDisplay.enabled = (tag != "Untagged" && GameManager.CurrentState != GameState.Build);
+        _resourceDisplay.text = $"{_resources} {tag.Remove(0,7)}" ;
 
     }
 
@@ -68,13 +69,13 @@ public class Deposit : MonoBehaviour
         int minInv = 10;
         Worker finalWorker = null;
 
-        for (int i = 0; i < playerManager.WorkerList.Count; i++)
+        for (int i = 0; i < playerManager.workerList.Count; i++)
         {
-            Worker currentWorker = playerManager.WorkerList[i];
+            Worker currentWorker = playerManager.workerList[i];
             if (currentWorker._inv <= minInv && currentWorker._assignedDepositTransform == null)
             {
-                minInv = playerManager.WorkerList[0]._inv;
-                finalWorker = playerManager.WorkerList[0];
+                minInv = currentWorker._inv;
+                finalWorker = currentWorker;
             }
         }
 
@@ -90,13 +91,13 @@ public class Deposit : MonoBehaviour
         int minInv = 10;
         Worker finalWorker = null;
 
-        for (int i = 0; i < playerManager.WorkerList.Count; i++)
+        for (int i = 0; i < playerManager.workerList.Count; i++)
         {
-            Worker currentWorker = playerManager.WorkerList[i];
-            if (currentWorker._inv >= minInv && currentWorker._assignedDepositTransform == this.transform)
+            Worker currentWorker = playerManager.workerList[i];
+            if (currentWorker._inv <= minInv && currentWorker._assignedDepositTransform == this.transform)
             {
-                minInv = playerManager.WorkerList[0]._inv;
-                finalWorker = playerManager.WorkerList[0];
+                minInv = currentWorker._inv;
+                finalWorker = currentWorker;
             }
         }
 
@@ -112,9 +113,13 @@ public class Deposit : MonoBehaviour
         ushort id = message.GetUShort();
         ushort value = message.GetUShort();
         string type = message.GetString();
-        if (_desposits[id] != null)
+        if (_deposits[0,id] != null)
         {
-            _desposits[id].SpawnResource(value, type);
+            _deposits[0,id].SpawnResource(value, type);
+        }
+        if (_deposits[1, id] != null)
+        {
+            _deposits[1, id].SpawnResource(value, type);
         }
     }
 }

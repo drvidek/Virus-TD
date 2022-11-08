@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public int[] ResourceCount { get; private set; } = new int[2] { 0, 0 };
 
-    public List<Worker> WorkerList = new List<Worker>();
+    public List<Worker> workerList = new List<Worker>();
     #endregion
 
     private void SendPlayerPointsMessage(ushort playerID, ushort points, ushort resourceA, ushort resourceB)

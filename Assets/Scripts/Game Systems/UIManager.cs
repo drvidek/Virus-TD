@@ -38,6 +38,16 @@ public class UIManager : MonoBehaviour
         }
         //Update worker purchase button to include cost of workers, can be moved to other function if cost will change
         _workerButton.GetComponentInChildren<Text>().text = "Hire Worker: " + _playerManager.workerCost + " Resources";
+
+        for (int i = 0; i < mobTypes.Length; i++)
+        {
+            mobTypes[i] = GameManager.GameManagerInstance.Deck[1, i] as MobCard;
+        }
+
+        for (int i = 0; i < towerTypes.Length; i++)
+        {
+            towerTypes[i] = GameManager.GameManagerInstance.Deck[0, i] as TowerCard;
+        }
     }
     #endregion
     #region Functions

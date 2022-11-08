@@ -66,7 +66,7 @@ public class TowerBase : MonoBehaviour
     }
 
 
-    protected void ApplyEffect(Mob mob, bool aoe = true)
+    protected void ApplyEffect(Mob mob)
     {
         foreach (Effect effect in _effects)
         {

@@ -54,7 +54,7 @@ public class BuildTower : MonoBehaviour
             return;
 
         towerID = spawningID;
-        GameObject prefab = Resources.Load($"Prefabs/TowersAndMobs/Tower{(tag == "Tower" ? "Ranged" : "Blockade")}") as GameObject;
+        GameObject prefab = Resources.Load($"Prefabs/Towers + Mobs/Tower{(tag == "Tower" ? "Ranged" : "Blockade")}") as GameObject;
         TowerBase newTower = Instantiate(prefab, transform).GetComponent<TowerBase>();
         newTower.Initialise(Resources.Load($"Cards/Towers/Tower{(tag == "Tower" ? towerID.ToString() : "Block0")}") as TowerCard, playerId);
 
@@ -113,7 +113,7 @@ public class BuildTower : MonoBehaviour
 
     private float SpawnMobFromID(ushort mobId, ushort playerId)
     {
-        GameObject prefab = Resources.Load("Prefabs/TowersAndMobs/Mob") as GameObject;
+        GameObject prefab = Resources.Load("Prefabs/Towers + Mobs/Mob") as GameObject;
         Mob mob = Instantiate(prefab, transform.position, Quaternion.identity).GetComponent<Mob>();
         MobCard mobCard = Resources.Load("Cards/Mobs/Mob" + mobId.ToString()) as MobCard;
         mob.Initialise(mobCard, gameObject, playerId);

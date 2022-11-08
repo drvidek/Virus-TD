@@ -9,6 +9,9 @@ TagManager:
   - Junction
   - Start
   - Ignore
+  - DepositCrypto
+  - DepositRAM
+  - Base
   layers:
   - Default
   - TransparentFX

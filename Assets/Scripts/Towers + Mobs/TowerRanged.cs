@@ -9,6 +9,7 @@ public class TowerRanged : TowerBase
     private LineRenderer _laser;
     private SpriteRenderer _rangeUI;
     private Image _delayUI;
+    [SerializeField] private float _rangeUISpinRate = 180f;
 
     new private void OnValidate()
     {
@@ -39,6 +40,11 @@ public class TowerRanged : TowerBase
             _laser.SetPosition(1, _currentTarget.transform.position);
         //set the UI for your attack delay
         _delayUI.fillAmount = (_attackDelay / _attackRate);
+
+        Vector3 rotation = _rangeUI.transform.localEulerAngles;
+        rotation.y += _rangeUISpinRate/_attackRadius * Time.deltaTime;
+
+        _rangeUI.transform.localEulerAngles = rotation;
     }
 
     protected override void Attack()
@@ -52,8 +58,8 @@ public class TowerRanged : TowerBase
             }
             else    //otherwise just attack the valid target
             {
-                _currentTarget.TakeDamage(_attackPower);
                 ApplyEffect(_currentTarget);
+                _currentTarget.TakeDamage(_attackPower);
             }
             //reset the attack delay
             _attackDelay = _attackRate;
