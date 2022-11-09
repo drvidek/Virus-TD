@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
     [Header("References")]
     [Tooltip("Add the PlayerManager from the scene in here")]
     [SerializeField] private PlayerManager _playerManager;
+    [Tooltip("Add the GameManager from the scene in here")]
+    [SerializeField] private GameManager _gameManager;
     //Create a struct to store various input data relating to our mobs including Card, Image and costs
     [System.Serializable]
     public struct MobTypes
@@ -166,16 +168,17 @@ public class UIManager : MonoBehaviour
         //Will be implemented once main menu scene is ready to implement
     }
     #endregion
-    #region
+    #region OnGUI
     private void OnGUI()
     {
         //Apply the GUISkin to our IMGUI elements
         GUI.skin = _guiSkin;
         //Create a box to display the points, resources and worker count
-        GUI.Box(new Rect(Screen.width / 6, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Poinst: " + _playerManager.Points + "</b>");
-        GUI.Box(new Rect((Screen.width / 6) * 2, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources A: " + _playerManager.ResourceCount[0] + "</b>");
-        GUI.Box(new Rect((Screen.width / 6) * 3, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources B: " + _playerManager.ResourceCount[1] + "</b>");
-        GUI.Box(new Rect((Screen.width / 6) * 4, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Workers: " + _playerManager.workerCount + "</b>");
+        GUI.Box(new Rect(Screen.width / 6, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Time Left: " + _gameManager.timer + "</b>");
+        GUI.Box(new Rect((Screen.width / 6) *2, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Poinst: " + _playerManager.Points + "</b>");
+        GUI.Box(new Rect((Screen.width / 6) * 3, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources A: " + _playerManager.ResourceCount[0] + "</b>");
+        GUI.Box(new Rect((Screen.width / 6) * 4, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources B: " + _playerManager.ResourceCount[1] + "</b>");
+        GUI.Box(new Rect((Screen.width / 6) * 5, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Workers Busy: " + _playerManager.workerCount + "/5</b>");
     }
     #endregion
 }

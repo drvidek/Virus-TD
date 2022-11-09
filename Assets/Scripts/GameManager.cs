@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ushort _gameResult = 0;
     [Tooltip("This value is set at runtime in the Build phase by the server. " +
         "\nIt represents how much time (in seconds) the player has left before the phase changes automatically.")]
-    [SerializeField] private float _timer = 2 * 60f;
+    [SerializeField] public float timer = 2 * 60f;
     private enum GameState
     {
         PreGame,
