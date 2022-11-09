@@ -17,6 +17,10 @@ MonoBehaviour:
   attackRange: 4
   attackRadius: 3
   healthMax: 0
+  effects:
+  - type: 1
+    value: 1
+    range: 5
   description: Slow atk rate but high damage to multiple targets
   towerImage: {fileID: 21300000, guid: 982ceade0335f5747813bb18b9a8772a, type: 3}
   resourceCost: 5
