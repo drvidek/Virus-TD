@@ -57,6 +57,8 @@ public class Worker : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, _targetDesination.transform.position, _moveSpeed * Time.deltaTime);
         if (GameManager.CurrentState != GameState.Play || _assignedDepositTransform == null)
             _targetDesination = _baseTransform;
+        if (_assignedDepositTransform != null && _assignedDepositTransform.GetComponent<Deposit>()._resources <= 0) //new
+            _assignedDepositTransform = null; //new
         _inv = _resourceA + _resourceB;
 
         State();
@@ -112,7 +114,7 @@ public class Worker : MonoBehaviour
     {
         _collectionTimer -= Time.deltaTime;
 
-        if (_targetDesination.GetComponent<Deposit>()._resources <= 0)
+        if (_targetDesination.TryGetComponent<Deposit>(out Deposit d) && d._resources <= 0)
             _targetDesination = _baseTransform;
 
         if (_collectionTimer <= 0)

@@ -11,7 +11,8 @@ public class Deposit : MonoBehaviour
     public int _resources;
     [SerializeField] int _min;
     [SerializeField] int _max;
-    float _reloadTimer;
+    [SerializeField] float _timeoutTimer; //new
+    [SerializeField] float _timeoutReset = 3; //new
     [SerializeField] TextMeshProUGUI _resourceDisplay;
 
     [Header("Workers")]
@@ -22,7 +23,7 @@ public class Deposit : MonoBehaviour
     PlayerManager playerManager;
 
     [SerializeField] private ushort _resourceID;
-    private static Deposit[,] _deposits = new Deposit[2,9];
+    private static Deposit[,] _deposits = new Deposit[2, 9];
     [SerializeField] private ushort _playerID;
 
     private void SpawnResource(ushort value, string type)
@@ -34,32 +35,34 @@ public class Deposit : MonoBehaviour
     private void Start()
     {
         playerManager = FindObjectOfType<PlayerManager>();
-        _deposits[_playerID,_resourceID] = this;
+        _timeoutTimer = _timeoutReset; //new
+        _deposits[_playerID, _resourceID] = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //_reloadTimer += Time.deltaTime;
-        //if(_resources < 10)
-        //{
-        //    if(_reloadTimer >= 2)
-        //    {
-        //        _resources++;
-        //        _reloadTimer = 0;
-        //    }
-        //}
+        Timeout();
         _resourceDisplay.enabled = (tag != "Untagged" && GameManager.CurrentState != GameState.Build);
-        _resourceDisplay.text = $"{_resources} {tag.Remove(0,7)}" ;
+        _resourceDisplay.text = $"{_resources} {tag.Remove(0, 7)}";
 
     }
 
     public void Assignment()
     {
-        if (_playerID == NetworkManager.GetPlayerIDNormalised())
+        if (_playerID != NetworkManager.GetPlayerIDNormalised())
+            return;
+
+        _timeoutTimer = _timeoutReset; //new
+        if (_resources != 0) //new
         {
-            _assignmentB = !_assignmentB; //not true = false; not false = true;
-                _assignmentGO.SetActive(_assignmentB); //true or false
+            _assignmentB = !_assignmentB;
+            _assignmentGO.SetActive(_assignmentB);
+        }
+        else //new
+        {
+            _assignmentB = false;
+            _assignmentGO.SetActive(false);
         }
     }
 
@@ -67,6 +70,7 @@ public class Deposit : MonoBehaviour
     {
         int minInv = 10;
         Worker finalWorker = null;
+        _timeoutTimer = _timeoutReset; //new
 
         for (int i = 0; i < playerManager.workerList.Count; i++)
         {
@@ -89,6 +93,7 @@ public class Deposit : MonoBehaviour
     {
         int minInv = 10;
         Worker finalWorker = null;
+        _timeoutTimer = _timeoutReset; //new
 
         for (int i = 0; i < playerManager.workerList.Count; i++)
         {
@@ -105,20 +110,29 @@ public class Deposit : MonoBehaviour
 
         finalWorker._assignedDepositTransform = null;
     }
-    
+
+    void Timeout() //new
+    {
+        if (_assignmentB)
+        {
+            _timeoutTimer -= Time.deltaTime;
+            if (_timeoutTimer <= 0)
+            {
+                Assignment();
+                _timeoutTimer = _timeoutReset;
+            }
+        }
+    }
+
     [MessageHandler((ushort)ServerToClientID.resourceSpawn)]
     private static void ReadResourceMessageFromServer(Message message)
     {
         ushort id = message.GetUShort();
         ushort value = message.GetUShort();
         string type = message.GetString();
-        if (_deposits[0,id] != null)
+        if (_deposits[NetworkManager.GetPlayerIDNormalised(), id] != null)
         {
-            _deposits[0,id].SpawnResource(value, type); //SpawnResource(14,"Crypto")
-        }
-        if (_deposits[1, id] != null)
-        {
-            _deposits[1, id].SpawnResource(value, type);
+            _deposits[NetworkManager.GetPlayerIDNormalised(), id].SpawnResource(value, type);
         }
     }
 }

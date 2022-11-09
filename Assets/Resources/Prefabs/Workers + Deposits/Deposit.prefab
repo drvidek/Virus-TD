@@ -781,12 +781,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6815630421510208108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d09dbdf2dc6dcf64991317718f2a0c78, type: 3}
+  m_Script: {fileID: 11500000, guid: 09c184a69a3666145983841fbfe0e945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _resources: 10
+  _resources: 0
   _min: 0
   _max: 0
+  _timeoutTimer: 0
+  _timeoutReset: 3
   _resourceDisplay: {fileID: 422181837140553303}
   _assignmentB: 0
   _assignmentGO: {fileID: 5059256631399266085}

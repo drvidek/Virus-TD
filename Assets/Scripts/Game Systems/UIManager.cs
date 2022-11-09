@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
             _playerManager = GameObject.Find("GameManager").GetComponent<PlayerManager>();
         }
         //Update worker purchase button to include cost of workers, can be moved to other function if cost will change
-        _workerButton.GetComponentInChildren<Text>().text = "Hire Worker: " + _playerManager.workerCost + " Resources";
+        //_workerButton.GetComponentInChildren<Text>().text = "Hire Worker: " + _playerManager.workerCost + " Resources";
 
         for (int i = 0; i < mobTypes.Length; i++)
         {
@@ -56,12 +56,12 @@ public class UIManager : MonoBehaviour
         //If buildType check variable equals Mob we will pass the index passed from the button pressed to the SetMob function of the build location
         if (_buildType == "Mob")
         {
-            _hitInfo.transform.GetComponent<BuildTower>().SetMobFromPlayerInput(NetworkManager.GetPlayerIDNormalised(), (ushort)index);
+            _hitInfo.transform.GetComponent<BuildTower>().SetMobFromPlayerInput((ushort)index);
         }
         //Else we pass it to the PlaceTower function
         else
         {
-            _hitInfo.transform.GetComponent<BuildTower>().PlaceTowerFromPlayerInput(NetworkManager.GetPlayerIDNormalised(), (ushort)index);
+            _hitInfo.transform.GetComponent<BuildTower>().PlaceTowerFromPlayerInput((ushort)index);
         }
     }
     public void HireWorkers()
@@ -136,7 +136,6 @@ public class UIManager : MonoBehaviour
                 {
                     if (_playerManager.TowerCardsArr[i] as TowerCard == towerTypes[n])
                     {
-                        Debug.Log($"{towerTypes[n].towerImage}");
                         //Assign Image that corresponds to Card in hand to the button and adjust it's text to display cost
                         _buttons[i].GetComponent<Image>().sprite = towerTypes[n].towerImage;
                         _buttons[i].GetComponentInChildren<Text>().text = towerTypes[n].resourceCost.ToString();

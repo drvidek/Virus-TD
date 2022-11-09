@@ -236,7 +236,7 @@ public class InputManager : MonoBehaviour
                 //If we select the path tiles and we have enough resources place a blockade tower and adjust resources to take away cost
                 if (_hitInfo.transform.tag == "Path" && _playerManager.ResourceCount[0] >= _playerManager.blockTowerCost)
                 {
-                    _hitInfo.transform.GetComponent<BuildTower>().PlaceTowerFromPlayerInput(NetworkManager.GetPlayerIDNormalised(),0);
+                    _hitInfo.transform.GetComponent<BuildTower>().PlaceTowerFromPlayerInput(0);
                     _playerManager.AdjustResources(0, -_playerManager.blockTowerCost);
                 }
                 //Else if we have selected start or tower tiles update the buttons with either tower or mob cards and open purchase panel
