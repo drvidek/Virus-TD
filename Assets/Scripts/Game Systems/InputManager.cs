@@ -133,39 +133,21 @@ public class InputManager : MonoBehaviour
                 //If we have started recieving inputs
                 if (context.started)
                 {
-                    //Set our old position to our current position
+                    //Set our old position to our current position and run checkray to get current position as our drag start
                     _oldPosition = transform.position;
-                    //Define a Ray to use to find current position of mouse click
-                    Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-                    //A plane to use as our area to determine location from
-                    Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
-                    //A float to store the location information recieved from our Ray
-                    float _screenPoint;
-                    //Perform the Raycast and store the location hit as our _dragStartPos
-                    if (_screenLocator.Raycast(_locationRay, out _screenPoint))
-                    {
-                        _dragStartPos = _locationRay.GetPoint(_screenPoint);
-                    }
+                    _dragStartPos = CheckRay(Mouse.current.position.ReadValue());
                 }
                 //As input continues to be recieved
                 if (context.performed)
                 {
-                    //Define a Ray to use to find the current position of mouse as it is dragged
-                    Ray _locationRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-                    //A plane to use as our area to determine location from
-                    Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
-                    //A float to store the location information recieved from our Ray
-                    float _screenPoint;
-                    //Perform the Raycast, store the location hit as our _dragStartPos and apply the difference between start and current position to our current camera position
-                    if (_screenLocator.Raycast(_locationRay, out _screenPoint))
-                    {
-                        _dragCurrentPos = _locationRay.GetPoint(_screenPoint);
-                        _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
-                    }
+                    //Use checkray to get current position as our drag to position an set our new position to move that way
+                    _dragCurrentPos = CheckRay(Mouse.current.position.ReadValue());
+                    _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
                 }
                 //If input from mouse has stopped
                 if (context.canceled)
                 {
+                    //Run check build to see if we have dragged or are building and reset newPosition to stop movement
                     CheckBuild(Mouse.current.position.ReadValue());
                     _newPosition = transform.position;
                 }
@@ -177,51 +159,32 @@ public class InputManager : MonoBehaviour
         //Run the function if we have less than 2 touches
         if (Input.touchCount == 1)
         {
-            //If we have started receiving inputs
-            if (context.started)
-            {
-                //Old position equals the current camera transform position
-                _oldPosition = transform.position;
-                //Define a Ray at touch position to determine position in scene
-                Ray _locationRay = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                //Plane to use for Ray to determine location
-                Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
-                //Float to store location data gathered from Ray
-                float _screenPoint;
-                //Cast the ray and store the location received as our drag start position
-                if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                //If we have started receiving inputs
+                if (context.started)
                 {
-                    _dragStartPos = _locationRay.GetPoint(_screenPoint);
+                    //Set our old position to our current position and run checkray to get current position as our drag start
+                    _oldPosition = transform.position;
+                    _dragStartPos = CheckRay(Input.GetTouch(0).position);
                 }
-
-            }
-            //If input is continuing
-            if (context.performed)
-            {
-                //Define a Ray at touch position to get current position of touch in scene
-                Ray _locationRay = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                //Plane to use for Ray to determine location
-                Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
-                //Float to store location data received from Ray
-                float _screenPoint;
-                //Cast the ray, store the location recieved as current drag position and apply the difference between the start and current drag position to our camera position
-                if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+                //If input is continuing
+                if (context.performed)
                 {
-                    _dragCurrentPos = _locationRay.GetPoint(_screenPoint);
+                    //Use checkray to get current position as our drag to position an set our new position to move that way
+                    _dragCurrentPos = CheckRay(Input.GetTouch(0).position);
                     _newPosition = transform.position + _dragStartPos - _dragCurrentPos;
                 }
-
+                //If input has stopped
+                if (context.canceled)
+                {
+                    //Run check build to see if we have dragged or are building and reset newPosition to stop movement
+                    CheckBuild(Input.GetTouch(0).position);
+                    _newPosition = transform.position;
+                }
             }
-            //If input has stopped
-            if (context.canceled)
-            {
-                CheckBuild(Input.GetTouch(0).position);
-            }
-        }
         #endregion
     }
     #endregion
-    #region Call Build Functions
+    #region Callback Helper Functions
     private void CheckBuild(Vector3 pos)
     {
         //If old position is equal to cameras current position we have not moved and we are obviously selecting something
@@ -247,6 +210,23 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
+    }
+    private Vector3 CheckRay(Vector3 pointerPos)
+    {
+        //Vector3 to store position of ray hit when cast
+        Vector3 _rayPos = Vector3.zero;
+        //Define a Ray to use to find current position of mouse click
+        Ray _locationRay = Camera.main.ScreenPointToRay(pointerPos);
+        //A plane to use as our area to determine location from
+        Plane _screenLocator = new Plane(Vector3.up, Vector3.zero);
+        //A float to store the location information recieved from our Ray
+        float _screenPoint;
+        //Perform the Raycast and store the location hit as our _dragStartPos
+        if (_screenLocator.Raycast(_locationRay, out _screenPoint))
+        {
+            _rayPos = _locationRay.GetPoint(_screenPoint);
+        }
+        return _rayPos;
     }
     #endregion
 }
