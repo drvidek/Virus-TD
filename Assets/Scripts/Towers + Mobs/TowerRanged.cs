@@ -42,7 +42,7 @@ public class TowerRanged : TowerBase
         _delayUI.fillAmount = (_attackDelay / _attackRate);
 
         Vector3 rotation = _rangeUI.transform.localEulerAngles;
-        rotation.y += _rangeUISpinRate/_attackRadius * Time.deltaTime;
+        rotation.y += _rangeUISpinRate/_attackRange * Time.deltaTime;
 
         _rangeUI.transform.localEulerAngles = rotation;
     }

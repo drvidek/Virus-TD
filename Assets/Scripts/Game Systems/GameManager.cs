@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private static GameState _currentState = GameState.PreGame;
     [SerializeField] private ParticleSystem _fogOfWarParticleSystem;
 
+    [SerializeField] private GameObject[] _fogOfWar;
+
     [Tooltip("DO NOT CHANGE THE NUMBER OF ELEMENTS IN THIS ARRAY VIA UNITY EDITOR, LOGIC LOOPS DEPEND ON IT.")]
     // Array that holds all the Tower type ScriptableObject cards
     [SerializeField] private ScriptableObject[] _towerCards = new ScriptableObject[8];
@@ -222,10 +224,15 @@ public class GameManager : MonoBehaviour
                 }
             case GameState.Build:
                 {
-                    Debug.Log($"We are in {_currentState} state.");
+                    _fogOfWar[0].SetActive(NetworkManager.GetPlayerIDNormalised() != 0);
+                    _fogOfWar[1].SetActive(NetworkManager.GetPlayerIDNormalised() != 1);
+
+                        Debug.Log($"We are in {_currentState} state.");
                     break;
                 }
             case GameState.Play:
+                _fogOfWar[0].SetActive(false);
+                _fogOfWar[1].SetActive(false);
                 Debug.Log($"We are in {_currentState} state.");
                 break;
             case GameState.PostGame:

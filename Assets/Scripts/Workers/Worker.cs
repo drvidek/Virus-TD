@@ -67,68 +67,33 @@ public class Worker : MonoBehaviour
     void State()
     {
 
-        //Crypto deposit extraction
-        if (Vector3.Distance(_targetDesination.transform.position, transform.position) < 1 && _targetDesination.tag == "DepositCrypto")
+        //What to do when we arrive at our destination
+        if (Vector3.Distance(_targetDesination.transform.position, transform.position) < 1)
         {
-            _collectionTimer -= Time.deltaTime;
-
-            if (_targetDesination.GetComponent<Deposit>()._resources <= 0)
-                _targetDesination = _baseTransform;
-
-            if (_collectionTimer <= 0)
+            if (_targetDesination.tag == "Base")
             {
-                _collectionTimer = _countdown;
-                _resourceA++;
-                _targetDesination.GetComponent<Deposit>()._resources--;
-                _targetDesination = _assignedDepositTransform;
-            }
-            if (_inv >= _invMax)
-                _targetDesination = _baseTransform;
-        }
-
-        //NFT deposit extraction
-        if (Vector3.Distance(_targetDesination.transform.position, transform.position) < 1 && _targetDesination.tag == "DepositRAM")
-        {
-            _collectionTimer -= Time.deltaTime;
-
-            if (_targetDesination.GetComponent<Deposit>()._resources <= 0)
-            {
-                _targetDesination = _baseTransform;
-            }
-
-            if (_collectionTimer <= 0)
-            {
-                _collectionTimer = _countdown;
-                _resourceB++;
-                _targetDesination.GetComponent<Deposit>()._resources--;
-                _targetDesination = _assignedDepositTransform;
-            }
-            if (_inv >= _invMax)
-                _targetDesination = _baseTransform;
-        }
-
-        //Resource depositing
-        if (Vector3.Distance(_targetDesination.transform.position, transform.position) < 1 && _targetDesination.tag == "Base")
-        {
-            _invDumpTimer -= Time.deltaTime;
-            if (_invDumpTimer <= 0)
-            {
-                _invDumpTimer = _countdown;
-
-                if (_resourceA > 0)
+                _invDumpTimer -= Time.deltaTime;
+                if (_invDumpTimer <= 0)
                 {
-                    _resourceA--;
-                    playerManager.ResourceCount[0]++;
-                }
+                    _invDumpTimer = _countdown;
 
-                if (_resourceB > 0)
-                {
-                    _resourceB--;
-                    playerManager.ResourceCount[1]++;
+                    if (_resourceA > 0)
+                    {
+                        _resourceA--;
+                        playerManager.ResourceCount[0]++;
+                    }
+
+                    if (_resourceB > 0)
+                    {
+                        _resourceB--;
+                        playerManager.ResourceCount[1]++;
+                    }
                 }
+                if (_inv <= 0 && _assignedDepositTransform != null)
+                    _targetDesination = _assignedDepositTransform;
             }
-            if (_inv <= 0 && _assignedDepositTransform != null)
-                _targetDesination = _assignedDepositTransform;
+            else
+                MineResource(_targetDesination.tag);
         }
 
         if (_inv >= _invMax)
@@ -140,4 +105,29 @@ public class Worker : MonoBehaviour
     //{
     //    playerManager.WorkerList.Remove(this);
     //}
+
+
+
+    private void MineResource(string resourceType)
+    {
+        _collectionTimer -= Time.deltaTime;
+
+        if (_targetDesination.GetComponent<Deposit>()._resources <= 0)
+            _targetDesination = _baseTransform;
+
+        if (_collectionTimer <= 0)
+        {
+            _collectionTimer = _countdown;
+            if (resourceType == "DepositCrypto")
+                _resourceA++;
+            if (resourceType == "DepositRAM")
+                _resourceB++;
+            _targetDesination.GetComponent<Deposit>()._resources--;
+            _targetDesination = _assignedDepositTransform;
+        }
+        if (_inv >= _invMax)
+            _targetDesination = _baseTransform;
+    }
+
+
 }

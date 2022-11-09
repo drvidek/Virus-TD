@@ -27,15 +27,14 @@ public class Deposit : MonoBehaviour
 
     private void SpawnResource(ushort value, string type)
     {
-        tag = type;
         _resources = (int)value;
+        tag = type;
     }
 
     private void Start()
     {
         playerManager = FindObjectOfType<PlayerManager>();
         _deposits[_playerID,_resourceID] = this;
-
     }
 
     // Update is called once per frame
@@ -59,8 +58,8 @@ public class Deposit : MonoBehaviour
     {
         if (_playerID == NetworkManager.GetPlayerIDNormalised())
         {
-            _assignmentB = !_assignmentB;
-                _assignmentGO.SetActive(_assignmentB);
+            _assignmentB = !_assignmentB; //not true = false; not false = true;
+                _assignmentGO.SetActive(_assignmentB); //true or false
         }
     }
 
@@ -115,7 +114,7 @@ public class Deposit : MonoBehaviour
         string type = message.GetString();
         if (_deposits[0,id] != null)
         {
-            _deposits[0,id].SpawnResource(value, type);
+            _deposits[0,id].SpawnResource(value, type); //SpawnResource(14,"Crypto")
         }
         if (_deposits[1, id] != null)
         {

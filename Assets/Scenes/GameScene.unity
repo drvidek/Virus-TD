@@ -3945,6 +3945,9 @@ MonoBehaviour:
   _gameResult: 0
   _timer: 120
   _fogOfWarParticleSystem: {fileID: 0}
+  _fogOfWar:
+  - {fileID: 970503346}
+  - {fileID: 864146398}
   _towerCards:
   - {fileID: 0}
   - {fileID: 0}
