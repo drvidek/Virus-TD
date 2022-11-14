@@ -11,10 +11,17 @@ public class Mob : MonoBehaviour
     [SerializeField] private float _moveDebuff, _minDist;
     [SerializeField] private Vector3 _moveDir;
     [SerializeField] private float _healthCurrent, _healthMax, _attackPower, _attackRate, _attackDelay;
+    private int _resourceCostA, _resourceCostB, _pointWorth;
+    private TowerBlockade _blockade;
+    private Mob _rearNeighbour;
+    private int _pathId;
+    public static ushort _mobCounter;
+
+    [SerializeField] private int _deathResourcePenalty = 2;
+
     [SerializeField] private int _waypointIndex;
     [SerializeField] private GameObject _waypointParent;
     [SerializeField] private Transform[] _waypoints;
-    [SerializeField] private TowerBlockade _blockade;
     private struct Slowed
     {
         public float rate;
@@ -32,7 +39,7 @@ public class Mob : MonoBehaviour
     {
         //if you have a card equpped, initialise it
         if (_myCard != null)
-            Initialise(_myCard, _waypointParent, 0);
+            Initialise(_myCard, _waypointParent, 0, 0);
     }
 
     private void ScrapePath(GameObject parent)
@@ -61,7 +68,7 @@ public class Mob : MonoBehaviour
         _anim = GetComponentInChildren<Animator>();
     }
 
-    public void Initialise(MobCard mobCard, GameObject pathParent, ushort playerId)
+    public void Initialise(MobCard mobCard, GameObject pathParent, ushort playerId, int pathId)
     {
         _playerId = playerId;
         _moveSpd = mobCard.moveSpd;
@@ -72,6 +79,12 @@ public class Mob : MonoBehaviour
         if (pathParent != null)
             ScrapePath(pathParent);
         _myCard ??= mobCard;
+
+        _pointWorth = mobCard.pointWorth;
+        _resourceCostA = mobCard.resourceCostA;
+        _resourceCostB = mobCard.resourceCostB;
+
+        _pathId = pathId;
     }
 
     private void Update()
@@ -112,18 +125,32 @@ public class Mob : MonoBehaviour
         _waypointIndex++;
 
         if (_waypointIndex >= _waypoints.Length)
-            #region replace this code
-            //currently they loop to their first waypoint
-            //replace this with earning points
-            _waypointIndex = 0;
-        #endregion
-
-        _moveDir = GetNewDirection();
+            ReachEndOfPath();
+        else
+            _moveDir = GetNewDirection();
     }
 
     private Vector3 GetNewDirection()
     {
         return (_waypoints[_waypointIndex].position - transform.position).normalized;
+    }
+
+    private void ReachEndOfPath()
+    {
+        if (_playerId == NetworkManager.GetPlayerIDNormalised())
+            PlayerManager.PlayerManagerInstance.UpdatePoints(_pointWorth);
+        StartCoroutine("EndOfLife");
+    }
+
+    private void MobDefeated()
+    {
+        if (_playerId == NetworkManager.GetPlayerIDNormalised())
+        {
+            int a = Mathf.RoundToInt(_resourceCostA / _deathResourcePenalty);
+            int b = Mathf.RoundToInt(_resourceCostB / _deathResourcePenalty);
+            PlayerManager.PlayerManagerInstance.UpdateResources(a, b);
+        }
+        StartCoroutine("EndOfLife");
     }
 
     private void ManageAttack()
@@ -134,7 +161,7 @@ public class Mob : MonoBehaviour
         //count towards 0 and attack
         if (_attackDelay == 0)
         {
-            Attack();
+            Attack(_blockade);
         }
         else
         {
@@ -142,10 +169,10 @@ public class Mob : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void Attack(TowerBlockade tb)
     {
         //apply damage to the blockade
-        _blockade.TakeDamage(_attackPower);
+        tb.TakeDamage(_attackPower);
         //reset your attack delay
         _attackDelay = _attackRate;
         //StartCoroutine("");
@@ -154,6 +181,22 @@ public class Mob : MonoBehaviour
     public void SetBlockade(TowerBlockade tower)
     {
         _blockade = tower;
+    }
+
+    private void SetRearNeighbour(Mob mob)
+    {
+        _rearNeighbour = mob;
+    }
+
+    public void RemoveRearNeighbours()
+    {
+        if (_rearNeighbour == null)
+            return;
+
+        Mob m = _rearNeighbour;
+        _rearNeighbour = null;
+        m.SetBlockade(null);
+        m.RemoveRearNeighbours();
     }
 
     public float GetDistanceToEnd()
@@ -170,7 +213,7 @@ public class Mob : MonoBehaviour
         //if you drop below 0 health, die
         if (_healthCurrent <= 0)
         {
-            StartCoroutine("EndOfLife");
+            MobDefeated();
         }
     }
 
@@ -291,6 +334,9 @@ public class Mob : MonoBehaviour
             //check if it needs to remove this mob from its targets
             tower.CheckMobForRemoval(this);
         }
+        RemoveRearNeighbours();
+        _mobCounter--;
+
         //reset the mob
         Reset();
         gameObject.SetActive(false);
@@ -302,22 +348,33 @@ public class Mob : MonoBehaviour
         _moveDebuff = 0;
         _healthCurrent = _healthMax;
         _blockade = null;
+        _rearNeighbour = null;
         _slowList.Clear();
         _dotList.Clear();
     }
 
     private void OnTriggerStay(Collider other)
     {
+        //if you're already blocked do nothing
+        if (_blockade != null)
+            return;
+
         //if you collide with another mob
         if (other.TryGetComponent<Mob>(out Mob m))
         {
             //if that mob is blocked
-            if (m._blockade != null)
+            if (m._pathId == _pathId && m._blockade != null)
             {
-                //add the blockade to yourself
+                //move down the neighbour chain until you find the end mob
+                while (m._rearNeighbour != null)
+                {
+                    m = m._rearNeighbour;
+                }
+                //add the mob as a blockade
                 SetBlockade(m._blockade);
                 //add yourself to the blockade list
-                _blockade.AddBlockedTarget(this);
+                m._blockade.AddBlockedTarget(this);
+                m.SetRearNeighbour(this);
             }
         }
     }

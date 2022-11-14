@@ -111,9 +111,9 @@ public class UIManager : MonoBehaviour
                     {
                         //Assign Image that corresponds to Card in hand to the button and adjust it's text to display cost
                         _buttons[i].GetComponent<Image>().sprite = mobTypes[n].mobImage;
-                        _buttons[i].GetComponentInChildren<Text>().text = mobTypes[n].resourceCost.ToString();
+                        _buttons[i].GetComponentInChildren<Text>().text = mobTypes[n].resourceCostA.ToString();
                         //If we have enough resources in Resource B button is interactable, else it isn't
-                        if (_playerManager.ResourceCount[1] >= mobTypes[n].resourceCost)
+                        if (_playerManager.ResourceCount[1] >= mobTypes[n].resourceCostA)
                         {
                             _buttons[i].interactable = true;
                         }
@@ -169,7 +169,7 @@ public class UIManager : MonoBehaviour
         GUI.skin = _guiSkin;
         //Create a box to display the points, resources and worker count
         GUI.Box(new Rect(Screen.width / 6, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Time Left: " + _gameManager.timer + "</b>");
-        GUI.Box(new Rect((Screen.width / 6) * 2, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Poinst: " + _playerManager.Points + "</b>");
+        GUI.Box(new Rect((Screen.width / 6) * 2, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Points: " + _playerManager.Points + "</b>");
         GUI.Box(new Rect((Screen.width / 6) * 3, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources A: " + _playerManager.ResourceCount[0] + "</b>");
         GUI.Box(new Rect((Screen.width / 6) * 4, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources B: " + _playerManager.ResourceCount[1] + "</b>");
         GUI.Box(new Rect((Screen.width / 6) * 5, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Workers Busy: " + _playerManager.workerCount + "/5</b>");

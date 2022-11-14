@@ -15,10 +15,7 @@ public class GameManager : MonoBehaviour
 {
     #region Private Variables
 
-    [Tooltip("This number has two values: 0 or 1.\n0 is \"Lost\", 1 is \"Won\"")]
-    // This number has two values: 0 or 1. 
-    // 0 is "Lost", 1 is "Won"
-    [SerializeField] private ushort _gameResult = 0;
+    [SerializeField] private bool _gameResult;
     [Tooltip("This value is set at runtime in the Build phase by the server. " +
         "\nIt represents how much time (in seconds) the player has left before the phase changes automatically.")]
     [SerializeField] public float timer = 2 * 60f;
@@ -39,6 +36,12 @@ public class GameManager : MonoBehaviour
     // each COLUMN represents whether it is a Mob or Tower card
     // each ROW represents the individual scriptable object (card) of that type of card
     private ScriptableObject[,] _deck = new ScriptableObject[2, 8];
+
+    private static ushort[,] _scoreTable = new ushort[2, 3];
+    private PlayerManager _playerManager;
+    private UIManager _uiManager;
+    private ushort _turnCurrent, _turnMax = 10;
+
     #endregion
 
     #region Properties
@@ -87,7 +90,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         GameManagerInstance = this;
-        
+
         // loop through the 2D card ScriptableObject array COLUMNS to determine the card type (Mob or Tower).
         for (int cardTypeIndex = 0; cardTypeIndex < 2; ++cardTypeIndex)
         {
@@ -227,14 +230,22 @@ public class GameManager : MonoBehaviour
                     _fogOfWar[0].SetActive(NetworkManager.GetPlayerIDNormalised() != 0);
                     _fogOfWar[1].SetActive(NetworkManager.GetPlayerIDNormalised() != 1);
 
-                        Debug.Log($"We are in {_currentState} state.");
+                    Debug.Log($"We are in {_currentState} state.");
                     break;
                 }
             case GameState.Play:
-                _fogOfWar[0].SetActive(false);
-                _fogOfWar[1].SetActive(false);
-                Debug.Log($"We are in {_currentState} state.");
-                break;
+                {
+                    _fogOfWar[0].SetActive(false);
+                    _fogOfWar[1].SetActive(false);
+
+                    if (Mob._mobCounter == 0)
+                    {
+                        PlayerManager.PlayerManagerInstance.EndPlayPhase();
+                    }
+
+                    Debug.Log($"We are in {_currentState} state.");
+                    break;
+                }
             case GameState.PostGame:
                 {
                     Debug.Log($"We are in {_currentState} state.");
@@ -250,21 +261,57 @@ public class GameManager : MonoBehaviour
 
     private void ChangeGameState(GameState newState)
     {
-        GameManager._currentState = newState;
+        //if (_turnCurrent == _turnMax)
+        //{
+        //    EndGame();
+        //    return;
+        //}
+        _currentState = newState;
         GetComponent<PlayerManager>().ResetReadyStatus();
     }
 
-    private void OnValidate()
+    private void EndGame()
     {
-        Mathf.Clamp(_gameResult, 0, 1);
+        _currentState = GameState.PostGame;
+        int[] finalScore = new int[2] { _scoreTable[0, 0], _scoreTable[1, 0] };
+        ushort myPlayerId = NetworkManager.GetPlayerIDNormalised();
+        ushort otherPlayerId = myPlayerId == 0 ? (ushort)1: (ushort)0;
+        _gameResult = (finalScore[myPlayerId] > finalScore[otherPlayerId]);
     }
+
+
+    private void UpdateScoreDisplay()
+    {
+        //_uiManager.UpdateScoreDisplay(scoreTable);
+    }
+
 
     [MessageHandler((ushort)ServerToClientID.stateChange)]
     private static void GetGameStateMessage(Message message)
     {
         ushort stateID = message.GetUShort();
+        ushort turn = message.GetUShort();
         GameState newState = (GameState)stateID;
+        GameManager.GameManagerInstance._turnCurrent = turn;
         GameManager.GameManagerInstance.ChangeGameState(newState);
     }
 
+
+    private static void ReceivePointsMessage(Message message)
+    {
+        for (var i = 0; i < 2; i++)
+        {
+            for (var ii = 0; ii < 3; ii++)
+            {
+                GameManager._scoreTable[i, ii] = message.GetUShort();
+            }
+        }
+        GameManager.GameManagerInstance.UpdateScoreDisplay();
+    }
+
+    [MessageHandler((ushort)ServerToClientID.mobCount)]
+    private static void SetMobCount(Message message)
+    {
+        Mob._mobCounter = message.GetUShort();
+    }
 }

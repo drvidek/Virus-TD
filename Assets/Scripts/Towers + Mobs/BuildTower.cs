@@ -34,7 +34,6 @@ public class BuildTower : MonoBehaviour
     #region Towers
     public void PlaceTowerFromPlayerInput(ushort towerID)
     {
-        Debug.Log("Set Tpwer for Player " + playerID + "at location " + locationID);
         SpawnTowerFromID(towerID, playerID);
         SendTowerMessage();
     }
@@ -111,7 +110,7 @@ public class BuildTower : MonoBehaviour
         GameObject prefab = Resources.Load("Prefabs/Towers + Mobs/Mob") as GameObject;
         Mob mob = Instantiate(prefab, transform.position, Quaternion.identity).GetComponent<Mob>();
         MobCard mobCard = Resources.Load("Cards/Mobs/Mob" + mobId.ToString()) as MobCard;
-        mob.Initialise(mobCard, gameObject, playerId);
+        mob.Initialise(mobCard, gameObject, playerId, locationID);
         return mobCard.scale;
     }
 

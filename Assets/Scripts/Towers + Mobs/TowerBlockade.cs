@@ -60,6 +60,7 @@ public class TowerBlockade : TowerBase
         foreach (Mob mob in _blockedTargets)
         {
             mob.SetBlockade(null);
+            mob.RemoveRearNeighbours();
         }
         Reset();
         gameObject.SetActive(false);
