@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using RiptideNetworking;
 
@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public float timer = 2 * 60f;
 
     private static GameState _currentState = GameState.PreGame;
-    [SerializeField] private ParticleSystem _fogOfWarParticleSystem;
 
     [SerializeField] private GameObject[] _fogOfWar;
 
@@ -38,8 +37,6 @@ public class GameManager : MonoBehaviour
     private ScriptableObject[,] _deck = new ScriptableObject[2, 8];
 
     private static ushort[,] _scoreTable = new ushort[2, 3];
-    private PlayerManager _playerManager;
-    private UIManager _uiManager;
     private ushort _turnCurrent, _turnMax = 10;
 
     #endregion
@@ -70,14 +67,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Public property for the fog of war Particle System that overlays the opposing side of the battlefield.
-    /// </summary>
-    public ParticleSystem FogOfWarParticleSystem
-    {
-        get { return _fogOfWarParticleSystem; }
-        set { _fogOfWarParticleSystem = value; }
-    }
     /// <summary>
     /// Public property for the array of both Card ScriptableObject types (Towers and Mobs.)
     /// </summary>
@@ -216,67 +205,109 @@ public class GameManager : MonoBehaviour
         Debug.Log("Reached the end of Awake().");
     }
 
+    private void Start()
+    {
+        _currentState = GameState.PreGame;
+        NextState();
+    }
+
     void Update()
     {
+        //Debug.Log($"We are in {_currentState} state.");
+    }
+
+    private void NextState()
+    {
+        Debug.Log("Triggered NextState");
+
         switch (_currentState)
         {
             case GameState.PreGame:
-                {
-                    Debug.Log($"We are in {_currentState} state.");
-                    break;
-                }
+                StartCoroutine("StatePreGame");
+                break;
             case GameState.Build:
-                {
-                    _fogOfWar[0].SetActive(NetworkManager.GetPlayerIDNormalised() != 0);
-                    _fogOfWar[1].SetActive(NetworkManager.GetPlayerIDNormalised() != 1);
-
-                    Debug.Log($"We are in {_currentState} state.");
-                    break;
-                }
+                StartCoroutine("StateBuild");
+                break;
             case GameState.Play:
-                {
-                    _fogOfWar[0].SetActive(false);
-                    _fogOfWar[1].SetActive(false);
-
-                    if (Mob._mobCounter == 0)
-                    {
-                        PlayerManager.PlayerManagerInstance.EndPlayPhase();
-                    }
-
-                    Debug.Log($"We are in {_currentState} state.");
-                    break;
-                }
+                StartCoroutine("StatePlay");
+                break;
             case GameState.PostGame:
-                {
-                    Debug.Log($"We are in {_currentState} state.");
-                    break;
-                }
+                StartCoroutine("StatePostGame");
+                break;
             default:
-                {
-                    Debug.LogError("Something went wrong with the GameState in Update().");
-                    break;
-                }
+                break;
         }
     }
 
+    IEnumerator StatePreGame()
+    {
+        Debug.Log($"Start {_currentState} state");
+        UIManager.UIManagerInstance.SetEndPanelOnStart();
+        _fogOfWar[0].SetActive(true);
+        _fogOfWar[1].SetActive(true);
+        while (_currentState == GameState.PreGame)
+        {
+            yield return null;
+        }
+        NextState();
+    }
+
+    IEnumerator StateBuild()
+    {
+        Debug.Log($"Start {_currentState} state");
+        _fogOfWar[0].SetActive(NetworkManager.GetPlayerIDNormalised() != 0);
+        _fogOfWar[1].SetActive(NetworkManager.GetPlayerIDNormalised() != 1);
+        while (_currentState == GameState.Build)
+        {
+            PlayerManager.PlayerManagerInstance.SendPlayerPointsMessage();
+            yield return null;
+        }
+        NextState();
+    }
+
+    IEnumerator StatePlay()
+    {
+        Debug.Log($"Start {_currentState} state");
+
+        _fogOfWar[0].SetActive(false);
+        _fogOfWar[1].SetActive(false);
+        while (_currentState == GameState.Play)
+        {
+            PlayerManager.PlayerManagerInstance.SendPlayerPointsMessage();
+            if (Mob._mobCounter == 0)
+            {
+                PlayerManager.PlayerManagerInstance.EndPlayPhase();
+            }
+            yield return null;
+        }
+        NextState();
+    }
+
+    IEnumerator StatePostGame()
+    {
+        Debug.Log($"Start {_currentState} state");
+        EndGame();
+        while (_currentState == GameState.PostGame)
+        {
+            yield return null;
+        }
+        NextState();
+    }
+
+
     private void ChangeGameState(GameState newState)
     {
-        //if (_turnCurrent == _turnMax)
-        //{
-        //    EndGame();
-        //    return;
-        //}
         _currentState = newState;
-        GetComponent<PlayerManager>().ResetReadyStatus();
+        PlayerManager.PlayerManagerInstance.ResetReadyStatus();
     }
 
     private void EndGame()
     {
-        _currentState = GameState.PostGame;
         int[] finalScore = new int[2] { _scoreTable[0, 0], _scoreTable[1, 0] };
         ushort myPlayerId = NetworkManager.GetPlayerIDNormalised();
-        ushort otherPlayerId = myPlayerId == 0 ? (ushort)1: (ushort)0;
+        ushort otherPlayerId = myPlayerId == 0 ? (ushort)1 : (ushort)0;
         _gameResult = (finalScore[myPlayerId] > finalScore[otherPlayerId]);
+        UIManager.UIManagerInstance.SetEndPanelOnEnd(_gameResult);
     }
 
 
@@ -296,7 +327,7 @@ public class GameManager : MonoBehaviour
         GameManager.GameManagerInstance.ChangeGameState(newState);
     }
 
-
+    [MessageHandler((ushort)ServerToClientID.points)]
     private static void ReceivePointsMessage(Message message)
     {
         for (var i = 0; i < 2; i++)

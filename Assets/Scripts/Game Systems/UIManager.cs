@@ -21,16 +21,46 @@ public class UIManager : MonoBehaviour
     public GameObject purchasePanel;
     [Tooltip("Add the four Select buttons so their appearance can be change based on what type of tower/mob building spot was selected")]
     [SerializeField] private Button[] _buttons = new Button[4];
-    [Tooltip("Add the HireWorker Button so we can control it's interactions")]
-    [SerializeField] private Button _workerButton;
     [Tooltip("Add the GUI Skin from the UI folder here")]
     [SerializeField] private GUISkin _guiSkin;
+    [Tooltip("Entry 1 should be Win panel, entry 2 should be Lose panel")]
+    [SerializeField] private GameObject[] _endResultUI = new GameObject[3];
     //String to determine if we are building a tower or mob
     private string _buildType = null;
     //HitInfo passed from InputManager so we can use it via UI buttons outside of original function
     private RaycastHit _hitInfo;
     #endregion
+
+    private static UIManager _UIManagerInstance;
+    public static UIManager UIManagerInstance
+    {
+        //Property Read is the instance, public by default
+        get => _UIManagerInstance;
+        //private means only this instance of the class can access set
+        private set
+        {
+            //set the instance to the value if the instance is null
+            if (_UIManagerInstance == null)
+            {
+                _UIManagerInstance = value;
+            }
+            //if it is not null, check if the value is stored as the static instance
+            else if (_UIManagerInstance != value)
+            {
+                //if not, throw a warning and destroy that instance
+
+                //$ is to identify the string as containing an interpolated value
+                Debug.LogWarning($"{nameof(UIManager)} instance already exists, destroy duplicate!");
+                Destroy(value);
+            }
+        }
+    }
     #region Startup
+    private void Awake()
+    {
+        UIManagerInstance = this;
+    }
+
     private void Start()
     {
         //If PlayerManager reference is empty find it in scene
@@ -66,22 +96,7 @@ public class UIManager : MonoBehaviour
             _hitInfo.transform.GetComponent<BuildTower>().PlaceTowerFromPlayerInput((ushort)index);
         }
     }
-    public void HireWorkers()
-    {
-        //When hire worker button is pushed worker count is incremented
-        _playerManager.workerCount++;
-        //Adjust resources to take away cost of worker from Resource B
-        _playerManager.AdjustResources(1, -_playerManager.workerCost);
-        //If we still have enough resources button is interactable, else it isn't
-        if (_playerManager.ResourceCount[1] >= _playerManager.workerCost)
-        {
-            _workerButton.interactable = true;
-        }
-        else
-        {
-            _workerButton.interactable = false;
-        }
-    }
+
     public void PurchaseFromResources(Text cost)
     {
         //If we have placed a mob take away the cost from the button from Resource B, else take it away from resource A because we built a tower
@@ -161,6 +176,21 @@ public class UIManager : MonoBehaviour
     {
         //Will be implemented once main menu scene is ready to implement
     }
+
+    public void SetEndPanelOnStart()
+    {
+        _endResultUI[0].SetActive(false);
+        _endResultUI[1].SetActive(false);
+        _endResultUI[2].SetActive(false);
+    }
+
+    public void SetEndPanelOnEnd(bool win)
+    {
+        _endResultUI[0].SetActive(true);
+        _endResultUI[1].SetActive(win);
+        _endResultUI[2].SetActive(!win);
+    }
+
     #endregion
     #region OnGUI
     private void OnGUI()

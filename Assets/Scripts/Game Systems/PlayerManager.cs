@@ -39,7 +39,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Public property representing the player's point total.
     /// </summary>
-    public float Points { get; private set; } = 0;
+    public ushort Points { get; private set; } = 0;
     /// <summary>
     /// Public property to access and set the tower cards present in the 'hand' for the current game.
     /// </summary>
@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
     /// <para><example><i>Index 0: Wood</i></example></para>
     /// <para><example><i>Index 1: Gold</i></example></para>
     /// </summary>
-    public int[] ResourceCount { get; private set; } = new int[2] { 0, 0 };
+    public ushort[] ResourceCount { get; private set; } = new ushort[2] { 0, 0 };
 
     public List<Worker> workerList = new List<Worker>();
     #endregion
@@ -64,13 +64,13 @@ public class PlayerManager : MonoBehaviour
         PlayerManagerInstance = this;
     }
 
-    private void SendPlayerPointsMessage(ushort playerID, ushort points, ushort resourceA, ushort resourceB)
+    public void SendPlayerPointsMessage()
     {
         Message m = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerID.points);
-        m.AddUShort(playerID);
-        m.AddUShort(points);
-        m.AddUShort(resourceA);
-        m.AddUShort(resourceB);
+        m.AddUShort(NetworkManager.GetPlayerIDNormalised());
+        m.AddUShort(Points);
+        m.AddUShort(ResourceCount[0]);
+        m.AddUShort(ResourceCount[1]);
         NetworkManager.NetworkManagerInstance.GameClient.Send(m);
     }
 
@@ -99,7 +99,7 @@ public class PlayerManager : MonoBehaviour
     //Also used to populate starting hand arrays with random cards to see if UI was updating properly
     private void Start()
     {
-        ResourceCount = new int[] { 50, 50 };
+        ResourceCount = new ushort[] { 50, 50 };
         GameManager _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         ScriptableObject[,] _deck = _gameManager.Deck;
 
@@ -108,20 +108,18 @@ public class PlayerManager : MonoBehaviour
         {
             int towerIndex = Random.Range(0, 7);
             TowerCardsArr[i] = _deck[0, towerIndex] as TowerCard;
-            Debug.Log($"Added card Scriptable Object with index: {towerIndex} to Tower element.");
         }
         MobCardsArr = new MobCard[4];
         for (int i = 0; i < 4; i++)
         {
             int mobIndex = Random.Range(0, 7);
             MobCardsArr[i] = _deck[1, mobIndex] as MobCard;
-            Debug.Log($"Added card Scriptable Object with index: {mobIndex} to Tower element.");
         }
     }
     //Allow changing of resource points from outside script from UI functions for purchasing mobs, towers and workers
     public void AdjustResources(int index, int adjustAmount)
     {
-        ResourceCount[index] += adjustAmount;
+        ResourceCount[index] += (ushort)adjustAmount;
     }
 
     public void EndPlayPhase()
@@ -131,13 +129,13 @@ public class PlayerManager : MonoBehaviour
 
     public void UpdateResources(int a, int b)
     {
-        ResourceCount[0] += a;
-        ResourceCount[1] += b;
+        ResourceCount[0] += (ushort)a;
+        ResourceCount[1] += (ushort)b;
     }
 
     public void UpdatePoints(int score)
     {
-        Points += score;
+        Points += (ushort)score;
     }
 
 
