@@ -34,6 +34,7 @@ public class Mob : MonoBehaviour
     private List<Dotted> _dotList = new List<Dotted>();
     private bool _dying;
     private Animator _anim;
+    [SerializeField] private ParticleSystem[] _effectPartSys;
 
     private void OnValidate()
     {
@@ -46,10 +47,8 @@ public class Mob : MonoBehaviour
     {
         //get all the waypoint transforms
         Transform[] _points = parent.GetComponentsInChildren<Transform>();
-        Debug.Log(_points.Length + "points");
         //set your waypoint list length to the length of that list (minus one for the parent object)
         _waypoints = new Transform[_points.Length];
-        Debug.Log(_waypoints.Length + "size array");
 
         //loop through and add each waypoint to your waypoint list
         for (int i = 0; i < _points.Length; i++)
@@ -70,14 +69,15 @@ public class Mob : MonoBehaviour
 
     public void Initialise(MobCard mobCard, GameObject pathParent, ushort playerId, int pathId)
     {
+        if (pathParent != null)
+            ScrapePath(pathParent);
+        
         _playerId = playerId;
         _moveSpd = mobCard.moveSpd;
         _healthMax = mobCard.healthMax;
         _attackPower = mobCard.attackPower;
         _attackRate = mobCard.attackRate;
         transform.localScale = Vector3.one * mobCard.scale;
-        if (pathParent != null)
-            ScrapePath(pathParent);
         _myCard ??= mobCard;
 
         _pointWorth = mobCard.pointWorth;
@@ -137,18 +137,24 @@ public class Mob : MonoBehaviour
 
     private void ReachEndOfPath()
     {
-        if (_playerId == NetworkManager.GetPlayerIDNormalised())
-            PlayerManager.PlayerManagerInstance.UpdatePoints(_pointWorth);
+        if (NetworkManager.NetworkManagerInstance != null)
+        {
+            if (_playerId == NetworkManager.GetPlayerIDNormalised())
+                PlayerManager.PlayerManagerInstance.UpdatePoints(_pointWorth);
+        }
         StartCoroutine("EndOfLife");
     }
 
     private void MobDefeated()
     {
-        if (_playerId == NetworkManager.GetPlayerIDNormalised())
+        if (NetworkManager.NetworkManagerInstance != null)
         {
-            int a = Mathf.RoundToInt(_resourceCostA / _deathResourcePenalty);
-            int b = Mathf.RoundToInt(_resourceCostB / _deathResourcePenalty);
-            PlayerManager.PlayerManagerInstance.UpdateResources(a, b);
+            if (_playerId == NetworkManager.GetPlayerIDNormalised())
+            {
+                int a = Mathf.RoundToInt(_resourceCostA / _deathResourcePenalty);
+                int b = Mathf.RoundToInt(_resourceCostB / _deathResourcePenalty);
+                PlayerManager.PlayerManagerInstance.UpdateResources(a, b);
+            }
         }
         StartCoroutine("EndOfLife");
     }
@@ -265,6 +271,14 @@ public class Mob : MonoBehaviour
 
     private float CalculateSlow()
     {
+        if (_slowList.Count > 0)
+        {
+            if (_effectPartSys[0].isStopped)
+            _effectPartSys[0].Play();
+        }
+        else
+            _effectPartSys[0].Stop();
+        
         //initialise the debuff value
         float finalSlow = 0;
         //for each slow effect currently active
@@ -287,12 +301,21 @@ public class Mob : MonoBehaviour
             //replace the entry with the new duration values
             _slowList[i] = newSlow;
         }
+
         //return a slow debuff no slower than 30% of your normal move spd
         return Mathf.Max(0.3f, 1f - finalSlow);
     }
 
     private void CalculateDot()
     {
+        if (_dotList.Count > 0)
+        {
+            if (_effectPartSys[1].isStopped)
+                _effectPartSys[1].Play();
+        }
+        else
+            _effectPartSys[1].Stop();
+
         //for each DoT effect currently active
         for (int i = 0; i < _dotList.Count; i++)
         {

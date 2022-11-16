@@ -12,6 +12,7 @@ TagManager:
   - DepositCrypto
   - DepositRAM
   - Base
+  - Mob
   layers:
   - Default
   - TransparentFX

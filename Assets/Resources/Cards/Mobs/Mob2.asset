@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f138302692a1f04cba27dad2e0f539b, type: 3}
   m_Name: Mob2
   m_EditorClassIdentifier: 
+  title: Trojan
+  description: Bulky, slow moving, strong attacker
   moveSpd: 0.5
-  healthMax: 20
+  healthMax: 25
   attackPower: 5
-  attackRate: 2
+  attackRate: 1.5
   scale: 1.5
   mobImage: {fileID: 21300000, guid: 4a5584611c12e1846ae3344e89ccb2ef, type: 3}
-  resourceCostA: 0
-  resourceCostB: 0
-  pointWorth: 3
+  resourceCostA: 18
+  resourceCostB: 10
+  pointWorth: 5
