@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f138302692a1f04cba27dad2e0f539b, type: 3}
   m_Name: Mob1
   m_EditorClassIdentifier: 
+  title: Keylogger
+  description: All-rounder with average speed and decent defences
   moveSpd: 1
   healthMax: 15
   attackPower: 1

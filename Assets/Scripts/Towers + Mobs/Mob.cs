@@ -138,18 +138,24 @@ public class Mob : MonoBehaviour
 
     private void ReachEndOfPath()
     {
-        if (_playerId == NetworkManager.GetPlayerIDNormalised())
-            PlayerManager.PlayerManagerInstance.UpdatePoints(_pointWorth);
+        if (NetworkManager.NetworkManagerInstance != null)
+        {
+            if (_playerId == NetworkManager.GetPlayerIDNormalised())
+                PlayerManager.PlayerManagerInstance.UpdatePoints(_pointWorth);
+        }
         StartCoroutine("EndOfLife");
     }
 
     private void MobDefeated()
     {
-        if (_playerId == NetworkManager.GetPlayerIDNormalised())
+        if (NetworkManager.NetworkManagerInstance != null)
         {
-            int a = Mathf.RoundToInt(_resourceCostA / _deathResourcePenalty);
-            int b = Mathf.RoundToInt(_resourceCostB / _deathResourcePenalty);
-            PlayerManager.PlayerManagerInstance.UpdateResources(a, b);
+            if (_playerId == NetworkManager.GetPlayerIDNormalised())
+            {
+                int a = Mathf.RoundToInt(_resourceCostA / _deathResourcePenalty);
+                int b = Mathf.RoundToInt(_resourceCostB / _deathResourcePenalty);
+                PlayerManager.PlayerManagerInstance.UpdateResources(a, b);
+            }
         }
         StartCoroutine("EndOfLife");
     }
