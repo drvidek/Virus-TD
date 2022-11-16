@@ -34,6 +34,7 @@ public class Mob : MonoBehaviour
     private List<Dotted> _dotList = new List<Dotted>();
     private bool _dying;
     private Animator _anim;
+    [SerializeField] private ParticleSystem[] _effectPartSys;
 
     private void OnValidate()
     {
@@ -270,6 +271,14 @@ public class Mob : MonoBehaviour
 
     private float CalculateSlow()
     {
+        if (_slowList.Count > 0)
+        {
+            if (_effectPartSys[0].isStopped)
+            _effectPartSys[0].Play();
+        }
+        else
+            _effectPartSys[0].Stop();
+        
         //initialise the debuff value
         float finalSlow = 0;
         //for each slow effect currently active
@@ -292,12 +301,21 @@ public class Mob : MonoBehaviour
             //replace the entry with the new duration values
             _slowList[i] = newSlow;
         }
+
         //return a slow debuff no slower than 30% of your normal move spd
         return Mathf.Max(0.3f, 1f - finalSlow);
     }
 
     private void CalculateDot()
     {
+        if (_dotList.Count > 0)
+        {
+            if (_effectPartSys[1].isStopped)
+                _effectPartSys[1].Play();
+        }
+        else
+            _effectPartSys[1].Stop();
+
         //for each DoT effect currently active
         for (int i = 0; i < _dotList.Count; i++)
         {

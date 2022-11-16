@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f138302692a1f04cba27dad2e0f539b, type: 3}
   m_Name: Mob5
   m_EditorClassIdentifier: 
-  moveSpd: 1.6
-  healthMax: 5
+  title: Spyware
+  description: Slow and weak attack but worth high points
+  moveSpd: 0.8
+  healthMax: 15
   attackPower: 0.5
-  attackRate: 0.5
-  scale: 0.5
+  attackRate: 2
+  scale: 0.75
   mobImage: {fileID: 21300000, guid: 1093b9a9fc065dd47bc17710d55df534, type: 3}
-  resourceCostA: 0
-  resourceCostB: 0
-  pointWorth: 5
+  resourceCostA: 10
+  resourceCostB: 5
+  pointWorth: 6

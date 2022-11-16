@@ -15,11 +15,11 @@ MonoBehaviour:
   title: Deedoss
   description: Small, fast, low health mob
   moveSpd: 1.6
-  healthMax: 5
+  healthMax: 3
   attackPower: 0.5
   attackRate: 0.5
   scale: 0.5
   mobImage: {fileID: 21300000, guid: 3c2e6c13706c53e499642c476c76cf70, type: 3}
-  resourceCostA: 0
-  resourceCostB: 0
+  resourceCostA: 2
+  resourceCostB: 1
   pointWorth: 1

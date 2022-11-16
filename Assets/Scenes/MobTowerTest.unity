@@ -594,14 +594,14 @@ PrefabInstance:
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _myCard
       value: 
-      objectReference: {fileID: 11400000, guid: c976aef6d1c53c74da5e71d87fb93be1, type: 2}
+      objectReference: {fileID: 11400000, guid: dfd503f22c9473a4ab6686cfaa310617, type: 2}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _playerId
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _attackRate
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _myCollider
@@ -609,19 +609,19 @@ PrefabInstance:
       objectReference: {fileID: 1667829750}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _attackPower
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _attackRange
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _attackRadius
-      value: 2.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _effects.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _effects.Array.data[0].type
@@ -629,7 +629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _effects.Array.data[0].range
-      value: 5
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _effects.Array.data[0].value
@@ -637,7 +637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615379, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: m_Radius
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615382, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: m_RootOrder
@@ -685,11 +685,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7237048317796520425, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7237048317796520425, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 296c34585681b514687f378470808ef9, type: 3}
@@ -770,7 +770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _healthMax
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackRate
@@ -895,7 +895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _healthMax
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackRate
@@ -1051,7 +1051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _healthMax
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackRate
@@ -1212,7 +1212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _healthMax
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackRate

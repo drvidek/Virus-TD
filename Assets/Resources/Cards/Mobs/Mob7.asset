@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f138302692a1f04cba27dad2e0f539b, type: 3}
   m_Name: Mob7
   m_EditorClassIdentifier: 
-  moveSpd: 0.5
-  healthMax: 20
-  attackPower: 5
-  attackRate: 2
-  scale: 1.5
+  title: Adware
+  description: Relentless attacker
+  moveSpd: 1
+  healthMax: 12
+  attackPower: 1
+  attackRate: 0.5
+  scale: 1.2
   mobImage: {fileID: 21300000, guid: 68331da0c077d0843ba873cdccbf2e35, type: 3}
-  resourceCostA: 0
-  resourceCostB: 0
-  pointWorth: 3
+  resourceCostA: 15
+  resourceCostB: 12
+  pointWorth: 4
