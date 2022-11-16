@@ -15,7 +15,7 @@ MonoBehaviour:
   attackPower: 2
   attackRate: 4
   attackRange: 4
-  attackRadius: 3
+  attackRadius: 2.5
   healthMax: 0
   effects:
   - type: 1

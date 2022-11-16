@@ -315,3 +315,167 @@ Received Import Request.
   path: Assets/UI/Circle.png
   artifactKey: Guid(a6ff52a87ff9fc14e9b14a77f8a713db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/UI/Circle.png using Guid(a6ff52a87ff9fc14e9b14a77f8a713db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd140914ab913a12267eed0896a2d02dc') in 0.026757 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005439 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 0.87 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.820 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1821ms)
+		BeginReloadAssembly (225ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (8ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (60ms)
+		EndReloadAssembly (1383ms)
+			LoadAssemblies (153ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (389ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (70ms)
+			SetupLoadedEditorAssemblies (680ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (36ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (137ms)
+				ProcessInitializeOnLoadAttributes (446ms)
+				ProcessInitializeOnLoadMethodAttributes (47ms)
+				AfterProcessingInitializeOnLoad (13ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (12ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 3.03 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2089 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 14 unused Assets / (24.7 KB). Loaded Objects now: 2639.
+Memory consumption went from 92.6 MB to 92.6 MB.
+Total: 4.918700 ms (FindLiveObjects: 0.235000 ms CreateObjectMapping: 0.245300 ms MarkObjects: 4.407500 ms  DeleteObjects: 0.029800 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1159.375941 seconds.
+  path: Assets/Resources/Cards/Mobs/Mob1.asset
+  artifactKey: Guid(d4af82684824cea459b9acd9f4b128ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Mobs/Mob1.asset using Guid(d4af82684824cea459b9acd9f4b128ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd13907b55e2f76fc763798cb21acdbfb') in 0.034845 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Resources/Cards/Mobs/Mob3.asset
+  artifactKey: Guid(c6b753db83b636f4b96e227aa1870e3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Mobs/Mob3.asset using Guid(c6b753db83b636f4b96e227aa1870e3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7437d8d48c07631b506d048dff9a9f2') in 0.021882 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Resources/Cards/Mobs/Mob5.asset
+  artifactKey: Guid(8217a6485168ab74aae66d34f09b25bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Mobs/Mob5.asset using Guid(8217a6485168ab74aae66d34f09b25bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0fb757bb1b89593024c40fa36e403b62') in 0.021659 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Resources/Cards/Mobs/Mob7.asset
+  artifactKey: Guid(46ebabade860a344bb1543d2c41a9d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Mobs/Mob7.asset using Guid(46ebabade860a344bb1543d2c41a9d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2eb12f9a8d889d347674160541c2c10') in 0.022907 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004101 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 0.41 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.163 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1164ms)
+		BeginReloadAssembly (150ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (38ms)
+		EndReloadAssembly (896ms)
+			LoadAssemblies (103ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (248ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (45ms)
+			SetupLoadedEditorAssemblies (444ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (23ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (103ms)
+				ProcessInitializeOnLoadAttributes (279ms)
+				ProcessInitializeOnLoadMethodAttributes (29ms)
+				AfterProcessingInitializeOnLoad (8ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (10ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.91 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2089 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 14 unused Assets / (24.7 KB). Loaded Objects now: 2642.
+Memory consumption went from 92.6 MB to 92.6 MB.
+Total: 3.226500 ms (FindLiveObjects: 0.169100 ms CreateObjectMapping: 0.077200 ms MarkObjects: 2.946400 ms  DeleteObjects: 0.032700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 54.134637 seconds.
+  path: Assets/Resources/Cards/Towers/Tower4.asset
+  artifactKey: Guid(86ebe90c6d8c6f3478476a5806042915) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower4.asset using Guid(86ebe90c6d8c6f3478476a5806042915) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9ea554ebd508ecccead698ef1ad0c67c') in 0.035258 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Resources/Cards/Towers/Tower1.asset
+  artifactKey: Guid(9b29d2189dc4d4242acd3124a4065d62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower1.asset using Guid(9b29d2189dc4d4242acd3124a4065d62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c126ee1ba761dd591bab3dc4c1b312d0') in 0.022612 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Resources/Cards/Towers/TowerBlock0.asset
+  artifactKey: Guid(7c62ab5ecb29af241a3db453726a4a75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/TowerBlock0.asset using Guid(7c62ab5ecb29af241a3db453726a4a75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '930f163355867a18e26935f09f53ce24') in 0.022557 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Resources/Cards/Towers/Tower5.asset
+  artifactKey: Guid(dfd503f22c9473a4ab6686cfaa310617) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower5.asset using Guid(dfd503f22c9473a4ab6686cfaa310617) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '983f2eaa74d8354e45264ff1c79809e2') in 0.020674 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 995.626751 seconds.
+  path: Assets/Resources/Cards/Towers/Tower2.asset
+  artifactKey: Guid(c976aef6d1c53c74da5e71d87fb93be1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower2.asset using Guid(c976aef6d1c53c74da5e71d87fb93be1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba56d9c1cfa48854bd7b8349de6f85c9') in 0.017178 seconds 

@@ -21,7 +21,7 @@ MonoBehaviour:
   - type: 0
     value: 0.2
     range: 5
-  description: Quickly hit targets with slow
+  description: Quickly hit targets with light slow
   towerImage: {fileID: 21300000, guid: 51caf04b6416f194c9726bc839c336ad, type: 3}
   resourceCost: 5
   pointCost: 5

@@ -165,7 +165,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8611490987115619150
 MonoBehaviour:
@@ -190,13 +190,13 @@ MonoBehaviour:
   _attackPower: 5
   _attackRate: 1
   _attackDelay: 0
+  _deathResourcePenalty: 2
   _waypointIndex: 0
   _waypointParent: {fileID: 0}
   _waypoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _blockade: {fileID: 0}
 --- !u!54 &8611490987115619147
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -399,3 +399,233 @@ Received Import Request.
   path: Assets/UI/TowerRadius.png
   artifactKey: Guid(7e48c2b7818f44c4b87d809cbec64b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/UI/TowerRadius.png using Guid(7e48c2b7818f44c4b87d809cbec64b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a21377a5dbe8d8d2de05b066a830d18d') in 0.025996 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005157 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 0.87 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.820 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1821ms)
+		BeginReloadAssembly (224ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (8ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (60ms)
+		EndReloadAssembly (1359ms)
+			LoadAssemblies (159ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (353ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (69ms)
+			SetupLoadedEditorAssemblies (680ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (36ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (138ms)
+				ProcessInitializeOnLoadAttributes (442ms)
+				ProcessInitializeOnLoadMethodAttributes (47ms)
+				AfterProcessingInitializeOnLoad (13ms)
+				EditorAssembliesLoaded (3ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (11ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 2.49 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2089 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 14 unused Assets / (24.7 KB). Loaded Objects now: 2644.
+Memory consumption went from 92.7 MB to 92.7 MB.
+Total: 4.670700 ms (FindLiveObjects: 0.225500 ms CreateObjectMapping: 0.154700 ms MarkObjects: 4.265700 ms  DeleteObjects: 0.023700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 863.236555 seconds.
+  path: Assets/UI/TowerRadius.png
+  artifactKey: Guid(7e48c2b7818f44c4b87d809cbec64b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UI/TowerRadius.png using Guid(7e48c2b7818f44c4b87d809cbec64b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de7cfb1177e45277ffe5605b5b3cedb4') in 0.091791 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 29.985053 seconds.
+  path: Assets/Scripts/Game Systems/PlayerManager.cs
+  artifactKey: Guid(cf37f079416a8f5468145774ae82002b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Game Systems/PlayerManager.cs using Guid(cf37f079416a8f5468145774ae82002b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '354055c6d544ddb30a3f399a9d6105c9') in 0.025423 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 142.163856 seconds.
+  path: Assets/Scenes/MenuScene.unity
+  artifactKey: Guid(9fc0d4010bbf28b4594072e72b8655ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/MenuScene.unity using Guid(9fc0d4010bbf28b4594072e72b8655ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '861dd7ac8fd765d5b59ddf5b64a1347e') in 0.009517 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.121908 seconds.
+  path: Assets/Scenes/SampleScene.unity
+  artifactKey: Guid(2192ed66b33241b4ba9fbb13357000f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/SampleScene.unity using Guid(2192ed66b33241b4ba9fbb13357000f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'deaa9027c22823d00943d039700f1a04') in 0.008946 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 19.136210 seconds.
+  path: Assets/Resources/Prefabs/Towers + Mobs/TowerRanged.prefab
+  artifactKey: Guid(296c34585681b514687f378470808ef9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Prefabs/Towers + Mobs/TowerRanged.prefab using Guid(296c34585681b514687f378470808ef9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4ebabd2febe91d84a11426fb2adc9a3') in 0.072644 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 103.510862 seconds.
+  path: Assets/Resources/Cards/Mobs/Mob0.asset
+  artifactKey: Guid(b4583f67b4700bb46b473f4a353f6bcf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Mobs/Mob0.asset using Guid(b4583f67b4700bb46b473f4a353f6bcf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '38bf167e176ea44604df1b57aad32ac9') in 0.020840 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Resources/Cards/Mobs/Mob6.asset
+  artifactKey: Guid(27c00902f108c8948bc9a9581c1dda80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Mobs/Mob6.asset using Guid(27c00902f108c8948bc9a9581c1dda80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b0c1435f93484a33b1f968dfd8ec38ff') in 0.022245 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Resources/Cards/Mobs/Mob2.asset
+  artifactKey: Guid(15b3054841cfad04cb2421c3c01dfdac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Mobs/Mob2.asset using Guid(15b3054841cfad04cb2421c3c01dfdac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba2f1c81d57dfe15d834777c9a041c4a') in 0.023534 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Resources/Cards/Mobs/Mob4.asset
+  artifactKey: Guid(950dd415cef5f1243af876429ddc5112) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Mobs/Mob4.asset using Guid(950dd415cef5f1243af876429ddc5112) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80d2d415acee43802033c0fd27ce87f5') in 0.021599 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005133 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.166 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1167ms)
+		BeginReloadAssembly (151ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (39ms)
+		EndReloadAssembly (898ms)
+			LoadAssemblies (105ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (239ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (45ms)
+			SetupLoadedEditorAssemblies (443ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (23ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (104ms)
+				ProcessInitializeOnLoadAttributes (277ms)
+				ProcessInitializeOnLoadMethodAttributes (30ms)
+				AfterProcessingInitializeOnLoad (8ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (11ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.48 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2089 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 15 unused Assets / (25.3 KB). Loaded Objects now: 2648.
+Memory consumption went from 92.8 MB to 92.7 MB.
+Total: 3.319900 ms (FindLiveObjects: 0.174600 ms CreateObjectMapping: 0.080100 ms MarkObjects: 3.041400 ms  DeleteObjects: 0.022800 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 54.149529 seconds.
+  path: Assets/Resources/Cards/Towers/Tower7.asset
+  artifactKey: Guid(22a09e068354d814394be9d165355eaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower7.asset using Guid(22a09e068354d814394be9d165355eaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df26bc652ffc4c097c2f888a63f6f74f') in 0.032317 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Resources/Cards/Towers/Tower2.asset
+  artifactKey: Guid(c976aef6d1c53c74da5e71d87fb93be1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower2.asset using Guid(c976aef6d1c53c74da5e71d87fb93be1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a3eec362284a54f5809a905ee2413a1') in 0.021332 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/Resources/Cards/Towers/Tower3.asset
+  artifactKey: Guid(bab9ee57ea0d89f48b0079207744e89f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower3.asset using Guid(bab9ee57ea0d89f48b0079207744e89f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '81ead8dd01751f350aca624f55b6efb1') in 0.021431 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Resources/Cards/Towers/Tower0.asset
+  artifactKey: Guid(625fa50064433b64480e2964f8f86ead) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower0.asset using Guid(625fa50064433b64480e2964f8f86ead) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '057ec47cd5a6a76beb0e185af67b4483') in 0.017010 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/Resources/Cards/Towers/Tower6.asset
+  artifactKey: Guid(8273f71d2e172ba4a801d5e958e2b9e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower6.asset using Guid(8273f71d2e172ba4a801d5e958e2b9e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5127c55426b05adf3d6724290128a31') in 0.020681 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 995.603671 seconds.
+  path: Assets/Resources/Cards/Towers/Tower1.asset
+  artifactKey: Guid(9b29d2189dc4d4242acd3124a4065d62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower1.asset using Guid(9b29d2189dc4d4242acd3124a4065d62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3187055c42d185f14548b3b2aed540ea') in 0.019235 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000053 seconds.
+  path: Assets/Resources/Cards/Towers/Tower3.asset
+  artifactKey: Guid(bab9ee57ea0d89f48b0079207744e89f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Cards/Towers/Tower3.asset using Guid(bab9ee57ea0d89f48b0079207744e89f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2acfd51e67b6b00fcd70e40dfb020d76') in 0.019242 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 31.743783 seconds.
+  path: Assets/Scenes/MainMenuScene.unity
+  artifactKey: Guid(69f51fbc58c748d438f36a692aa65909) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/MainMenuScene.unity using Guid(69f51fbc58c748d438f36a692aa65909) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7251ad8b0b7282400080b15e3e9bc839') in 0.009542 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.859953 seconds.
+  path: Assets/Scenes/SampleScene.unity
+  artifactKey: Guid(2192ed66b33241b4ba9fbb13357000f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/SampleScene.unity using Guid(2192ed66b33241b4ba9fbb13357000f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e56e998ede64ebc114debf9ac5d543c') in 0.009208 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.428640 seconds.
+  path: Assets/Scenes/Test.unity
+  artifactKey: Guid(21cfbd459cbb0e944bf0ff018878d6b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Test.unity using Guid(21cfbd459cbb0e944bf0ff018878d6b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b9b847ba9dc4f94734d83b7fcd31f3e') in 0.009847 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.579353 seconds.
+  path: Assets/Scenes/MobTowerTest.unity
+  artifactKey: Guid(2192ed66b33241b4ba9fbb13357000f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/MobTowerTest.unity using Guid(2192ed66b33241b4ba9fbb13357000f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8eb12e27735778ae454bd1f5468e2f34') in 0.009620 seconds 

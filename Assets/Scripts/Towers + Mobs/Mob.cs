@@ -70,14 +70,15 @@ public class Mob : MonoBehaviour
 
     public void Initialise(MobCard mobCard, GameObject pathParent, ushort playerId, int pathId)
     {
+        if (pathParent != null)
+            ScrapePath(pathParent);
+        
         _playerId = playerId;
         _moveSpd = mobCard.moveSpd;
         _healthMax = mobCard.healthMax;
         _attackPower = mobCard.attackPower;
         _attackRate = mobCard.attackRate;
         transform.localScale = Vector3.one * mobCard.scale;
-        if (pathParent != null)
-            ScrapePath(pathParent);
         _myCard ??= mobCard;
 
         _pointWorth = mobCard.pointWorth;
