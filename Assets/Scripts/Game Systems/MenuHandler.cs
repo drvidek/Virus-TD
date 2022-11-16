@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine; //Connect to Unity Engine
 using UnityEngine.UI; //Allow use of Canvas elements 
+using UnityEngine.SceneManagement; //Use Scene Management to switch scenes
 
 public class MenuHandler : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class MenuHandler : MonoBehaviour
     private bool _swappingTower;
     #endregion
     #region Setup
-    private void Start()
+    private void Awake()
     {
         //Load card lists with cards from resources
         for (int i = 0; i < 8; i++)
@@ -34,14 +35,14 @@ public class MenuHandler : MonoBehaviour
             _towersInGame[i] = Resources.Load<TowerCard>("Cards/Towers/Tower" + i);
         }
         //Temporarily fill hand with cards from arrays
-        mobsInHand[0] = _mobsInGame[Random.Range(0,2)];
-        mobsInHand[1] = _mobsInGame[Random.Range(2,4)];
-        mobsInHand[2] = _mobsInGame[Random.Range(4,6)];
-        mobsInHand[3] = _mobsInGame[Random.Range(6,8)];
-        towersInHand[0] = _towersInGame[Random.Range(0,2)];
-        towersInHand[1] = _towersInGame[Random.Range(2,4)];
-        towersInHand[2] = _towersInGame[Random.Range(4,6)];
-        towersInHand[3] = _towersInGame[Random.Range(6,8)];      
+        mobsInHand[0] = _mobsInGame[0];
+        mobsInHand[1] = _mobsInGame[1];
+        mobsInHand[2] = _mobsInGame[2];
+        mobsInHand[3] = _mobsInGame[3];
+        towersInHand[0] = _towersInGame[0];
+        towersInHand[1] = _towersInGame[1];
+        towersInHand[2] = _towersInGame[2];
+        towersInHand[3] = _towersInGame[3];      
     }
     #endregion
     #region Manage Display & Cards
@@ -82,6 +83,7 @@ public class MenuHandler : MonoBehaviour
     }
     public void ShowHand()
     {
+        //If swapping tower update current hand window to include towers
         if (_swappingTower)
         {
             for (int i = 0; i < 4; i++)
@@ -89,6 +91,7 @@ public class MenuHandler : MonoBehaviour
                 _currentHandButtons[i].GetComponent<Image>().sprite = towersInHand[i].towerImage;
             }
         }
+        //else update it to include mobs
         else
         {
             for (int i = 0; i < 4; i++)
@@ -117,6 +120,19 @@ public class MenuHandler : MonoBehaviour
         if (_swappingTower) towersInHand[swapIndex] = _tempTowerSelect;
         //Else swap a mob
         else mobsInHand[swapIndex] = _tempMobSelect;
+    }
+    #endregion
+    #region Game Functions
+    public void EndGame()
+    {
+        #if UNITY_EDITOR
+UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        Application.Quit();
+    }
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene(1);
     }
     #endregion
 }

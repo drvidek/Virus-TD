@@ -128,7 +128,7 @@ public class UIManager : MonoBehaviour
                         _buttons[i].GetComponent<Image>().sprite = mobTypes[n].mobImage;
                         _buttons[i].GetComponentInChildren<Text>().text = mobTypes[n].resourceCostA.ToString();
                         //If we have enough resources in Resource B button is interactable, else it isn't
-                        if (_playerManager.ResourceCount[1] >= mobTypes[n].resourceCostA)
+                        if (_playerManager.ResourceCount[0] >= mobTypes[n].resourceCostA && _playerManager.ResourceCount[1] >= mobTypes[n].resourceCostB)
                         {
                             _buttons[i].interactable = true;
                         }
@@ -157,7 +157,7 @@ public class UIManager : MonoBehaviour
                         _buttons[i].GetComponent<Image>().sprite = towerTypes[n].towerImage;
                         _buttons[i].GetComponentInChildren<Text>().text = towerTypes[n].resourceCostA.ToString();
                         //If we have enough resources in Resource B button is interactable, else it isn't
-                        if (_playerManager.ResourceCount[0] >= towerTypes[n].resourceCostA)
+                        if (_playerManager.ResourceCount[0] >= towerTypes[n].resourceCostA && _playerManager.ResourceCount[1] >= towerTypes[n].resourceCostB)
                         {
                             _buttons[i].interactable = true;
                         }

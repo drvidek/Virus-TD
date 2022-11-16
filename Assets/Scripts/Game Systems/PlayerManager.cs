@@ -106,14 +106,18 @@ public class PlayerManager : MonoBehaviour
         TowerCardsArr = new TowerCard[4];
         for (int i = 0; i < 4; i++)
         {
-            int towerIndex = Random.Range(0, 7);
-            TowerCardsArr[i] = _deck[0, towerIndex] as TowerCard;
+            //int towerIndex = Random.Range(0, 7);
+            //TowerCardsArr[i] = _deck[0, towerIndex] as TowerCard;
+            TowerCardsArr[i] = MenuHandler.towersInHand[i];
+            Debug.Log(MenuHandler.towersInHand[i].name);
         }
         MobCardsArr = new MobCard[4];
         for (int i = 0; i < 4; i++)
         {
-            int mobIndex = Random.Range(0, 7);
-            MobCardsArr[i] = _deck[1, mobIndex] as MobCard;
+            //int mobIndex = Random.Range(0, 7);
+            //MobCardsArr[i] = _deck[1, mobIndex] as MobCard;
+            Debug.Log(MenuHandler.mobsInHand[i].name);
+            MobCardsArr[i] = MenuHandler.mobsInHand[i];
         }
     }
     //Allow changing of resource points from outside script from UI functions for purchasing mobs, towers and workers
