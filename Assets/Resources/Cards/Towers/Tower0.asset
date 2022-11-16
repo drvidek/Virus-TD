@@ -18,7 +18,7 @@ MonoBehaviour:
   attackRadius: 0.1
   healthMax: 0
   effects: []
-  description: Decent attacker with no special effects
   towerImage: {fileID: 21300000, guid: 11149962794dbc74fbd64974babb9ea5, type: 3}
-  resourceCost: 5
+  resourceCost: 30
   pointCost: 5
+  description: Decent attacker with no special effects

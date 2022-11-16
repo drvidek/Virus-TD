@@ -155,9 +155,9 @@ public class UIManager : MonoBehaviour
                     {
                         //Assign Image that corresponds to Card in hand to the button and adjust it's text to display cost
                         _buttons[i].GetComponent<Image>().sprite = towerTypes[n].towerImage;
-                        _buttons[i].GetComponentInChildren<Text>().text = towerTypes[n].resourceCost.ToString();
+                        _buttons[i].GetComponentInChildren<Text>().text = towerTypes[n].resourceCostA.ToString();
                         //If we have enough resources in Resource B button is interactable, else it isn't
-                        if (_playerManager.ResourceCount[0] >= towerTypes[n].resourceCost)
+                        if (_playerManager.ResourceCount[0] >= towerTypes[n].resourceCostA)
                         {
                             _buttons[i].interactable = true;
                         }

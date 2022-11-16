@@ -17,13 +17,14 @@ public enum eType
     public float range;
 }
 
-[CreateAssetMenu(fileName = "TowerSO", menuName = "SOs/TowerSO")]
+[CreateAssetMenu(fileName = "TowerCard", menuName = "Cards/TowerCard")]
 public class TowerCard : ScriptableObject
 {
+    public string title;
+    public string description;
     public float attackPower;
     public float attackRate, attackRange, attackRadius, healthMax;
     public Effect[] effects;
-    public string description;
     public Sprite towerImage;
-    public int resourceCost, pointCost;
+    public int resourceCostA, resourceCostB;
 }

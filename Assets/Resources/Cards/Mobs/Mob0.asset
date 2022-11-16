@@ -21,3 +21,4 @@ MonoBehaviour:
   resourceCostA: 0
   resourceCostB: 0
   pointWorth: 1
+  description: 'Small, fast mob '
