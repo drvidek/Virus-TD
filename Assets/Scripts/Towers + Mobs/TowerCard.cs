@@ -26,5 +26,5 @@ public class TowerCard : ScriptableObject
     public float attackRate, attackRange, attackRadius, healthMax;
     public Effect[] effects;
     public Sprite towerImage;
-    public int resourceCostA, resourceCostB;
+    public int resourceCostA, resourceCostB, pointWorth;
 }

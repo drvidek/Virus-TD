@@ -26,3 +26,4 @@ MonoBehaviour:
   towerImage: {fileID: 21300000, guid: f33d8eb4b7e8fcc41a5dd0a855ab39ce, type: 3}
   resourceCostA: 4
   resourceCostB: 8
+  pointWorth: 2

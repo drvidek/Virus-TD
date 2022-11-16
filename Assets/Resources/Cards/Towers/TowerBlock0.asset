@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ff61525e8153940b2426171f138f64, type: 3}
   m_Name: TowerBlock0
   m_EditorClassIdentifier: 
+  title: 
+  description: 
   attackPower: 0
   attackRate: 0
   attackRange: 0.1
   attackRadius: 1
   healthMax: 10
-  description: 
+  effects: []
   towerImage: {fileID: 21300000, guid: 11149962794dbc74fbd64974babb9ea5, type: 3}
-  resourceCost: 5
-  pointCost: 5
+  resourceCostA: 4
+  resourceCostB: 3
+  pointWorth: 0
