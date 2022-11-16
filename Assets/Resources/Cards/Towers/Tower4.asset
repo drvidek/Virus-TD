@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ff61525e8153940b2426171f138f64, type: 3}
   m_Name: Tower4
   m_EditorClassIdentifier: 
-  attackPower: 0.5
-  attackRate: 1
+  title: Corrupter
+  description: Applies a long lasting DoT effect
+  attackPower: 1
+  attackRate: 1.5
   attackRange: 2
   attackRadius: 0.1
   healthMax: 0
-  effects: []
+  effects:
+  - type: 1
+    value: 1
+    range: 10
   towerImage: {fileID: 21300000, guid: 4becce5e1387af24eb14fc6a21b34360, type: 3}
-  resourceCost: 5
-  pointCost: 5
-  description: 0
+  resourceCostA: 0
+  resourceCostB: 0

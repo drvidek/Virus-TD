@@ -594,14 +594,14 @@ PrefabInstance:
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _myCard
       value: 
-      objectReference: {fileID: 11400000, guid: 625fa50064433b64480e2964f8f86ead, type: 2}
+      objectReference: {fileID: 11400000, guid: c976aef6d1c53c74da5e71d87fb93be1, type: 2}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _playerId
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _attackRate
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _myCollider
@@ -609,31 +609,35 @@ PrefabInstance:
       objectReference: {fileID: 1667829750}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _attackPower
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _attackRange
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _attackRadius
-      value: 0.1
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _effects.Array.size
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
+      propertyPath: _effects.Array.data[0].type
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _effects.Array.data[0].range
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615378, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: _effects.Array.data[0].value
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615379, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: m_Radius
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3529742038287615382, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: m_RootOrder
@@ -681,11 +685,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7237048317796520425, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7237048317796520425, guid: 296c34585681b514687f378470808ef9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 296c34585681b514687f378470808ef9, type: 3}
@@ -706,19 +710,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.25
+      value: -2.12
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -759,22 +763,22 @@ PrefabInstance:
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _myCard
       value: 
-      objectReference: {fileID: 11400000, guid: b4583f67b4700bb46b473f4a353f6bcf, type: 2}
+      objectReference: {fileID: 11400000, guid: 15b3054841cfad04cb2421c3c01dfdac, type: 2}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _moveSpd
-      value: 1.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _healthMax
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackRate
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackPower
-      value: 0.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _waypointParent
@@ -831,15 +835,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -884,22 +888,22 @@ PrefabInstance:
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _myCard
       value: 
-      objectReference: {fileID: 11400000, guid: b4583f67b4700bb46b473f4a353f6bcf, type: 2}
+      objectReference: {fileID: 11400000, guid: 15b3054841cfad04cb2421c3c01dfdac, type: 2}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _moveSpd
-      value: 1.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _healthMax
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackRate
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackPower
-      value: 0.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _waypointParent
@@ -987,19 +991,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.62
+      value: -1.04
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1040,22 +1044,22 @@ PrefabInstance:
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _myCard
       value: 
-      objectReference: {fileID: 11400000, guid: b4583f67b4700bb46b473f4a353f6bcf, type: 2}
+      objectReference: {fileID: 11400000, guid: 15b3054841cfad04cb2421c3c01dfdac, type: 2}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _moveSpd
-      value: 1.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _healthMax
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackRate
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackPower
-      value: 0.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _waypointParent
@@ -1148,19 +1152,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.93
+      value: -3.25
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619146, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1201,22 +1205,22 @@ PrefabInstance:
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _myCard
       value: 
-      objectReference: {fileID: 11400000, guid: b4583f67b4700bb46b473f4a353f6bcf, type: 2}
+      objectReference: {fileID: 11400000, guid: 15b3054841cfad04cb2421c3c01dfdac, type: 2}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _moveSpd
-      value: 1.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _healthMax
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackRate
-      value: 0.5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _attackPower
-      value: 0.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8611490987115619150, guid: 22ff491824489234a921f3877f5fd4f5, type: 3}
       propertyPath: _waypointParent

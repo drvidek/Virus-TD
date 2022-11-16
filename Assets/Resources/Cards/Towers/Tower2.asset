@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ff61525e8153940b2426171f138f64, type: 3}
   m_Name: Tower2
   m_EditorClassIdentifier: 
+  title: Bombarder
+  description: Slow atk but high dmg and DoT to multiple targets
   attackPower: 2
   attackRate: 4
   attackRange: 4
@@ -21,7 +23,6 @@ MonoBehaviour:
   - type: 1
     value: 1
     range: 5
-  description: Slow atk rate but high damage to multiple targets
   towerImage: {fileID: 21300000, guid: 982ceade0335f5747813bb18b9a8772a, type: 3}
-  resourceCost: 5
-  pointCost: 5
+  resourceCostA: 0
+  resourceCostB: 0

@@ -8,8 +8,11 @@ public class TowerRanged : TowerBase
     private Mob _currentTarget;
     private LineRenderer _laser;
     private SpriteRenderer _rangeUI;
+    [SerializeField] private GameObject _impact;
+    private Animator _impactAnim;
     private Image _delayUI;
     [SerializeField] private float _rangeUISpinRate = 180f;
+
 
     new private void OnValidate()
     {
@@ -29,6 +32,9 @@ public class TowerRanged : TowerBase
         _rangeUI ??= GetComponentInChildren<SpriteRenderer>();
         _rangeUI.transform.localScale = new Vector3(_attackRange, _attackRange);
         _delayUI = GetComponentInChildren<Image>();
+        _impactAnim = _impact.GetComponent<Animator>();
+        _impact.transform.localScale = Vector3.one * _attackRadius * 2f;
+        _impact.SetActive(false);
     }
 
     new void Update()
@@ -121,7 +127,12 @@ public class TowerRanged : TowerBase
     {
         //flash the laser on then off
         _laser.enabled = true;
+        _impact.SetActive(true);
+        _impact.transform.position = _currentTarget.transform.position;
+        _impactAnim.SetTrigger("Impact");
         yield return new WaitForSeconds(0.1f);
         _laser.enabled = false;
+        yield return new WaitForSeconds(1f/6f - 0.1f);
+        _impact.SetActive(false);
     }
 }

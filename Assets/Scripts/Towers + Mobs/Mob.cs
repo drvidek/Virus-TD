@@ -46,10 +46,8 @@ public class Mob : MonoBehaviour
     {
         //get all the waypoint transforms
         Transform[] _points = parent.GetComponentsInChildren<Transform>();
-        Debug.Log(_points.Length + "points");
         //set your waypoint list length to the length of that list (minus one for the parent object)
         _waypoints = new Transform[_points.Length];
-        Debug.Log(_waypoints.Length + "size array");
 
         //loop through and add each waypoint to your waypoint list
         for (int i = 0; i < _points.Length; i++)

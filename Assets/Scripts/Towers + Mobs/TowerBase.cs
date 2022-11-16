@@ -9,7 +9,8 @@ public class TowerBase : MonoBehaviour
     [SerializeField] protected TowerCard _myCard;
     [SerializeField] protected ushort _playerId;
     [SerializeField] protected float _attackPower;
-    [SerializeField] protected float _attackRate, _attackRange, _attackDelay, _attackRadius;
+    [SerializeField] protected float _attackRate, _attackRange, _attackRadius;
+    protected float _attackDelay;
     [SerializeField] protected Effect[] _effects;
     [SerializeField] private SphereCollider _myCollider;
     [SerializeField] protected List<Mob> _validTargets = new List<Mob>();
@@ -39,6 +40,7 @@ public class TowerBase : MonoBehaviour
         _myCollider = GetComponent<SphereCollider>();
         _myCollider.radius = _attackRange;
     }
+
 
     virtual public void Reset()
     {
