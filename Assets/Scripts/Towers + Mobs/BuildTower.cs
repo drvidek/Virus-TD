@@ -52,7 +52,7 @@ public class BuildTower : MonoBehaviour
         towerID = spawningID;
         GameObject prefab = Resources.Load($"Prefabs/Towers + Mobs/Tower{(tag == "Tower" ? "Ranged" : "Blockade")}") as GameObject;
         TowerBase newTower = Instantiate(prefab, transform).GetComponent<TowerBase>();
-        newTower.Initialise(Resources.Load($"Cards/Towers/Tower{(tag == "Tower" ? towerID.ToString() : "Block0")}") as TowerCard, playerId);
+        newTower.Initialise(MenuHandler.towersInHand[spawningID], playerId);
 
         locationFree = false;
     }
@@ -109,7 +109,7 @@ public class BuildTower : MonoBehaviour
     {
         GameObject prefab = Resources.Load("Prefabs/Towers + Mobs/Mob") as GameObject;
         Mob mob = Instantiate(prefab, transform.position, Quaternion.identity).GetComponent<Mob>();
-        MobCard mobCard = Resources.Load("Cards/Mobs/Mob" + mobId.ToString()) as MobCard;
+        MobCard mobCard = MenuHandler.mobsInHand[mobId];
         mob.Initialise(mobCard, gameObject, playerId, locationID);
         return mobCard.scale;
     }

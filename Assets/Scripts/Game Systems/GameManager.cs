@@ -255,11 +255,13 @@ public class GameManager : MonoBehaviour
     IEnumerator StateBuild()
     {
         Debug.Log($"Start {_currentState} state");
+        UIManager.UIManagerInstance.readyButton.interactable = true;
         _fogOfWar[0].SetActive(NetworkManager.GetPlayerIDNormalised() != 0);
         _fogOfWar[1].SetActive(NetworkManager.GetPlayerIDNormalised() != 1);
         while (_currentState == GameState.Build)
         {
             PlayerManager.PlayerManagerInstance.SendPlayerPointsMessage();
+            timer = Mathf.MoveTowards(timer, 0, Time.deltaTime);
             yield return null;
         }
         NextState();
@@ -268,7 +270,9 @@ public class GameManager : MonoBehaviour
     IEnumerator StatePlay()
     {
         Debug.Log($"Start {_currentState} state");
-
+        //Deactivate ready splash screen when game starts and make ready button non-interactable
+        PlayerManager.PlayerManagerInstance.readyPanel.SetActive(false);
+        UIManager.UIManagerInstance.readyButton.interactable = false;
         _fogOfWar[0].SetActive(false);
         _fogOfWar[1].SetActive(false);
         while (_currentState == GameState.Play)

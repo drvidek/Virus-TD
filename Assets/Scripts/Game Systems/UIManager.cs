@@ -1,5 +1,7 @@
+using TMPro; //Use TextMeshPro components
 using UnityEngine; //Connect to Unity Engine
 using UnityEngine.UI; //Allow access and modification to Unitys Canvas UI elements
+using RiptideNetworking;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,26 +11,23 @@ public class UIManager : MonoBehaviour
     [SerializeField] private PlayerManager _playerManager;
     [Tooltip("Add the GameManager from the scene in here")]
     [SerializeField] private GameManager _gameManager;
-    //Create a struct to store various input data relating to our mobs including Card, Image and costs
-    [Header("Mob & Tower Types")]
-    [Tooltip("Enter the data including names, images and costs for available Mobs in the game.")]
-    public MobCard[] mobTypes = new MobCard[8];
-    //Create a struct to store various input data relating to our towers including Card, Image and costs
-    [Tooltip("Enter the data including names, images and costs for the available Towers in the game.")]
-    public TowerCard[] towerTypes = new TowerCard[8];
     [Header("UI Elements")]
+    [Tooltip("Add the ready button from HUD panel in here")]
+    public Button readyButton;
     [Tooltip("Add the PurchasePanel object from the heirarchy so we can enable it on selection of buildable tile.")]
     public GameObject purchasePanel;
     [Tooltip("Add the four Select buttons so their appearance can be change based on what type of tower/mob building spot was selected")]
     [SerializeField] private Button[] _buttons = new Button[4];
-    [Tooltip("Add the GUI Skin from the UI folder here")]
-    [SerializeField] private GUISkin _guiSkin;
+    [Tooltip("Add the Text fields from the HUDPanel here")]
+    [SerializeField] private Text[] _hudText = new Text[5];
     [Tooltip("Entry 1 should be Win panel, entry 2 should be Lose panel")]
     [SerializeField] private GameObject[] _endResultUI = new GameObject[3];
     //String to determine if we are building a tower or mob
     private string _buildType = null;
     //HitInfo passed from InputManager so we can use it via UI buttons outside of original function
     private RaycastHit _hitInfo;
+    //Timer variable to show correct time
+    private static int _timer;
     #endregion
 
     private static UIManager _UIManagerInstance;
@@ -60,7 +59,6 @@ public class UIManager : MonoBehaviour
     {
         UIManagerInstance = this;
     }
-
     private void Start()
     {
         //If PlayerManager reference is empty find it in scene
@@ -68,18 +66,14 @@ public class UIManager : MonoBehaviour
         {
             _playerManager = GameObject.Find("GameManager").GetComponent<PlayerManager>();
         }
-        //Update worker purchase button to include cost of workers, can be moved to other function if cost will change
-        //_workerButton.GetComponentInChildren<Text>().text = "Hire Worker: " + _playerManager.workerCost + " Resources";
-
-        for (int i = 0; i < mobTypes.Length; i++)
-        {
-            mobTypes[i] = GameManager.GameManagerInstance.Deck[1, i] as MobCard;
-        }
-
-        for (int i = 0; i < towerTypes.Length; i++)
-        {
-            towerTypes[i] = GameManager.GameManagerInstance.Deck[0, i] as TowerCard;
-        }
+    }
+    private void LateUpdate()
+    {
+        _hudText[0].text = "Time Left: " + _timer;
+        _hudText[1].text = "Points: " + _playerManager.Points;
+        _hudText[2].text = "Crypto: " + _playerManager.ResourceCount[0];
+        _hudText[3].text = "RAM: " + _playerManager.ResourceCount[1];
+        _hudText[4].text = "Workers Busy: " + _playerManager.workerCount + "/5";
     }
     #endregion
     #region Functions
@@ -97,17 +91,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void PurchaseFromResources(Text cost)
+    public void PurchaseFromResources(int cardID)
     {
-        //If we have placed a mob take away the cost from the button from Resource B, else take it away from resource A because we built a tower
-        if (_buildType == "Mob")
-        {
-            _playerManager.AdjustResources(1, -int.Parse(cost.text));
-        }
-        else
-        {
-            _playerManager.AdjustResources(0, -int.Parse(cost.text));
-        }
+        //Retrieve Card belonging to ID and take away the cost of the card from both resources based off build type
+        if (_buildType == "Mob") _playerManager.AdjustResources(-MenuHandler.mobsInHand[cardID].resourceCostA, -MenuHandler.mobsInHand[cardID].resourceCostB);
+        else _playerManager.AdjustResources(-MenuHandler.towersInHand[cardID].resourceCostA, -MenuHandler.towersInHand[cardID].resourceCostB);
     }
     public void UpdateDisplay(RaycastHit hitInfo)
     {
@@ -120,26 +108,18 @@ public class UIManager : MonoBehaviour
             //For each button search through our mobTypes struct array for a Card that matches the Card held in players hand
             for (int i = 0; i < _buttons.Length; i++)
             {
-                for (int n = 0; n < 8; n++)
-                {
-                    if (_playerManager.MobCardsArr[i] as MobCard == mobTypes[n])
-                    {
-                        //Assign Image that corresponds to Card in hand to the button and adjust it's text to display cost
-                        _buttons[i].GetComponent<Image>().sprite = mobTypes[n].mobImage;
-                        _buttons[i].GetComponentInChildren<Text>().text = mobTypes[n].resourceCostA.ToString();
-                        //If we have enough resources in Resource B button is interactable, else it isn't
-                        if (_playerManager.ResourceCount[0] >= mobTypes[n].resourceCostA && _playerManager.ResourceCount[1] >= mobTypes[n].resourceCostB)
-                        {
-                            _buttons[i].interactable = true;
-                        }
-                        else
-                        {
-                            _buttons[i].interactable = false;
-                        }
-                        //Break operation once we've assigned a Card as we don't need to keep looking for it
-                        break;
-                    }
-                }
+                //Adjust text on buttons to match cards in hand
+                _buttons[i].transform.GetChild(0).GetComponent<Text>().text = MenuHandler.mobsInHand[i].title;
+                _buttons[i].transform.GetChild(1).GetComponent<Text>().text = MenuHandler.mobsInHand[i].description;
+                _buttons[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
+                    "Move Speed: " + MenuHandler.mobsInHand[i].moveSpd.ToString() +
+                    "<br>Max Health: " + MenuHandler.mobsInHand[i].healthMax.ToString() +
+                    "<br>Power: " + MenuHandler.mobsInHand[i].attackPower.ToString() +
+                    "<br>Hit Rate: " + MenuHandler.mobsInHand[i].attackRate.ToString();
+                _buttons[i].transform.GetChild(3).GetComponent<Text>().text = "Cost: " + MenuHandler.mobsInHand[i].resourceCostA + " Crypto, " + MenuHandler.mobsInHand[i].resourceCostB + " RAM";
+                //If we have enough resources in Resource B button is interactable, else it isn't
+                if (_playerManager.ResourceCount[0] >= MenuHandler.mobsInHand[i].resourceCostA && _playerManager.ResourceCount[1] >= MenuHandler.mobsInHand[i].resourceCostB) _buttons[i].interactable = true;
+                else _buttons[i].interactable = false;
             }
         }
         //Else build type is tower
@@ -149,34 +129,21 @@ public class UIManager : MonoBehaviour
             //For each button search through our towerTypes struct array for a Card that matches the Card held in players hand
             for (int i = 0; i < _buttons.Length; i++)
             {
-                for (int n = 0; n < 8; n++)
-                {
-                    if (_playerManager.TowerCardsArr[i] as TowerCard == towerTypes[n])
-                    {
-                        //Assign Image that corresponds to Card in hand to the button and adjust it's text to display cost
-                        _buttons[i].GetComponent<Image>().sprite = towerTypes[n].towerImage;
-                        _buttons[i].GetComponentInChildren<Text>().text = towerTypes[n].resourceCostA.ToString();
-                        //If we have enough resources in Resource B button is interactable, else it isn't
-                        if (_playerManager.ResourceCount[0] >= towerTypes[n].resourceCostA && _playerManager.ResourceCount[1] >= towerTypes[n].resourceCostB)
-                        {
-                            _buttons[i].interactable = true;
-                        }
-                        else
-                        {
-                            _buttons[i].interactable = false;
-                        }
-                        //Break operation once we've assigned a Card as we don't need to keep looking for it
-                        break;
-                    }
-                }
+                //Adjust text on buttons to match cards in hand
+                _buttons[i].transform.GetChild(0).GetComponent<Text>().text = MenuHandler.towersInHand[i].title;
+                _buttons[i].transform.GetChild(1).GetComponent<Text>().text = MenuHandler.towersInHand[i].description;
+                _buttons[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
+                    "Power: " + MenuHandler.towersInHand[i].attackPower.ToString() +
+                    "<br>Fire Rate: " + MenuHandler.towersInHand[i].attackRate.ToString() +
+                    "<br>Range: " + MenuHandler.towersInHand[i].attackRange.ToString() +
+                    "<br>Damage Radius: " + MenuHandler.towersInHand[i].attackRadius.ToString();
+                _buttons[i].transform.GetChild(3).GetComponent<Text>().text = "Cost: " + MenuHandler.towersInHand[i].resourceCostA + " Crypto, " + MenuHandler.towersInHand[i].resourceCostB + " RAM";
+                //If we have enough resources in Resource B button is interactable, else it isn't
+                if (_playerManager.ResourceCount[0] >= MenuHandler.towersInHand[i].resourceCostA && _playerManager.ResourceCount[1] >= MenuHandler.towersInHand[i].resourceCostB) _buttons[i].interactable = true;
+                else _buttons[i].interactable = false;
             }
         }
     }
-    public void UpdateHand()
-    {
-        //Will be implemented once main menu scene is ready to implement
-    }
-
     public void SetEndPanelOnStart()
     {
         _endResultUI[0].SetActive(false);
@@ -192,17 +159,11 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
-    #region OnGUI
-    private void OnGUI()
+    [MessageHandler((ushort)ServerToClientID.timer)]
+    private static void GetTimerMessage(Message message)
     {
-        //Apply the GUISkin to our IMGUI elements
-        GUI.skin = _guiSkin;
-        //Create a box to display the points, resources and worker count
-        GUI.Box(new Rect(Screen.width / 6, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Time Left: " + _gameManager.timer + "</b>");
-        GUI.Box(new Rect((Screen.width / 6) * 2, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Points: " + _playerManager.Points + "</b>");
-        GUI.Box(new Rect((Screen.width / 6) * 3, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources A: " + _playerManager.ResourceCount[0] + "</b>");
-        GUI.Box(new Rect((Screen.width / 6) * 4, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources B: " + _playerManager.ResourceCount[1] + "</b>");
-        GUI.Box(new Rect((Screen.width / 6) * 5, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Workers Busy: " + _playerManager.workerCount + "/5</b>");
+        ushort timer = message.GetUShort();
+        _timer = timer;
     }
-    #endregion
 }
+

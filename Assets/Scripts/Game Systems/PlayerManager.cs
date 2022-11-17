@@ -8,7 +8,11 @@ public class PlayerManager : MonoBehaviour
     #region Private Variables
     private bool _ready;
     #endregion
-
+    #region Public Variables
+    [Header("UI Components")]
+    [Tooltip("Add the ReadyPanel in here")]
+    public GameObject readyPanel;
+    #endregion
     #region Properties
 
     private static PlayerManager _playerManagerInstance;
@@ -39,7 +43,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Public property representing the player's point total.
     /// </summary>
-    public ushort Points { get; private set; } = 0;
+    public ushort Points { get; private set; } = MenuHandler.points;
     /// <summary>
     /// Public property to access and set the tower cards present in the 'hand' for the current game.
     /// </summary>
@@ -62,6 +66,10 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         PlayerManagerInstance = this;
+        //Deactivate ready panel just in case it is active
+        readyPanel.SetActive(false);
+        //Set the points to the value from MenuHandler at start
+        Points = MenuHandler.points;
     }
 
     public void SendPlayerPointsMessage()
@@ -77,6 +85,8 @@ public class PlayerManager : MonoBehaviour
     public void ToggleReadyStatus()
     {
         _ready = !_ready;
+        //If we are ready activate the splash screen
+        readyPanel.SetActive(_ready);
         SendReadyMessage(_ready);
     }
 
@@ -121,9 +131,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
     //Allow changing of resource points from outside script from UI functions for purchasing mobs, towers and workers
-    public void AdjustResources(int index, int adjustAmount)
+    public void AdjustResources(int crypto, int ram)
     {
-        ResourceCount[index] += (ushort)adjustAmount;
+        ResourceCount[0] += (ushort) crypto;
+        ResourceCount[1] += (ushort) ram;
     }
 
     public void EndPlayPhase()
