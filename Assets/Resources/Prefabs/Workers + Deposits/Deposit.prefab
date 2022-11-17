@@ -792,6 +792,7 @@ MonoBehaviour:
   _resourceDisplay: {fileID: 422181837140553303}
   _assignmentB: 0
   _assignmentGO: {fileID: 5059256631399266085}
+  _depositImage: {fileID: 1062189947992085247}
   _resourceID: 0
   _playerID: 0
 --- !u!1 &7394838415941440116

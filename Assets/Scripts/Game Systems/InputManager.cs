@@ -187,6 +187,9 @@ public class InputManager : MonoBehaviour
     #region Callback Helper Functions
     private void CheckBuild(Vector3 pos)
     {
+        if (GameManager.CurrentState != GameState.Build)
+            return;
+
         //If old position is equal to cameras current position we have not moved and we are obviously selecting something
         if (_oldPosition == transform.position)
         {

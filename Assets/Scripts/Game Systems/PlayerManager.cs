@@ -76,6 +76,9 @@ public class PlayerManager : MonoBehaviour
 
     public void ToggleReadyStatus()
     {
+        if (GameManager.CurrentState != GameState.Build)
+            return;
+
         _ready = !_ready;
         SendReadyMessage(_ready);
     }

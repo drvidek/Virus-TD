@@ -1,5 +1,6 @@
 using UnityEngine; //Connect to Unity Engine
 using UnityEngine.UI; //Allow access and modification to Unitys Canvas UI elements
+using RiptideNetworking;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GUISkin _guiSkin;
     [Tooltip("Entry 1 should be Win panel, entry 2 should be Lose panel")]
     [SerializeField] private GameObject[] _endResultUI = new GameObject[3];
+    private static int _timer;
     //String to determine if we are building a tower or mob
     private string _buildType = null;
     //HitInfo passed from InputManager so we can use it via UI buttons outside of original function
@@ -198,11 +200,18 @@ public class UIManager : MonoBehaviour
         //Apply the GUISkin to our IMGUI elements
         GUI.skin = _guiSkin;
         //Create a box to display the points, resources and worker count
-        GUI.Box(new Rect(Screen.width / 6, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Time Left: " + _gameManager.timer + "</b>");
+        GUI.Box(new Rect(Screen.width / 6, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Time Left: " + _timer + "</b>");
         GUI.Box(new Rect((Screen.width / 6) * 2, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Points: " + _playerManager.Points + "</b>");
         GUI.Box(new Rect((Screen.width / 6) * 3, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources A: " + _playerManager.ResourceCount[0] + "</b>");
         GUI.Box(new Rect((Screen.width / 6) * 4, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Resources B: " + _playerManager.ResourceCount[1] + "</b>");
         GUI.Box(new Rect((Screen.width / 6) * 5, (Screen.height / 18) * 17, Screen.width / 6, Screen.height / 18), "<b>Workers Busy: " + _playerManager.workerCount + "/5</b>");
     }
     #endregion
+
+    [MessageHandler((ushort)ServerToClientID.timer)]
+    private static void GetTimerMessage(Message message)
+    {
+        ushort timer = message.GetUShort();
+        _timer = timer;
+    }
 }
