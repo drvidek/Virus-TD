@@ -20,7 +20,7 @@ MonoBehaviour:
   attackRadius: 0.1
   healthMax: 0
   effects: []
-  towerImage: {fileID: 21300000, guid: 11149962794dbc74fbd64974babb9ea5, type: 3}
+  towerImage: {fileID: 21300000, guid: d1e201eaa6e897142ab7426c7dfc9c5c, type: 3}
   resourceCostA: 2
   resourceCostB: 5
   pointWorth: 1

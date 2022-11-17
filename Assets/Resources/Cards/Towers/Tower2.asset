@@ -23,7 +23,7 @@ MonoBehaviour:
   - type: 1
     value: 1
     range: 5
-  towerImage: {fileID: 21300000, guid: 982ceade0335f5747813bb18b9a8772a, type: 3}
+  towerImage: {fileID: 21300000, guid: 6d2be91a1017d3342af6bbc0d10b78da, type: 3}
   resourceCostA: 5
   resourceCostB: 10
   pointWorth: 5

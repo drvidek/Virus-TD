@@ -117,6 +117,7 @@ public class UIManager : MonoBehaviour
                     "<br>Power: " + MenuHandler.mobsInHand[i].attackPower.ToString() +
                     "<br>Hit Rate: " + MenuHandler.mobsInHand[i].attackRate.ToString();
                 _buttons[i].transform.GetChild(3).GetComponent<Text>().text = "Cost: " + MenuHandler.mobsInHand[i].resourceCostA + " Crypto, " + MenuHandler.mobsInHand[i].resourceCostB + " RAM";
+                _buttons[i].GetComponent<Image>().sprite = MenuHandler.mobsInHand[i].mobImage;
                 //If we have enough resources in Resource B button is interactable, else it isn't
                 if (_playerManager.ResourceCount[0] >= MenuHandler.mobsInHand[i].resourceCostA && _playerManager.ResourceCount[1] >= MenuHandler.mobsInHand[i].resourceCostB) _buttons[i].interactable = true;
                 else _buttons[i].interactable = false;

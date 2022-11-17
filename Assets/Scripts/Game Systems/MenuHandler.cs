@@ -92,7 +92,8 @@ public class MenuHandler : MonoBehaviour
                     "<br>Damage Radius: " + towersInGame[i].tower.attackRadius.ToString();
                 if (towersInGame[i].purchased == true) _buttons[i].transform.GetChild(3).GetComponent<Text>().text = "Purchased";
                 else _buttons[i].transform.GetChild(3).GetComponent<Text>().text = "Cost: " + towersInGame[i].tower.pointWorth + " points";
-                //_buttons[i].GetComponent<Image>().sprite = _towersInGame[i].tower.towerImage;
+                //Change BG image for button
+                _buttons[i].GetComponent<Image>().sprite = towersInGame[i].tower.towerImage;
                 //If we can afford card or it has been purchased make it selectable else we can't choose it
                 if (towersInGame[i].tower.pointWorth <= points || towersInGame[i].purchased) _buttons[i].GetComponent<Button>().interactable = true;
                 else _buttons[i].GetComponent<Button>().interactable = false;
@@ -148,7 +149,7 @@ public class MenuHandler : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                //_currentHandButtons[i].GetComponent<Image>().sprite = towersInHand[i].towerImage;
+                _currentHandButtons[i].GetComponent<Image>().sprite = towersInHand[i].towerImage;
                 _currentHandButtons[i].transform.GetChild(0).GetComponent<Text>().text = towersInHand[i].title;
                 _currentHandButtons[i].transform.GetChild(1).GetComponent<Text>().text = towersInHand[i].description;
                 _currentHandButtons[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
