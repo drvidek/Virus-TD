@@ -84,6 +84,9 @@ public class PlayerManager : MonoBehaviour
 
     public void ToggleReadyStatus()
     {
+        if (GameManager.CurrentState != GameState.Build)
+            return;
+
         _ready = !_ready;
         //If we are ready activate the splash screen
         readyPanel.SetActive(_ready);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RiptideNetworking;
 using TMPro;
-
+using UnityEngine.UI;
 
 public class Deposit : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class Deposit : MonoBehaviour
 
     [Header("Misc")]
     PlayerManager playerManager;
+    [SerializeField] Image _depositImage;
 
     [SerializeField] private ushort _resourceID;
     private static Deposit[,] _deposits = new Deposit[2, 9];
@@ -43,9 +44,15 @@ public class Deposit : MonoBehaviour
     void Update()
     {
         Timeout();
-        _resourceDisplay.enabled = (tag != "Untagged" && GameManager.CurrentState != GameState.Build);
+        _resourceDisplay.enabled = CheckEnable();
         _resourceDisplay.text = $"{_resources} {tag.Remove(0, 7)}";
+        _depositImage.color = CheckEnable() ? Color.green : Color.white;
 
+    }
+
+    private bool CheckEnable()
+    {
+        return _resources > 0 && _playerID == NetworkManager.GetPlayerIDNormalised() && GameManager.CurrentState != GameState.Build;
     }
 
     public void Assignment()

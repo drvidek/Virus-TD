@@ -20,7 +20,8 @@ public enum ServerToClientID : ushort
     points,
     resourceSpawn,
     stateChange,
-    mobCount
+    mobCount,
+    timer
 }
 
 public class NetworkManager : MonoBehaviour

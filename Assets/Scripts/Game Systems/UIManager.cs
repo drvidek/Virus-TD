@@ -159,6 +159,7 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
+
     [MessageHandler((ushort)ServerToClientID.timer)]
     private static void GetTimerMessage(Message message)
     {

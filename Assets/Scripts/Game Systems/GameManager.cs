@@ -16,13 +16,10 @@ public class GameManager : MonoBehaviour
     #region Private Variables
 
     [SerializeField] private bool _gameResult;
-    [Tooltip("This value is set at runtime in the Build phase by the server. " +
-        "\nIt represents how much time (in seconds) the player has left before the phase changes automatically.")]
-    [SerializeField] public float timer = 2 * 60f;
-
+    
     private static GameState _currentState = GameState.PreGame;
 
-    [SerializeField] private GameObject[] _fogOfWar;
+    [SerializeField] private FogOfWar[] _fogOfWar;
 
     [Tooltip("DO NOT CHANGE THE NUMBER OF ELEMENTS IN THIS ARRAY VIA UNITY EDITOR, LOGIC LOOPS DEPEND ON IT.")]
     // Array that holds all the Tower type ScriptableObject cards
@@ -243,8 +240,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log($"Start {_currentState} state");
         UIManager.UIManagerInstance.SetEndPanelOnStart();
-        _fogOfWar[0].SetActive(true);
-        _fogOfWar[1].SetActive(true);
+        _fogOfWar[0].SetTargetDissolve(0);
+        _fogOfWar[1].SetTargetDissolve(0);
         while (_currentState == GameState.PreGame)
         {
             yield return null;
@@ -258,10 +255,11 @@ public class GameManager : MonoBehaviour
         UIManager.UIManagerInstance.readyButton.interactable = true;
         _fogOfWar[0].SetActive(NetworkManager.GetPlayerIDNormalised() != 0);
         _fogOfWar[1].SetActive(NetworkManager.GetPlayerIDNormalised() != 1);
+        _fogOfWar[0].SetTargetDissolve(NetworkManager.GetPlayerIDNormalised() == 0 ? 1 : 0);
+        _fogOfWar[1].SetTargetDissolve(NetworkManager.GetPlayerIDNormalised() == 1 ? 1 : 0);
         while (_currentState == GameState.Build)
         {
             PlayerManager.PlayerManagerInstance.SendPlayerPointsMessage();
-            timer = Mathf.MoveTowards(timer, 0, Time.deltaTime);
             yield return null;
         }
         NextState();
@@ -275,6 +273,8 @@ public class GameManager : MonoBehaviour
         UIManager.UIManagerInstance.readyButton.interactable = false;
         _fogOfWar[0].SetActive(false);
         _fogOfWar[1].SetActive(false);
+        _fogOfWar[0].SetTargetDissolve(1);
+        _fogOfWar[1].SetTargetDissolve(1);
         while (_currentState == GameState.Play)
         {
             PlayerManager.PlayerManagerInstance.SendPlayerPointsMessage();
