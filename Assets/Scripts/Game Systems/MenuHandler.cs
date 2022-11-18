@@ -4,7 +4,7 @@ using UnityEngine; //Connect to Unity Engine
 using UnityEngine.UI; //Allow use of Canvas elements 
 using UnityEngine.SceneManagement; //Use Scene Management to switch scenes
 using TMPro; //Use TextMeshPro components
-using System.IO;
+using System.IO; //Allow for checking for files in a path
 
 public class MenuHandler : MonoBehaviour
 {
@@ -27,10 +27,15 @@ public class MenuHandler : MonoBehaviour
     public static TowerCard[] towersInHand = new TowerCard[4]; 
     //Public static array of tower cards in hand so PlayerManager can get current hand
     public static MobCard[] mobsInHand = new MobCard[4];
-    //Serialized private field to store buttons to adjust cards between mob and tower mode
+    [Header("UI Elements")]
+    [Tooltip("An array of buttons for the Deck card selection screen. Populates automatically when opening the screen.")]
     [SerializeField] private GameObject[] _buttons = new GameObject[8];
-    //Serialized field for buttons in Current Hand screen
+    [Tooltip("Array of buttons from current hand window when swapping cards. Please add the buttons from the CurrentHandPanel")]
     [SerializeField] private Button[] _currentHandButtons = new Button[4];
+    [Tooltip("Input field for the IP adress. Add the IPInput here")]
+    [SerializeField] private InputField _ipInput;
+    [Tooltip("Input field for the port. Add the PortInput here")]
+    [SerializeField] private InputField _portInput;
     //Private references to the currently selected cards to change with held cards
     private TowerCard _tempTowerSelect;
     private MobCard _tempMobSelect;
@@ -38,6 +43,9 @@ public class MenuHandler : MonoBehaviour
     private bool _swappingTower;
     //Static variable to store amount of points from save file 
     public static ushort points;
+    //Server IP and Port information to pass to the network manager
+    public static string s_ip;
+    public static ushort s_port;
     #endregion
     #region Setup
     private void Awake()
@@ -51,7 +59,7 @@ public class MenuHandler : MonoBehaviour
         //If save file exists load data from it
         if (File.Exists(BinarySave.path)) 
         {
-            BinarySave.LoadPlayerData(ref mobsInGame, ref towersInGame, mobsInHand, towersInHand, points);
+            BinarySave.LoadPlayerData(ref mobsInGame, ref towersInGame, mobsInHand, towersInHand, ref points);
         }
         //else assign the default 
         else {
@@ -68,7 +76,6 @@ public class MenuHandler : MonoBehaviour
                 towersInGame[i].purchased = false;
             }
         }
-        Debug.Log(points);
     }
     #endregion
     #region Manage Display & Cards
@@ -215,7 +222,7 @@ public class MenuHandler : MonoBehaviour
     public void EndGame()
     {
         //Save data from game to save file
-        BinarySave.SaveGameData(ref mobsInGame, ref towersInGame, mobsInHand, towersInHand, points);
+        BinarySave.SaveGameData(ref mobsInGame, ref towersInGame, mobsInHand, towersInHand, ref points);
         //If unity editor exit play mode else quit application
         #if UNITY_EDITOR
 UnityEditor.EditorApplication.isPlaying = false;
@@ -226,6 +233,13 @@ UnityEditor.EditorApplication.isPlaying = false;
     {
         //Change to scene matching index given
         SceneManager.LoadScene(sceneIndex);
+    }
+    public void SetAddress()
+    {
+        Debug.Log(_ipInput.text);
+        s_ip = _ipInput.text;
+        Debug.Log(_portInput.text);
+        s_port = ushort.Parse(_portInput.text);
     }
     #endregion
 }

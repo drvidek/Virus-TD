@@ -14,7 +14,7 @@ public class SaveData
     public ushort playerScore;
     #endregion
     #region Save
-    public SaveData(ref MenuHandler.MobsInGame[] mobs, ref MenuHandler.TowersInGame[] towers, MobCard[] mobsInHand, TowerCard[] towersInHand, ushort score)
+    public SaveData(ref MenuHandler.MobsInGame[] mobs, ref MenuHandler.TowersInGame[] towers, MobCard[] mobsInHand, TowerCard[] towersInHand, ref ushort score)
     {
         //Initialize arrays
         purchasedMobBool = new int[mobs.Length];
@@ -46,12 +46,13 @@ public class SaveData
                 }
             }
         }
+        Debug.Log(score);
         //Store the points in the proper index
         playerScore = score;
     }
     #endregion
     #region Load
-    public void LoadPlayerData(ref MenuHandler.MobsInGame[] mobs, ref MenuHandler.TowersInGame[] towers, MobCard[] mobsInHand, TowerCard[] towersInHand, ushort score)
+    public void LoadPlayerData(ref MenuHandler.MobsInGame[] mobs, ref MenuHandler.TowersInGame[] towers, MobCard[] mobsInHand, TowerCard[] towersInHand, ref ushort score)
     {
         //Convert int back to boolean and store it in arrays
         for (int i = 0; i < 8; i++)
@@ -65,6 +66,7 @@ public class SaveData
             mobsInHand[i] = mobs[handMobIndex[i]].mob;
             towersInHand[i] = towers[handTowerIndex[i]].tower;
         }
+        Debug.Log(score);
         score = playerScore;
     }
     #endregion

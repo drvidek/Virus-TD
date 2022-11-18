@@ -8,10 +8,11 @@ public class BinarySave
     public static string path = Path.Combine(Application.streamingAssetsPath, "SaveFile.bin");
 
     //Save function requires Deck information, whether they are purchased, current hand information and points balance
-    public static void SaveGameData(ref MenuHandler.MobsInGame[] mobs, ref MenuHandler.TowersInGame[] towers, MobCard[] mobsInHand, TowerCard[] towersInHand, ushort score)
+    public static void SaveGameData(ref MenuHandler.MobsInGame[] mobs, ref MenuHandler.TowersInGame[] towers, MobCard[] mobsInHand, TowerCard[] towersInHand, ref ushort score)
     {
+        Debug.Log(score);
         //Retrieve SaveData information so we can save it to file
-        SaveData data = new SaveData(ref mobs, ref towers, mobsInHand, towersInHand, score);
+        SaveData data = new SaveData(ref mobs, ref towers, mobsInHand, towersInHand, ref score);
         //Create a new BinaryFormatter so we can convert SaveData information
         BinaryFormatter formatter = new BinaryFormatter();
         //Open a new FileStream to stream the data to the file
@@ -22,7 +23,7 @@ public class BinarySave
         stream.Close();
     }
     //Load function  requires Player transforms, states and a save index to be fed to it when calling so it will change the values. Interacts with SaveData file.
-    public static SaveData LoadPlayerData(ref MenuHandler.MobsInGame[] mobs, ref MenuHandler.TowersInGame[] towers, MobCard[] mobsInHand, TowerCard[] towersInHand, ushort score)
+    public static SaveData LoadPlayerData(ref MenuHandler.MobsInGame[] mobs, ref MenuHandler.TowersInGame[] towers, MobCard[] mobsInHand, TowerCard[] towersInHand, ref ushort score)
     {
         //If the file exists at that path
         if (File.Exists(path))
@@ -36,9 +37,10 @@ public class BinarySave
             //Close the stream
             stream.Close();
             //Call the LoadPlayerData function in SaveData to store correct values in the arrays and variables so it can be passed to MenuHandler
-            data.LoadPlayerData(ref mobs, ref towers, mobsInHand, towersInHand, score);
+            data.LoadPlayerData(ref mobs, ref towers, mobsInHand, towersInHand, ref score);
+            Debug.Log(score);
             //Return the data
-            return data;
+            return data;            
         }
         //If the specified file doesn't exist return nothing
         else

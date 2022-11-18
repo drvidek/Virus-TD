@@ -312,6 +312,10 @@ public class GameManager : MonoBehaviour
         ushort otherPlayerId = myPlayerId == 0 ? (ushort)1 : (ushort)0;
         _gameResult = (finalScore[myPlayerId] > finalScore[otherPlayerId]);
         UIManager.UIManagerInstance.SetEndPanelOnEnd(_gameResult);
+        //Assign points to MenuHandler version because player manager version was throwing error in save call
+        MenuHandler.points = PlayerManager.PlayerManagerInstance.Points;
+        //Save the game to store current information, most importantly updated points
+        BinarySave.SaveGameData(ref MenuHandler.mobsInGame, ref MenuHandler.towersInGame, MenuHandler.mobsInHand, MenuHandler.towersInHand, ref MenuHandler.points);
     }
 
 

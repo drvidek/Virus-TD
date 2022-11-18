@@ -64,6 +64,9 @@ public class NetworkManager : MonoBehaviour
     {
         //when the object that this is attached to in game initialises, try to set the instance to this
         NetworkManagerInstance = this;
+        //Setup port information from menu
+        s_ip = MenuHandler.s_ip;
+        s_port = MenuHandler.s_port;
     }
 
     private void Start()
@@ -80,7 +83,7 @@ public class NetworkManager : MonoBehaviour
         GameClient.Disconnected += DidDisconnect;
 
         NetworkManager.NetworkManagerInstance.Connect();
-
+        Debug.Log(s_ip + " " + s_port);
     }
 
     void DidConnect(object sender, EventArgs e)
