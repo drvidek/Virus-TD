@@ -69,7 +69,12 @@ public class PlayerManager : MonoBehaviour
         //Deactivate ready panel just in case it is active
         readyPanel.SetActive(false);
         //Set the points to the value from MenuHandler at start
-        Points = MenuHandler.points;
+        //Points = MenuHandler.points;
+    }
+
+    private void Update()
+    {
+        Debug.Log($"Ready: {_ready}");
     }
 
     public void SendPlayerPointsMessage()

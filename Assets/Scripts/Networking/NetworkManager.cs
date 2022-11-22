@@ -30,7 +30,7 @@ public class NetworkManager : MonoBehaviour
     We want to make sure there can be only ONE instance of our network manager
     We are creating a private static instance of our NetworkManager and a public static Property to control it
     */
-    private static NetworkManager _networkmanagerInstance;
+    private static NetworkManager _networkmanagerInstance = null;
     public static NetworkManager NetworkManagerInstance
     {
         //Property Read is the instance, public by default

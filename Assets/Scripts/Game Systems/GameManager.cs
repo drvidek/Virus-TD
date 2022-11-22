@@ -210,7 +210,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log($"We are in {_currentState} state.");
+        Debug.Log($"We are in {_currentState} state on turn {_turnCurrent}");
     }
 
     private void NextState()
@@ -246,6 +246,7 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
+        PlayerManager.PlayerManagerInstance.ResetReadyStatus();
         NextState();
     }
 
@@ -253,8 +254,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log($"Start {_currentState} state");
         UIManager.UIManagerInstance.readyButton.interactable = true;
-        //_fogOfWar[0].SetActive(NetworkManager.GetPlayerIDNormalised() != 0);
-        //_fogOfWar[1].SetActive(NetworkManager.GetPlayerIDNormalised() != 1);
         _fogOfWar[0].SetTargetDissolve(NetworkManager.GetPlayerIDNormalised() == 0 ? 1 : 0);
         _fogOfWar[1].SetTargetDissolve(NetworkManager.GetPlayerIDNormalised() == 1 ? 1 : 0);
         while (_currentState == GameState.Build)
@@ -262,6 +261,7 @@ public class GameManager : MonoBehaviour
             PlayerManager.PlayerManagerInstance.SendPlayerPointsMessage();
             yield return null;
         }
+        PlayerManager.PlayerManagerInstance.ResetReadyStatus();
         NextState();
     }
 
@@ -271,8 +271,6 @@ public class GameManager : MonoBehaviour
         //Deactivate ready splash screen when game starts and make ready button non-interactable
         PlayerManager.PlayerManagerInstance.readyPanel.SetActive(false);
         UIManager.UIManagerInstance.readyButton.interactable = false;
-        //_fogOfWar[0].SetActive(false);
-        //_fogOfWar[1].SetActive(false);
         _fogOfWar[0].SetTargetDissolve(1);
         _fogOfWar[1].SetTargetDissolve(1);
         while (_currentState == GameState.Play)
@@ -284,6 +282,7 @@ public class GameManager : MonoBehaviour
             }
             yield return null;
         }
+        PlayerManager.PlayerManagerInstance.ResetReadyStatus();
         NextState();
     }
 
@@ -302,7 +301,6 @@ public class GameManager : MonoBehaviour
     private void ChangeGameState(GameState newState)
     {
         _currentState = newState;
-        PlayerManager.PlayerManagerInstance.ResetReadyStatus();
     }
 
     private void EndGame()
@@ -317,13 +315,6 @@ public class GameManager : MonoBehaviour
         //Save the game to store current information, most importantly updated points
         BinarySave.SaveGameData(ref MenuHandler.mobsInGame, ref MenuHandler.towersInGame, MenuHandler.mobsInHand, MenuHandler.towersInHand, ref MenuHandler.points);
     }
-
-
-    private void UpdateScoreDisplay()
-    {
-        //_uiManager.UpdateScoreDisplay(scoreTable);
-    }
-
 
     [MessageHandler((ushort)ServerToClientID.stateChange)]
     private static void GetGameStateMessage(Message message)
@@ -345,7 +336,6 @@ public class GameManager : MonoBehaviour
                 GameManager._scoreTable[i, ii] = message.GetUShort();
             }
         }
-        GameManager.GameManagerInstance.UpdateScoreDisplay();
     }
 
     [MessageHandler((ushort)ServerToClientID.mobCount)]
