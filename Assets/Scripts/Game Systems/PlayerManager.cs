@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
     #region Private Variables
     private bool _ready;
+    public bool Ready { get => _ready; }
     #endregion
     #region Public Variables
     [Header("UI Components")]
@@ -70,11 +71,6 @@ public class PlayerManager : MonoBehaviour
         readyPanel.SetActive(false);
         //Set the points to the value from MenuHandler at start
         //Points = MenuHandler.points;
-    }
-
-    private void Update()
-    {
-        Debug.Log($"Ready: {_ready}");
     }
 
     public void SendPlayerPointsMessage()

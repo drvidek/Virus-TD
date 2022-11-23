@@ -210,12 +210,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"We are in {_currentState} state on turn {_turnCurrent}");
+        Debug.Log($"We are in {_currentState} state on turn {_turnCurrent} and ready status is {PlayerManager.PlayerManagerInstance.Ready}");
     }
 
     private void NextState()
     {
-        Debug.Log("Triggered NextState");
+        //Debug.Log("Triggered NextState");
 
         switch (_currentState)
         {
@@ -238,7 +238,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StatePreGame()
     {
-        Debug.Log($"Start {_currentState} state");
+        //Debug.Log($"Start {_currentState} state");
         UIManager.UIManagerInstance.SetEndPanelOnStart();
         _fogOfWar[0].SetTargetDissolve(0);
         _fogOfWar[1].SetTargetDissolve(0);
@@ -252,7 +252,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StateBuild()
     {
-        Debug.Log($"Start {_currentState} state");
+        //Debug.Log($"Start {_currentState} state");
         UIManager.UIManagerInstance.readyButton.interactable = true;
         _fogOfWar[0].SetTargetDissolve(NetworkManager.GetPlayerIDNormalised() == 0 ? 1 : 0);
         _fogOfWar[1].SetTargetDissolve(NetworkManager.GetPlayerIDNormalised() == 1 ? 1 : 0);
@@ -267,7 +267,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StatePlay()
     {
-        Debug.Log($"Start {_currentState} state");
+        //Debug.Log($"Start {_currentState} state");
         //Deactivate ready splash screen when game starts and make ready button non-interactable
         PlayerManager.PlayerManagerInstance.readyPanel.SetActive(false);
         UIManager.UIManagerInstance.readyButton.interactable = false;
@@ -288,7 +288,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StatePostGame()
     {
-        Debug.Log($"Start {_currentState} state");
+        //Debug.Log($"Start {_currentState} state");
         EndGame();
         while (_currentState == GameState.PostGame)
         {
