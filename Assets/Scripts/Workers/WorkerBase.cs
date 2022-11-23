@@ -13,7 +13,7 @@ public class WorkerBase : MonoBehaviour
         if ((ushort)_playerID != NetworkManager.GetPlayerIDNormalised())
             return;
 
-        if (RoundManager.CurrentState == GameState.Play && _playerManager.workerCount < _workerMax)
+        if ((NetworkManager.NetworkManagerInstance.GameClient.IsNotConnected || RoundManager.CurrentState == GameState.Play) && _playerManager.workerCount < _workerMax)
         {
             GameObject prefab = Instantiate(Resources.Load("Prefabs/Workers + Deposits/Worker") as GameObject, transform.position, Quaternion.identity);
             Worker worker = prefab.GetComponent<Worker>();
@@ -21,5 +21,6 @@ public class WorkerBase : MonoBehaviour
             _playerManager.workerCount++;
         }
     }
+
 
 }

@@ -52,7 +52,7 @@ public class Deposit : MonoBehaviour
 
     private bool CheckEnable()
     {
-        return _resources > 0 && _playerID == NetworkManager.GetPlayerIDNormalised() && RoundManager.CurrentState != GameState.Build;
+        return _resources > 0 && _playerID == NetworkManager.GetPlayerIDNormalised() && (NetworkManager.NetworkManagerInstance.GameClient.IsNotConnected || RoundManager.CurrentState != GameState.Build);
     }
 
     public void Assignment()
