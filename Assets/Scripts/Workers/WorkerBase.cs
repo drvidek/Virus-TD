@@ -13,7 +13,7 @@ public class WorkerBase : MonoBehaviour
         if ((ushort)_playerID != NetworkManager.GetPlayerIDNormalised())
             return;
 
-        if (GameManager.CurrentState == GameState.Play && _playerManager.workerCount < _workerMax)
+        if (RoundManager.CurrentState == GameState.Play && _playerManager.workerCount < _workerMax)
         {
             GameObject prefab = Instantiate(Resources.Load("Prefabs/Workers + Deposits/Worker") as GameObject, transform.position, Quaternion.identity);
             Worker worker = prefab.GetComponent<Worker>();

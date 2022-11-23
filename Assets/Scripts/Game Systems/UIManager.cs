@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     [Tooltip("Add the PlayerManager from the scene in here")]
     [SerializeField] private PlayerManager _playerManager;
     [Tooltip("Add the GameManager from the scene in here")]
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private RoundManager _gameManager;
     [Header("UI Elements")]
     [Tooltip("Add the ready button from HUD panel in here")]
     public Button readyButton;
@@ -22,6 +22,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text[] _hudText = new Text[5];
     [Tooltip("Entry 1 should be Win panel, entry 2 should be Lose panel")]
     [SerializeField] private GameObject[] _endResultUI = new GameObject[3];
+    [Tooltip("Display both player's points from the game on the end panel")]
+    [SerializeField] private TextMeshProUGUI _endingPointsDisplay;
+    [Tooltip("Display the player's total points on the end panel")]
+    [SerializeField] private TextMeshProUGUI _totalPointsDisplay;
     //String to determine if we are building a tower or mob
     private string _buildType = null;
     //HitInfo passed from InputManager so we can use it via UI buttons outside of original function
@@ -157,6 +161,10 @@ public class UIManager : MonoBehaviour
         _endResultUI[0].SetActive(true);
         _endResultUI[1].SetActive(win);
         _endResultUI[2].SetActive(!win);
+        int myID = NetworkManager.GetPlayerIDNormalised();
+        int enemyID = myID == 0 ? 1 : 0;
+        _endingPointsDisplay.text = $"Your Score: {RoundManager.ScoreTable[myID,0]}\nEnemy Score: {RoundManager.ScoreTable[enemyID, 0]}";
+        _totalPointsDisplay.text = $"Points in bank: {MenuHandler.pointsInBank}";
     }
 
     #endregion

@@ -117,6 +117,11 @@ public class NetworkManager : MonoBehaviour
         GameClient.Connect($"{s_ip}:{s_port}");
     }
 
+    public void Disconnect()
+    {
+        GameClient.Disconnect();
+    }
+
     /// <summary>
     /// Returns the PlayerID normalised to 0 or 1 for array access
     /// </summary>

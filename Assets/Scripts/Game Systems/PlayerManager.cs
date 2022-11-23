@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Public property representing the player's point total.
     /// </summary>
-    public ushort Points { get; private set; } = MenuHandler.points;
+    public ushort Points { get; private set; } //= MenuHandler.points;
     /// <summary>
     /// Public property to access and set the tower cards present in the 'hand' for the current game.
     /// </summary>
@@ -85,7 +85,7 @@ public class PlayerManager : MonoBehaviour
 
     public void ToggleReadyStatus()
     {
-        if (GameManager.CurrentState != GameState.Build)
+        if (RoundManager.CurrentState != GameState.Build)
             return;
 
         _ready = !_ready;
@@ -115,8 +115,8 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         ResourceCount = new ushort[] { 50, 50 };
-        GameManager _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        ScriptableObject[,] _deck = _gameManager.Deck;
+        RoundManager _gameManager = GameObject.Find("GameManager").GetComponent<RoundManager>();
+        //ScriptableObject[,] _deck = _gameManager.Deck;
 
         TowerCardsArr = new TowerCard[4];
         for (int i = 0; i < 4; i++)
@@ -158,6 +158,4 @@ public class PlayerManager : MonoBehaviour
     {
         Points += (ushort)score;
     }
-
-
 }

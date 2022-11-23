@@ -77,7 +77,7 @@ public class BuildTower : MonoBehaviour
 
     void Update()
     {
-        if (_mobsToSpawn.Count > 0 && GameManager.CurrentState == GameState.Play)
+        if (_mobsToSpawn.Count > 0 && RoundManager.CurrentState == GameState.Play)
         {
             ManageMobSpawnTimer();
         }

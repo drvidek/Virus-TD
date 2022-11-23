@@ -32,6 +32,8 @@ public class MenuHandler : MonoBehaviour
     [SerializeField] private GameObject[] _buttons = new GameObject[8];
     [Tooltip("Array of buttons from current hand window when swapping cards. Please add the buttons from the CurrentHandPanel")]
     [SerializeField] private Button[] _currentHandButtons = new Button[4];
+    [Tooltip("Displays the current total of points on the shop screen")]
+    [SerializeField] private Text _pointsDisplay;
     [Tooltip("Input field for the IP adress. Add the IPInput here")]
     [SerializeField] private InputField _ipInput;
     [Tooltip("Input field for the port. Add the PortInput here")]
@@ -42,7 +44,7 @@ public class MenuHandler : MonoBehaviour
     //Bool to check if we are swapping a tower, or we are swapping a mob
     private bool _swappingTower;
     //Static variable to store amount of points from save file 
-    public static ushort points;
+    public static ushort pointsInBank;
     //Server IP and Port information to pass to the network manager
     public static string s_ip;
     public static ushort s_port;
@@ -59,7 +61,7 @@ public class MenuHandler : MonoBehaviour
         //If save file exists load data from it
         if (File.Exists(BinarySave.path)) 
         {
-            BinarySave.LoadPlayerData(ref mobsInGame, ref towersInGame, mobsInHand, towersInHand, ref points);
+            BinarySave.LoadPlayerData(ref mobsInGame, ref towersInGame, mobsInHand, towersInHand, ref pointsInBank);
         }
         //else assign the default 
         else {
@@ -76,6 +78,7 @@ public class MenuHandler : MonoBehaviour
                 towersInGame[i].purchased = false;
             }
         }
+        UpdatePointsDisplay();
     }
     #endregion
     #region Manage Display & Cards
@@ -102,7 +105,7 @@ public class MenuHandler : MonoBehaviour
                 //Change BG image for button
                 _buttons[i].GetComponent<Image>().sprite = towersInGame[i].tower.towerImage;
                 //If we can afford card or it has been purchased make it selectable else we can't choose it
-                if (towersInGame[i].tower.pointWorth <= points || towersInGame[i].purchased) _buttons[i].GetComponent<Button>().interactable = true;
+                if (towersInGame[i].tower.pointWorth <= pointsInBank || towersInGame[i].purchased) _buttons[i].GetComponent<Button>().interactable = true;
                 else _buttons[i].GetComponent<Button>().interactable = false;
                 //Now check if we have it in hand already and make it unselectable if it is and modify text
                 foreach (TowerCard tower in towersInHand)
@@ -135,7 +138,7 @@ public class MenuHandler : MonoBehaviour
                 else _buttons[i].transform.GetChild(3).GetComponent<Text>().text = "Cost: " + mobsInGame[i].mob.pointWorth + " points";
                 //_buttons[i].GetComponent<Image>().sprite = _mobsInGame[i].mob.mobImage;
                 //If we can afford card or it has been purchased make it selectable else we can't choose it
-                if (mobsInGame[i].mob.pointWorth <= points || mobsInGame[i].purchased) _buttons[i].GetComponent<Button>().interactable = true;
+                if (mobsInGame[i].mob.pointWorth <= pointsInBank || mobsInGame[i].purchased) _buttons[i].GetComponent<Button>().interactable = true;
                 else _buttons[i].GetComponent<Button>().interactable = false;
                 //Now check if we have it in hand already and make it unselectable if it is
                 foreach (MobCard mob in mobsInHand)
@@ -189,10 +192,11 @@ public class MenuHandler : MonoBehaviour
         //Set temporary reference to card player wants to use
         _tempTowerSelect = towersInGame[towerIndex].tower;
         //Take away points for card purchased and change its purchased status
-        if (!towersInGame[towerIndex].purchased) 
+        if (!towersInGame[towerIndex].purchased && pointsInBank - (ushort)towersInGame[towerIndex].tower.pointWorth >= 0)
         { 
-            points -= (ushort)towersInGame[towerIndex].tower.pointWorth;
+            pointsInBank -= (ushort)towersInGame[towerIndex].tower.pointWorth;
             towersInGame[towerIndex].purchased = true;
+            UpdatePointsDisplay();
         }
         //We are swapping a tower
         _swappingTower = true;
@@ -202,10 +206,11 @@ public class MenuHandler : MonoBehaviour
         //Make temp holder equal object selected
         _tempMobSelect = mobsInGame[mobIndex].mob;
         //Take away points for card purchased and change its purchased status
-        if (!mobsInGame[mobIndex].purchased)
+        if (!mobsInGame[mobIndex].purchased && pointsInBank - (ushort)mobsInGame[mobIndex].mob.pointWorth >= 0)
         {
-            points -= (ushort)mobsInGame[mobIndex].mob.pointWorth;
+            pointsInBank -= (ushort)mobsInGame[mobIndex].mob.pointWorth;
             mobsInGame[mobIndex].purchased = true;
+            UpdatePointsDisplay();
         }
         //We are swapping a mob
         _swappingTower = false;
@@ -217,19 +222,25 @@ public class MenuHandler : MonoBehaviour
         //Else swap a mob
         else mobsInHand[swapIndex] = _tempMobSelect;
     }
+
+    public void UpdatePointsDisplay()
+    {
+        _pointsDisplay.text = $"{pointsInBank} Points";
+    }
     #endregion
+
     #region Game Functions
     public void EndGame()
     {
         //Save data from game to save file
-        BinarySave.SaveGameData(ref mobsInGame, ref towersInGame, mobsInHand, towersInHand, ref points);
+        BinarySave.SaveGameData(ref mobsInGame, ref towersInGame, mobsInHand, towersInHand, ref pointsInBank);
         //If unity editor exit play mode else quit application
         #if UNITY_EDITOR
 UnityEditor.EditorApplication.isPlaying = false;
         #endif
         Application.Quit();
     }
-    public void ChangeScene(int sceneIndex)
+    public static void ChangeScene(int sceneIndex)
     {
         //Change to scene matching index given
         SceneManager.LoadScene(sceneIndex);

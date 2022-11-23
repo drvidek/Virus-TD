@@ -55,7 +55,7 @@ public class Worker : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, _targetDesination.transform.position, _moveSpeed * Time.deltaTime);
-        if (GameManager.CurrentState != GameState.Play || _assignedDepositTransform == null)
+        if (RoundManager.CurrentState != GameState.Play || _assignedDepositTransform == null)
             _targetDesination = _baseTransform;
         if (_assignedDepositTransform != null && _assignedDepositTransform.GetComponent<Deposit>()._resources <= 0) //new
             _assignedDepositTransform = null; //new
