@@ -101,6 +101,7 @@ public class PlayerManager : MonoBehaviour
 
     private void SendReadyMessage(bool ready)
     {
+        Debug.Log($"Sending ready message {ready}");
         Message m = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerID.playerReady);
         m.AddBool(ready);
         NetworkManager.NetworkManagerInstance.GameClient.Send(m);
@@ -143,6 +144,7 @@ public class PlayerManager : MonoBehaviour
 
     public void EndPlayPhase()
     {
+        _ready = true;
         SendReadyMessage(true);
     }
 

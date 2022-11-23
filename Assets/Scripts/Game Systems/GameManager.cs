@@ -275,11 +275,11 @@ public class GameManager : MonoBehaviour
         _fogOfWar[1].SetTargetDissolve(1);
         while (_currentState == GameState.Play)
         {
-            PlayerManager.PlayerManagerInstance.SendPlayerPointsMessage();
-            if (Mob._mobCounter == 0)
+            if (Mob._mobCounter == 0 && !PlayerManager.PlayerManagerInstance.Ready)
             {
                 PlayerManager.PlayerManagerInstance.EndPlayPhase();
             }
+            PlayerManager.PlayerManagerInstance.SendPlayerPointsMessage();
             yield return null;
         }
         PlayerManager.PlayerManagerInstance.ResetReadyStatus();
