@@ -251,6 +251,7 @@ UnityEditor.EditorApplication.isPlaying = false;
         s_ip = _ipInput.text;
         Debug.Log(_portInput.text);
         s_port = ushort.Parse(_portInput.text);
+        NetworkManager.NetworkManagerInstance.SetAddress(s_ip, s_port);
     }
     #endregion
 }

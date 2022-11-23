@@ -18,7 +18,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private bool _gameResult;
 
     private static GameState _currentState = GameState.PreGame;
-
+    [SerializeField] private UIManager _uiManager;
     [SerializeField] private FogOfWar[] _fogOfWar;
 
     //[Tooltip("DO NOT CHANGE THE NUMBER OF ELEMENTS IN THIS ARRAY VIA UNITY EDITOR, LOGIC LOOPS DEPEND ON IT.")]
@@ -116,7 +116,7 @@ public class RoundManager : MonoBehaviour
     IEnumerator StatePreGame()
     {
         //Debug.Log($"Start {_currentState} state");
-        UIManager.UIManagerInstance.SetEndPanelOnStart();
+        _uiManager.SetEndPanelOnStart();
         _fogOfWar[0].SetTargetDissolve(0);
         _fogOfWar[1].SetTargetDissolve(0);
         while (_currentState == GameState.PreGame)
@@ -130,7 +130,7 @@ public class RoundManager : MonoBehaviour
     IEnumerator StateBuild()
     {
         //Debug.Log($"Start {_currentState} state");
-        UIManager.UIManagerInstance.readyButton.interactable = true;
+        _uiManager.readyButton.interactable = true;
         _fogOfWar[0].SetTargetDissolve(NetworkManager.GetPlayerIDNormalised() == 0 ? 1 : 0);
         _fogOfWar[1].SetTargetDissolve(NetworkManager.GetPlayerIDNormalised() == 1 ? 1 : 0);
         while (_currentState == GameState.Build)
@@ -147,7 +147,7 @@ public class RoundManager : MonoBehaviour
         //Debug.Log($"Start {_currentState} state");
         //Deactivate ready splash screen when game starts and make ready button non-interactable
         PlayerManager.PlayerManagerInstance.readyPanel.SetActive(false);
-        UIManager.UIManagerInstance.readyButton.interactable = false;
+        _uiManager.readyButton.interactable = false;
         _fogOfWar[0].SetTargetDissolve(1);
         _fogOfWar[1].SetTargetDissolve(1);
         while (_currentState == GameState.Play)
@@ -195,7 +195,7 @@ public class RoundManager : MonoBehaviour
         MenuHandler.pointsInBank += PlayerManager.PlayerManagerInstance.Points;
         //Save the game to store current information, most importantly updated points
         BinarySave.SaveGameData(ref MenuHandler.mobsInGame, ref MenuHandler.towersInGame, MenuHandler.mobsInHand, MenuHandler.towersInHand, ref MenuHandler.pointsInBank);
-        UIManager.UIManagerInstance.SetEndPanelOnEnd(_gameResult);
+        _uiManager.SetEndPanelOnEnd(_gameResult);
     }
 
     [MessageHandler((ushort)ServerToClientID.stateChange)]

@@ -26,6 +26,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _endingPointsDisplay;
     [Tooltip("Display the player's total points on the end panel")]
     [SerializeField] private TextMeshProUGUI _totalPointsDisplay;
+    [Tooltip("Display the Failed To Connect panel")]
+    [SerializeField] private GameObject _failedPanel;
     //String to determine if we are building a tower or mob
     private string _buildType = null;
     //HitInfo passed from InputManager so we can use it via UI buttons outside of original function
@@ -34,35 +36,8 @@ public class UIManager : MonoBehaviour
     private static int _timer;
     #endregion
 
-    private static UIManager _UIManagerInstance;
-    public static UIManager UIManagerInstance
-    {
-        //Property Read is the instance, public by default
-        get => _UIManagerInstance;
-        //private means only this instance of the class can access set
-        private set
-        {
-            //set the instance to the value if the instance is null
-            if (_UIManagerInstance == null)
-            {
-                _UIManagerInstance = value;
-            }
-            //if it is not null, check if the value is stored as the static instance
-            else if (_UIManagerInstance != value)
-            {
-                //if not, throw a warning and destroy that instance
-
-                //$ is to identify the string as containing an interpolated value
-                Debug.LogWarning($"{nameof(UIManager)} instance already exists, destroy duplicate!");
-                Destroy(value);
-            }
-        }
-    }
     #region Startup
-    private void Awake()
-    {
-        UIManagerInstance = this;
-    }
+
     private void Start()
     {
         //If PlayerManager reference is empty find it in scene
@@ -73,11 +48,14 @@ public class UIManager : MonoBehaviour
     }
     private void LateUpdate()
     {
-        _hudText[0].text = "Time Left: " + _timer;
-        _hudText[1].text = "Points: " + _playerManager.Points;
-        _hudText[2].text = "Crypto: " + _playerManager.ResourceCount[0];
-        _hudText[3].text = "RAM: " + _playerManager.ResourceCount[1];
-        _hudText[4].text = "Workers Busy: " + _playerManager.workerCount + "/5";
+        if (_playerManager != null)
+        {
+            _hudText[0].text = "Time Left: " + _timer;
+            _hudText[1].text = "Points: " + _playerManager.Points;
+            _hudText[2].text = "Crypto: " + _playerManager.ResourceCount[0];
+            _hudText[3].text = "RAM: " + _playerManager.ResourceCount[1];
+            _hudText[4].text = "Workers Busy: " + _playerManager.workerCount + "/5";
+        }
     }
     #endregion
     #region Functions
@@ -155,7 +133,6 @@ public class UIManager : MonoBehaviour
         _endResultUI[1].SetActive(false);
         _endResultUI[2].SetActive(false);
     }
-
     public void SetEndPanelOnEnd(bool win)
     {
         _endResultUI[0].SetActive(true);
@@ -166,7 +143,10 @@ public class UIManager : MonoBehaviour
         _endingPointsDisplay.text = $"Your Score: {RoundManager.ScoreTable[myID,0]}\nEnemy Score: {RoundManager.ScoreTable[enemyID, 0]}";
         _totalPointsDisplay.text = $"Points in bank: {MenuHandler.pointsInBank}";
     }
-
+    public void FailedToConnect()
+    {
+        _failedPanel.SetActive(true);
+    }
     #endregion
 
     [MessageHandler((ushort)ServerToClientID.timer)]

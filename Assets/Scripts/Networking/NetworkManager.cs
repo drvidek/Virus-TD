@@ -50,7 +50,7 @@ public class NetworkManager : MonoBehaviour
 
                 //$ is to identify the string as containing an interpolated value
                 Debug.LogWarning($"{nameof(NetworkManager)} instance already exists, destroy duplicate!");
-                Destroy(value);
+                Destroy(value.gameObject);
             }
         }
     }
@@ -60,21 +60,31 @@ public class NetworkManager : MonoBehaviour
     [SerializeField] private ushort s_port;
     [SerializeField] private string s_ip;
 
+    private bool _attemptConnect;
+
     private void Awake()
     {
         //when the object that this is attached to in game initialises, try to set the instance to this
         NetworkManagerInstance = this;
+        DontDestroyOnLoad(this.gameObject);
         //Setup port information from menu
-        s_ip = MenuHandler.s_ip;
-        s_port = MenuHandler.s_port;
+        //s_ip = MenuHandler.s_ip;
+        //s_port = MenuHandler.s_port;
     }
 
     private void Start()
     {
         //Logs what the network is doing
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
+
+    }
+
+    private void AttemptConnect()
+    {
         //Create new client 
         GameClient = new Client();
+
+        _attemptConnect = false;
         //connect to a server
         GameClient.Connected += DidConnect;
         //display if connection failed
@@ -83,7 +93,21 @@ public class NetworkManager : MonoBehaviour
         GameClient.Disconnected += DidDisconnect;
 
         NetworkManager.NetworkManagerInstance.Connect();
-        Debug.Log(s_ip + " " + s_port);
+    }
+
+    private void Update()
+    {
+        if (_attemptConnect)
+        {
+            _attemptConnect = false;
+            AttemptConnect();
+        }
+    }
+
+    public void SetAddress(string ip, ushort port)
+    {
+        s_ip = ip;
+        s_port = port;
     }
 
     void DidConnect(object sender, EventArgs e)
@@ -93,7 +117,7 @@ public class NetworkManager : MonoBehaviour
 
     void FailedToConnect(object sender, EventArgs e)
     {
-        //UIManager.UIManagerInstance.BackToMain();
+        FindObjectOfType<UIManager>().FailedToConnect();
     }
 
     void DidDisconnect(object sender, EventArgs e)
@@ -103,6 +127,7 @@ public class NetworkManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameClient != null)
         GameClient.Tick();
     }
 
@@ -115,6 +140,11 @@ public class NetworkManager : MonoBehaviour
     {
         //Connect to the server
         GameClient.Connect($"{s_ip}:{s_port}");
+    }
+
+    public void NewGame()
+    {
+        _attemptConnect = true;
     }
 
     public void Disconnect()
