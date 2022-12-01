@@ -60,7 +60,6 @@ public class NetworkManager : MonoBehaviour
     [SerializeField] private ushort s_port;
     [SerializeField] private string s_ip;
 
-    private bool _attemptConnect;
 
     private void Awake()
     {
@@ -76,32 +75,15 @@ public class NetworkManager : MonoBehaviour
     {
         //Logs what the network is doing
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
-
-    }
-
-    private void AttemptConnect()
-    {
         //Create new client 
         GameClient = new Client();
 
-        _attemptConnect = false;
         //connect to a server
         GameClient.Connected += DidConnect;
         //display if connection failed
         GameClient.ConnectionFailed += FailedToConnect;
         //When the client disconnects from the server
         GameClient.Disconnected += DidDisconnect;
-
-        NetworkManager.NetworkManagerInstance.Connect();
-    }
-
-    private void Update()
-    {
-        if (_attemptConnect)
-        {
-            _attemptConnect = false;
-            AttemptConnect();
-        }
     }
 
     public void SetAddress(string ip, ushort port)
@@ -117,12 +99,12 @@ public class NetworkManager : MonoBehaviour
 
     void FailedToConnect(object sender, EventArgs e)
     {
-        FindObjectOfType<UIManager>().FailedToConnect();
+        GetComponent<NetworkUIManager>().ShowMessageFailedConnect();
     }
 
     void DidDisconnect(object sender, EventArgs e)
     {
-        //UIManager.UIManagerInstance.BackToMain();
+        //_networkUIManager.ShowMessageDisconnected();
     }
 
     void FixedUpdate()
@@ -140,11 +122,6 @@ public class NetworkManager : MonoBehaviour
     {
         //Connect to the server
         GameClient.Connect($"{s_ip}:{s_port}");
-    }
-
-    public void NewGame()
-    {
-        _attemptConnect = true;
     }
 
     public void Disconnect()

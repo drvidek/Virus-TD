@@ -253,5 +253,10 @@ UnityEditor.EditorApplication.isPlaying = false;
         s_port = ushort.Parse(_portInput.text);
         NetworkManager.NetworkManagerInstance.SetAddress(s_ip, s_port);
     }
+
+    public void AttemptConnect()
+    {
+        NetworkManager.NetworkManagerInstance.Connect();
+    }
     #endregion
 }
